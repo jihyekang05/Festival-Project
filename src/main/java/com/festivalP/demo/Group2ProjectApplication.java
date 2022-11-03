@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 
 //나중에 db연결할 때 exclude = DataSourceAutoConfiguration.class 부분 지워야한다.
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication
 public class Group2ProjectApplication {
 
 	public static void main(String[] args) {
