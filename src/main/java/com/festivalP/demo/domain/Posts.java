@@ -17,7 +17,6 @@ public class Posts {
     @Column
     private Long post_num;
 
-
     private String admin_index;
 
     private String content_text;

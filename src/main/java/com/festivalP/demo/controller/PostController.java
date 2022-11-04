@@ -1,9 +1,13 @@
 package com.festivalP.demo.controller;
 
+import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.service.FestivalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -13,9 +17,10 @@ public class PostController {
     private final FestivalService festivalService;
 
     @RequestMapping("/allFestival")
-    public String allFestival() {
-        List<Festival> festivals = festivalService.findFestival();
-        return "allFestival";
+    public String allFestival(Model model) {
+        List<Posts> festivals = festivalService.findFestivals();
+        model.addAttribute("posts",festivals);
+        return "/prac";
     }
 
     //    @RequestMapping("/contact")
