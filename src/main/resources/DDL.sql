@@ -10,7 +10,8 @@ CREATE TABLE "MEMBER" (
 	"member_email"	varchar2(200)		NOT NULL,
 	"memeber_phone"	varchar2(100)		NOT NULL,
 	"member_nickname"	varchar2(50)		NOT NULL,
-	"member_state"	number(10)		NOT NULL
+	"member_state"	number(10)		NOT NULL,
+	"interest_category" VARCHAR2(100)
 );
 
 CREATE TABLE "INTEREST" (
@@ -34,7 +35,8 @@ CREATE TABLE "POSTS" (
 	"progress_state"	number(1)		NULL,
 	"festival_title"	varchar2(1000)		NULL,
 	"festival_upload_date"	DATE		NULL,
-    CONSTRAINT "admin_index" FOREIGN KEY("admin_index") REFERENCES admin("admin_index")
+    CONSTRAINT "admin_index" FOREIGN KEY("admin_index") REFERENCES admin("admin_index"),
+    "festival_category" VARCHAR2(100)
 );
 
 CREATE TABLE "Favorite" (
