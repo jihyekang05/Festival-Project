@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -9,7 +9,7 @@
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="/css/styles.css" rel="stylesheet" />
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -19,8 +19,8 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/every_festival_board.html">전체목록</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/allfestival">전체목록</a></li>
                         <li class="nav-item"><a class="nav-link" href="/favorites_board.html">내 즐겨찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Local_Festival_board.html">지역별 축제</a></li>
                         <li class="nav-item"><a class="nav-link" href="/contact.html">Contact</a></li>
@@ -35,36 +35,45 @@
         <a class="btn btn-primary btn-xl text-uppercase" href="#review">축제후기</a>
         <!-- ==================================== -->
         <!-- Page content-->
-        <div class="container mt-5">
+        <div class="container mt-5" th:each="post : ${post}">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-8" >
                     <!-- Post content-->
                     <article>
                         <!-- Post header-->
                         <header class="mb-4">
                             <!-- Post title-->
-                            <h1 class="fw-bolder mb-1">2022 사과 축제!</h1>
+                            <h1 class="fw-bolder mb-1" th:text="${post.festival_title}">2022 사과 축제!</h1>
                             <!-- Post meta content-->
-                            <div class="text-muted fst-italic mb-4">게시일자 : 게시일자 들어갈 자리       
+                            <div class="text-muted fst-italic mb-4" th:text="${post.festival_upload_date}">게시일자 : 게시일자 들어갈 자리
                             </div>
                             <!-- Post categories-->
                             <a class="badge bg-secondary text-decoration-none link-light" href="#!">청송</a>
                             <a class="badge bg-secondary text-decoration-none link-light" href="#!">사과</a>
                         </header>
                         <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="./assets/img/festival_example.jpg" alt="..." /></figure>
+                        <figure class="mb-4"><img class="img-fluid rounded" th:src="${post.content_image}" alt="..." /></figure>
                         <!-- Post content-->
                         <section class="mb-5">
-                            <p class="fs-5 mb-4">Science is an enterprise that should be cherished as an activity of the free human mind. Because it transforms who we are, how we live, and it gives us an understanding of our place in the universe.</p>
-                            <p class="fs-5 mb-4">The universe is large and old, and the ingredients for life as we know it are everywhere, so there's no reason to think that Earth would be unique in that regard. Whether of not the life became intelligent is a different question, and we'll see if we find that.</p>
-                            <p class="fs-5 mb-4">If you get asteroids about a kilometer in size, those are large enough and carry enough energy into our system to disrupt transportation, communication, the food chains, and that can be a really bad day on Earth.</p>
-                            <h2 class="fw-bolder mb-4 mt-5">I have odd cosmic thoughts every day</h2>
-                            <p class="fs-5 mb-4">For me, the most fascinating interface is Twitter. I have odd cosmic thoughts every day and I realized I could hold them to myself or share them with people who might be interested.</p>
-                            <p class="fs-5 mb-4">Venus has a runaway greenhouse effect. I kind of want to know what happened there because we're twirling knobs here on Earth without knowing the consequences of it. Mars once had running water. It's bone dry today. Something bad happened there as well.</p>
+                            <p th:text="${post.content_text}"></p>
                         </section>
                     </article>
+                    <!--api 들어갈 부분-->
+                    <input type="text" id="address" value="" size="70">
+                    <input type="button" value="편의점" onclick="addressChk()">
+
+                    <div id="map" style="width:100%;height:450px;"></div>
+
+                    <div id="coordXY"></div>
+
+                    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f0ea3c6cbdf7a79d08988e31487b46ad&libraries=services"></script>
+                    <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk()">편의점</a>
+                    <a class="btn btn-primary btn-xl text-uppercase" href="#services">지하철역</a>
+                    <a class="btn btn-primary btn-xl text-uppercase" href="#services">주차장</a>
+                    <a class="btn btn-primary btn-xl text-uppercase" href="#services">카페</a>
                     <h1>Example heading <span class="badge bg-secondary" id="">카카오api들어갈 부분</span></h1>
-                    <!-- 후기남기는 부분-->
+                    <!--                    ===================================================================================-->
+                    <-- 후기남기는 부분-->
                     <section class="mb-5">
                         <div class="alert alert-success" role="alert" id="review">
                             후기를 남겨보세요!
@@ -127,6 +136,8 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script src="/js/scripts.js"></script>
+        <script src="/js/api.js"></script>
+
     </body>
 </html>

@@ -18,18 +18,18 @@ public class Member {
 
     @Id
     @GeneratedValue
-    @Column
-    private Long member_index;
+    @Column(name="MEMBER_INDEX")
+    private Long index;
 
 
-    private String member_id;
-    private Long member_pw;
-    private String member_birth;
-    private String member_addr;
-    private String member_email;
-    private String member_nickname;
-    private String member_state;
-    private String member_category;
+//    private String member_id;
+//    private Long member_pw;
+//    private String member_birth;
+//    private String member_addr;
+//    private String member_email;
+//    private String member_nickname;
+//    private String member_state;
+//    private String member_category;
 
 
 

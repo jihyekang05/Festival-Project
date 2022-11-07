@@ -19,4 +19,8 @@ public class FestivalService {
     public List<Posts> findFestivals() {
         return festivalRepository.findAll();
     }
+
+    public List<Posts> findOne(Long post_num) {
+        return festivalRepository.findByPost_num(post_num);
+    }
 }
