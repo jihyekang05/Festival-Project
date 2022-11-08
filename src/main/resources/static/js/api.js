@@ -1,30 +1,32 @@
-//var address      = document.getElementById("address");
-//var address = ""
+var address      = document.getElementById("address");
 var mapContainer = document.getElementById("map");
 var coordXY   = document.getElementById("coordXY");
 var mapOption;
 var map;
 var x,y          = "";
 
-if (address.value=="") {
+
 
  mapOption = {
   center: new daum.maps.LatLng(33.450701, 126.570667), // 임의의 지도 중심좌표
         level: 4            // 지도의 확대 레벨
 
  };
-}
+ 
+
 
 // 지도 생성
 map = new daum.maps.Map(mapContainer, mapOption);
 
 
 //편의점 찾기
-function addressChk() {
-address.value="서울시";
+function addressChk(categoryCode) {
+
+ marker = []
+
  var gap = address.value; // 주소검색어
  if (gap=="") {
-  alert("주소 검색어를 입력해 주십시오.");
+  alert("주소입력값 없음");
   address.focus();
   return;
  }
@@ -70,8 +72,8 @@ address.value="서울시";
   // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places(map);
 
-// 카테고리로 편의점을 검색합니다
-ps.categorySearch('CS2', placesSearchCB, {useMapBounds:true});
+// 카테고리로 편의시설을 검색합니다
+ps.categorySearch(categoryCode, placesSearchCB, {useMapBounds:true});
 
 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
 function placesSearchCB (data, status, pagination) {
@@ -104,4 +106,6 @@ function displayMarker(place) {
  });
  
 }
+
+
 

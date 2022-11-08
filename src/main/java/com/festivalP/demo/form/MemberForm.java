@@ -8,11 +8,13 @@ import lombok.Setter;
 public class MemberForm {
 
     private String id;
-    private Long pw;
+    private String pw;
     private String nickname;
+    private String birth;
+    private String phone;
     private String email;
     private String addr;
     private String category;
-
-
+    private int state;
 }
+

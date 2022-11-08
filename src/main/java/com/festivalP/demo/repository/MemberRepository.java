@@ -14,6 +14,23 @@ public class MemberRepository {
 
     private final EntityManager em;
 
+
+    public void save(Member member) {
+        // JPA에서 save 함수는 매개변수를 insert 해주는 동작
+        em.persist(member);
+    }
+
+
+    public List<Member> findById(String id) {
+
+        return em.createQuery("select m from Member m where m.member_id = : id", Member.class).setParameter("id", id).getResultList();
+    }
+
+    public List<Member> findByNickname(String nickname){
+        return em.createQuery("select m from Member m where m.member_nickname = : nickname", Member.class).setParameter("nickname", nickname).getResultList();
+    }
+
+
 //    public void save(Member member) {
 //        em.persist(member);
 //    }

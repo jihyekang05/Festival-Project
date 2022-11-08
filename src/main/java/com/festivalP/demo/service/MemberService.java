@@ -2,7 +2,6 @@ package com.festivalP.demo.service;
 
 
 import com.festivalP.demo.domain.Member;
-import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,12 +9,52 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
+
+
+    @Transactional
+    public String join(Member member){
+        System.out.println("MemberService.join");
+        memberRepository.save(member);
+        return member.getMember_id();
+    }
+
+    @Transactional
+    public boolean validateDuplicateMemberId(String member_id){
+        List<Member> findMem = memberRepository.findById(member_id);
+        if(!findMem.isEmpty()) {
+            // 중복된 ID 있을 경우
+            System.out.println("@@@@@@@ duplicate! @@@@");
+            return false;
+        }
+        else{
+            // 중복된 ID 없을 경우
+            System.out.println("$$$$$$$$ no id in db$$$$$$$$$$");
+            return true;
+        }
+    }
+
+    @Transactional
+    public boolean validateDuplicateMemberNickname(String member_nickname){
+        List<Member> findMem = memberRepository.findByNickname(member_nickname);
+        if(!findMem.isEmpty()) {
+            // 중복된 ID 있을 경우
+            System.out.println("@@@@@@@ duplicate! @@@@");
+            return false;
+        }
+        else{
+            // 중복된 닉네임 없을 경우
+            System.out.println("$$$$$$$$ no nickname in db$$$$$$$$$$");
+            return true;
+        }
+    }
+}
 
 //    @Transactional
 //    public String join(Member member){
@@ -26,9 +65,7 @@ public class MemberService {
 //        return member.getMember_id();
 //    }
 
-    public List<Member> findMember() {
-        return memberRepository.findAll();
-    }
+
 //    private void validateDuplicateMember(Member member){
 //        List<Member> findMem = memberRepository.findById(member.getMember_id());
 //        if(!findMem.isEmpty()){
@@ -41,4 +78,3 @@ public class MemberService {
 //
 //        }
 //    }
-}

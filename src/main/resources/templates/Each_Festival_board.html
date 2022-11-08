@@ -59,21 +59,19 @@
                         </section>
                     </article>
                     <!--api 들어갈 부분-->
-                    <input type="text" id="address" value="" size="70">
-                    <input type="button" value="편의점" onclick="addressChk()">
-
+                    <input type="hidden" id="address" th:value="${post.board_addr}" size="70"  >
                     <div id="map" style="width:100%;height:450px;"></div>
 
                     <div id="coordXY"></div>
 
                     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f0ea3c6cbdf7a79d08988e31487b46ad&libraries=services"></script>
-                    <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk()">편의점</a>
-                    <a class="btn btn-primary btn-xl text-uppercase" href="#services">지하철역</a>
-                    <a class="btn btn-primary btn-xl text-uppercase" href="#services">주차장</a>
-                    <a class="btn btn-primary btn-xl text-uppercase" href="#services">카페</a>
-                    <h1>Example heading <span class="badge bg-secondary" id="">카카오api들어갈 부분</span></h1>
+                    <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('CS2')">편의점</a>
+                    <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('SW8')">지하철역</a>
+                    <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('PK6')">주차장</a>
+                    <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('CE7')">카페</a>
+
                     <!--                    ===================================================================================-->
-                    <-- 후기남기는 부분-->
+<!--                    <&#45;&#45; 후기남기는 부분&ndash;&gt;-->
                     <section class="mb-5">
                         <div class="alert alert-success" role="alert" id="review">
                             후기를 남겨보세요!
