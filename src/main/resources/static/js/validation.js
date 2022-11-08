@@ -19,9 +19,6 @@ const email_check = document.getElementById("email_check");
 const email_valid_text = document.getElementById("email_valid_text");
 const email_check_valid_text = document.getElementById("email_check_valid_text");
 
-const phone = document.getElementById("phone");
-const phone_valid_text = document.getElementById("phone_valid_text");
-
 
 const birth = document.getElementById("birth");
 const birth_valid_text = document.getElementById("birth_valid_text");
@@ -37,14 +34,18 @@ const detailAddress_valid_text = document.getElementById("detailAddress_valid_te
 const address = document.getElementById("address");
 const address_valid_text = document.getElementById("address_valid_text");
 
+const category = document.getElementsByClassName("category");
+
+
+
 const extraAddress = document.getElementById("extraAddress");
 
 
 
 // 유효성 검사를 위한 정규식 패턴
-const id_pattern = /^[a-zA-Z][0-9a-zA-Z]{4,7}$/;
+const id_pattern = /^[a-zA-Z][0-9a-zA-Z]{4,8}$/;
 const pw_pattern = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-const nickname_pattern = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ].{0,5}$/;
+const nickname_pattern = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ].{0,7}$/;
 const email_pattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
 const forms = document.getElementsByClassName('validation-form');
@@ -57,15 +58,14 @@ function validTextChange(flag, validObject, text){
 
 
     if(flag){
-        validObject.innerHTML = "사용 가능한 "+text+"입니다.";
+        validObject.innerHTML = text;
         validObject.classList.remove('invalidText');
         validObject.classList.add('validText');
     }
     else{
-        validObject.innerHTML=text+"를(을) 확인하세요.";
+        validObject.innerHTML=text;
         validObject.classList.remove('validText');
         validObject.classList.add('invalidText');
-
 
     }    
 
@@ -75,30 +75,20 @@ function validTextChange(flag, validObject, text){
 //////////////////////////////////////////////////////////////////////
 // ID 유효성검사 로직
 
-id.addEventListener("keydown", () => {
+
+id.addEventListener("input", () => {
 
     id.classList.remove('valid');
     id_dup_check.disabled = false;
 
-    validTextChange(false, id_valid_text, "아이디");
+    validTextChange(false, id_valid_text, "아이디를 확인하세요.");
     
 
 });
 
-
-id.addEventListener("keyup", () => {
-
-    id.classList.remove('valid');
-    id_dup_check.disabled = false;
-    validTextChange(false, id_valid_text, "아이디");
-
-});
-
-
 // ID 중복 체크 이벤트 리스너
 id_dup_check.addEventListener('click', function (event) {
 
-    console.log("id : "+id.value)
 
     pattern_check = false;
     dup_check = false;
@@ -111,11 +101,9 @@ id_dup_check.addEventListener('click', function (event) {
         method: "POST",
         dataType: "text"
     })
-
         .done(function (text) {
             // Ajax 통신 성공했을 경우
             
-            console.log(text);
             console.log("AJAX SUCCESS");
             dup_check = true;
 
@@ -135,10 +123,6 @@ id_dup_check.addEventListener('click', function (event) {
                 pattern_check = false;
             }
 
-
-            console.log("patter_check: " + pattern_check);
-            console.log("dup_check: " + dup_check);
-
             if (pattern_check && dup_check) {
                 $("#id_valid_msg").textContent="중복체크 완료";
                 Swal.fire({
@@ -152,7 +136,7 @@ id_dup_check.addEventListener('click', function (event) {
                         id.classList.add('valid');
                         Swal.fire('저장되었습니다.', '', 'success');
                         id_dup_check.disabled = true;
-                        validTextChange(true, id_valid_text, "아이디");
+                        validTextChange(true, id_valid_text, "사용 가능한 아이디입니다.");
 
         
                     }
@@ -167,11 +151,12 @@ id_dup_check.addEventListener('click', function (event) {
                     icon: 'error',
                     title: '사용 불가능한 아이디입니다.',
                     text: '다른 아이디를 입력하세요.',
+                    confirmButtonText: '확인',
                 });
 
                 id.value = '';
                 id.focus();
-                validTextChange(false, id_valid_text, "아이디");
+                validTextChange(false, id_valid_text, "아이디를 확인하세요.");
 
 
             }
@@ -188,52 +173,29 @@ id_dup_check.addEventListener('click', function (event) {
 
 //////////////////////////////////////////////////////////////////////////
 // PW 유효성 검사 로직
-password.addEventListener("keyup", () => {
+password.addEventListener("input", () => {
 
     if (password_check.value == password.value) {
         password_check.classList.add('valid');
-        validTextChange(true, password_check_valid_text, "비밀번호");
+        validTextChange(true, password_check_valid_text, "사용 가능한 비밀번호입니다.");
 
     }
     else {
         password_check.classList.remove('valid');
-        validTextChange(false, password_check_valid_text, "비밀번호 확인");
+        validTextChange(false, password_check_valid_text, "비밀번호를 확인하세요.");
     }
 
     if (pw_pattern.test(password.value)) {
         password.classList.add('valid');
-        validTextChange(true, password_valid_text, "비밀번호");
+        validTextChange(true, password_valid_text, "사용 가능한 비밀번호입니다.");
     }
     else {
         password.classList.remove('valid');
-        validTextChange(false, password_valid_text, "비밀번호");
+        validTextChange(false, password_valid_text, "비밀번호를 확인하세요.");
 
     }
 });
 
-
-password.addEventListener("keydown", () => {
-    if (password_check.value == password.value) {
-        password_check.classList.add('valid');
-        validTextChange(true, password_check_valid_text, "비밀번호");
-
-    }
-    else {
-        password_check.classList.remove('valid');
-        validTextChange(false, password_check_valid_text, "비밀번호 확인");
-    }
-    
-    if (pw_pattern.test(password.value)) {
-        password.classList.add('valid');
-        validTextChange(true, password_valid_text, "비밀번호");
-
-    }
-    else {
-        password.classList.remove('valid');
-        validTextChange(false, password_valid_text, "비밀번호");
-
-    }
-});
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -242,24 +204,24 @@ password.addEventListener("keydown", () => {
 password_check.addEventListener("keyup", () => {
     if (password_check.value == password.value) {
         password_check.classList.add('valid');
-        validTextChange(true, password_check_valid_text, "비밀번호");
+        validTextChange(true, password_check_valid_text, "비밀번호와 일치합니다.");
 
     }
     else {
         password_check.classList.remove('valid');
-        validTextChange(false, password_check_valid_text, "비밀번호 확인");
+        validTextChange(false, password_check_valid_text, "비밀번호와 일치하지 않습니다.");
     }
 });
 
 password_check.addEventListener("keydown", () => {
     if (password_check.value == password.value) {
         password_check.classList.add('valid');
-        validTextChange(true, password_check_valid_text, "비밀번호");
+        validTextChange(true, password_check_valid_text, "비밀번호와 일치합니다.");
 
     }
     else {
         password_check.classList.remove('valid');
-        validTextChange(false, password_check_valid_text, "비밀번호 확인");
+        validTextChange(false, password_check_valid_text, "비밀번호와 일치하지 않습니다.");
 
     }
 });
@@ -269,22 +231,13 @@ password_check.addEventListener("keydown", () => {
 // nickname 유효성 검사 로직
 
 
-nickname.addEventListener("keydown", () => {
+nickname.addEventListener("input", () => {
 
     nickname.classList.remove('valid');
     nickname_dup_check.disabled = false;
 
-    validTextChange(false, nickname_valid_text, "닉네임");
+    validTextChange(false, nickname_valid_text, "사용 불가능한 닉네임입니다.");
     
-
-});
-
-
-nickname.addEventListener("keyup", () => {
-
-    nickname.classList.remove('valid');
-    nickname_dup_check.disabled = false;
-    validTextChange(false, nickname_valid_text, "닉네임");
 
 });
 
@@ -326,8 +279,7 @@ nickname_dup_check.addEventListener("click", () => {
             else {
                 pattern_check = false;
             }
-            console.log(pattern_check);
-            console.log(dup_check);
+
 
             if (pattern_check && dup_check) {
 
@@ -342,7 +294,7 @@ nickname_dup_check.addEventListener("click", () => {
                         nickname.classList.add('valid');
                         Swal.fire('저장되었습니다.', '', 'success');
                         nickname_dup_check.disabled = true;
-                        validTextChange(true, nickname_valid_text, "닉네임");
+                        validTextChange(true, nickname_valid_text, "사용 가능한 닉네임입니다.");
 
                     }
                     else {
@@ -357,11 +309,12 @@ nickname_dup_check.addEventListener("click", () => {
                     icon: 'error',
                     title: '닉네임이 유효하지 않습니다.',
                     text: '닉네임을 확인하세요',
+                    confirmButtonText: '확인',
                 });
         
                 nickname.value = '';
                 nickname.focus();
-                validTextChange(false, nickname_valid_text, "닉네임");
+                validTextChange(false, nickname_valid_text, "닉네임을 확인하세요.");
 
             }
 
@@ -373,107 +326,71 @@ nickname_dup_check.addEventListener("click", () => {
         })
 });
 
-nickname.addEventListener("keydown", () => {
-
-    nickname.classList.remove('valid');
-    nickname_dup_check.disabled = false;
-
-});
 
 //////////////////////////////////////////////////////////
 // email 유효성 검증 로직
 
-email.addEventListener("keyup", () => {
-    if (email_check.value == email.value) {
-        email_check.classList.add('valid');
-        console.log("valid");
-        console.log(email_check.value);
-        validTextChange(true, email_check_valid_text, "이메일 확인");
+email.addEventListener("input", () => {
 
-    }
-    else {
-        email_check.classList.remove('valid');
-        validTextChange(false, email_check_valid_text, "이메일 확인");
-
-    }
     if (email_pattern.test(email.value)) {
         email.classList.add('valid');
-        console.log("valid");
-        console.log(email.value);
         email_check.classList.remove('valid');
-        validTextChange(true, email_valid_text, "이메일");
+        validTextChange(true, email_valid_text, "사용 가능한 이메일입니다.");
 
     }
     else {
         email.classList.remove('valid');
-        validTextChange(false, email_valid_text, "이메일");
+        validTextChange(false, email_valid_text, "이메일을 확인하세요.");
 
     }
-});
 
-
-email.addEventListener("keydown", () => {
     if (email_check.value == email.value) {
         email_check.classList.add('valid');
-        console.log("valid");
-        console.log(email_check.value);
-        validTextChange(true, email_check_valid_text, "이메일 확인");
+        validTextChange(true, email_check_valid_text, "이메일과 일치합니다.");
 
     }
     else {
         email_check.classList.remove('valid');
-        validTextChange(false, email_check_valid_text, "이메일 확인");
+        validTextChange(false, email_check_valid_text, "이메일과 일치하지 않습니다.");
 
     }
-    if (email_pattern.test(email.value)) {
-        email.classList.add('valid');
-        console.log("valid");
-        console.log(email.value);
-        email_check.classList.remove('valid');
-        validTextChange(true, email_valid_text, "이메일");
 
 
-    }
-    else {
-        email.classList.remove('valid');
-        validTextChange(false, email_valid_text, "이메일");
-
-    }
 });
 
 
 //////////////////////////////////////////////////////////
 // email_check 유효성 검증 로직
 
-email_check.addEventListener("keyup", () => {
+email_check.addEventListener("input", () => {
     if (email_check.value == email.value) {
         email_check.classList.add('valid');
-        console.log("valid");
-        console.log(email_check.value);
-        validTextChange(true, email_check_valid_text, "이메일 확인");
+        validTextChange(true, email_check_valid_text, "이메일과 일치합니다.");
 
     }
     else {
         email_check.classList.remove('valid');
-        validTextChange(false, email_check_valid_text, "이메일 확인");
+        validTextChange(false, email_check_valid_text, "이메일과 일치하지 않습니다.");
 
     }
 });
 
-email_check.addEventListener("keydown", () => {
-    if (email_check.value == email.value) {
-        email_check.classList.add('valid');
-        console.log("valid");
-        console.log(email_check.value);
-        validTextChange(true, email_check_valid_text, "이메일 확인");
+////////////////////////////////////////////////////////
+// 생년월일 검증 로직
 
-    }
-    else {
-        email_check.classList.remove('valid');
-        validTextChange(false, email_check_valid_text, "이메일 확인");
 
+birth.addEventListener("change", ()=>{
+    if(birth.value!=null){
+        birth.classList.add("valid");
+        validTextChange(true, birth_valid_text, "옳바른 생년월일입니다.");
     }
+    else{
+        birth.classList.remove("valid");
+        validTextChange(false, birth_valid_text, "생년월일을 입력해주세요.");
+    }
+
 });
+
 
 
 
@@ -481,18 +398,36 @@ email_check.addEventListener("keydown", () => {
 // 주소 유효성 검증 로직
 
 
-// detailAddress.addEventListener("focusout", () => {
-//     if (detailAddress.value != '') {
-//         detailAddress.classList.add('valid');
-//         validTextChange(true, detailAddress_valid_text, "상세주소");
+address.addEventListener("input", ()=>{
 
-//     }
-//     else {
-//         detailAddress.classList.remove('valid');
-//         validTextChange(false, detailAddress_valid_text, "상세주소");
+    if(address.value!=''){
+        address.classList.add('valid');
+        address_valid_text.classList.add()
+        validTextChange(true, address_valid_text, "주소가 입력되었습니다.");
+    }
+});
 
-//     }
-// });
+
+////////////////////////////////////////////////
+// 카테고리 로직
+
+const selected_category = document.getElementById("selected_category");
+const category_value = document.getElementById("category_value");
+
+
+
+function category_insert(){
+
+    Array.prototype.forEach.call(category, (e)=>{
+    
+        if(e.checked){
+                category_value.value+=e.value+",";
+        }
+    });
+};
+
+
+
 
 
 
@@ -504,21 +439,12 @@ let validFlag = false;
 
 
 function validCheck(){
-    if(address.value!=''){
-        address.classList.add('valid');
-        validTextChange(true, address_valid_text, "주소");
-
-    }
-    else{
-        address.classList.remove('valid');
-        validTextChange(false, address_valid_text, "주소");
-    }
 
     validCnt = document.getElementsByClassName("valid");
 
     // valid 개수 카운팅 후 flag
 
-    if(validCnt.length>=7){
+    if(validCnt.length>=0){
     // valid 개수 맞으면
         validFlag=true;
     }
@@ -531,11 +457,7 @@ function validCheck(){
 submitBtn.addEventListener("click", (event) => {
     
 
-    
-    // 주소 유효성 검증
-
     validCheck();
-
 
     if (validFlag) {
 
@@ -547,7 +469,8 @@ submitBtn.addEventListener("click", (event) => {
             denyButtonText: `취소`,
         }).then((result) => {
             if (result.isConfirmed) {
-                // document.getElementById("signUpForm").submit();
+                
+                category_insert();
                 $("#signUpForm").submit();
             }
             else {
@@ -558,11 +481,16 @@ submitBtn.addEventListener("click", (event) => {
     }
     else {
 
+        // 완성 후 지우기
         Swal.fire({
             icon: 'error',
             title: '회원가입 실패',
             text: '필수항목을 입력해주세요.',
+            confirmButtonText:'확인'
         });
     }
 
 });
+
+
+

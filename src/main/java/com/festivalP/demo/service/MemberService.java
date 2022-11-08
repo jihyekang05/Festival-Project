@@ -4,9 +4,11 @@ package com.festivalP.demo.service;
 import com.festivalP.demo.domain.Member;
 import com.festivalP.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -18,10 +20,35 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
 
+
+    private Member encryptFunc(Member member){
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(30);
+
+
+        String pw = member.getMember_pw();
+        String securePw = encoder.encode(pw);
+
+        member.setMember_pw(securePw);
+        return member;
+    }
+
+
+
+// 암호화 함수 사용 전
+//    @Transactional
+//    public String join(Member member){
+//        System.out.println("MemberService.join");
+//
+//        memberRepository.save(member);
+//        return member.getMember_id();
+//    }
+
     @Transactional
     public String join(Member member){
         System.out.println("MemberService.join");
-        memberRepository.save(member);
+
+        memberRepository.save(encryptFunc(member));
         return member.getMember_id();
     }
 

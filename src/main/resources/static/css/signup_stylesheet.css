@@ -39,6 +39,8 @@ font-style: normal;
 }
 
 
-input{
+.valid{
+  outline-style: solid;
 
+  outline-color: rgb(9, 252, 9);
 }

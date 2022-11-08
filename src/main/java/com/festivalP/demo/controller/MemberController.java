@@ -49,7 +49,6 @@ public class MemberController {
         member.setMember_birth(form.getBirth());
         member.setMember_addr(form.getAddr());
         member.setMember_email(form.getEmail());
-        member.setMember_phone(form.getPhone());
         member.setMember_nickname(form.getNickname());
         member.setMember_category(form.getCategory());
 
@@ -60,11 +59,11 @@ public class MemberController {
     }
 
 
+
     //    @RequestMapping(value = "/iddupcheck", method = RequestMethod.POST)
     @ResponseBody
     @PostMapping("/iddupcheck")
     public String iddupcheck(String member_id){
-
 
         System.out.print("&&&&&&&&&&& id dup check called *************");
         if(memberService.validateDuplicateMemberId(member_id)){
@@ -89,6 +88,11 @@ public class MemberController {
     }
 
 
+    @RequestMapping("/member/signup")
+    public void signup(@ModelAttribute Member member){
+
+
+    }
 
     @RequestMapping("/findid")
     public String findId() {

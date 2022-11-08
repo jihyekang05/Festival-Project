@@ -13,6 +13,14 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/signup_stylesheet.css">
+
+  
+ <!-- Font Awesome icons (free version)-->
+ <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+ <!-- Google fonts-->
+ <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+ <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+
 </head>
 
 
@@ -23,13 +31,14 @@
         <div class="d-flex justify-content-center">
           <h4 class="mb-3">회원가입</h4>
         </div>
+        <br><p style="color: red;">관심 카테고리를 제외한 모든 항목은 필수입력사항입니다.</p><br><br>
 
         <form role="form" th:object="${memberForm}" class="validation-form" method="post" id="signUpForm" name="signUpForm">
 
-          <label for="id">아이디</label>
+          <label for="id">아이디 (영문 또는 숫자 혼합 5~7)</label>
           <div class="row">
             <div class="col-md-9">
-              <input type="text" th:field="*{id}" class="form-control" id="id" placeholder="" value="" >
+              <input type="text" th:field="*{id}" class="form-control shadow-none" id="id" placeholder="" value="">
               <div id="id_valid_text"></div>
             </div>
             <div class="col-md-3">
@@ -39,10 +48,10 @@
 
 
           <br>
-          <label for="id">비밀번호</label>
+          <label for="id">비밀번호 (특수문자, 영문, 숫자를 모두 사용 8~16)</label>
           <div class="row">
             <div class="col-md-12">
-              <input type="password" th:field="*{pw}" class="form-control" id="password" placeholder="" value="" >
+              <input type="password" th:field="*{pw}" class="form-control shadow-none" id="password" placeholder="" value="" >
               <div id="password_valid_text"></div>
             </div>
           </div>
@@ -52,17 +61,17 @@
           <div class="row">
             <div class="col-md-12">
 
-              <input type="password" class="form-control" id="password_check" placeholder="" value="" >
+              <input type="password" class="form-control shadow-none" id="password_check" placeholder="" value="" >
               <div id="password_check_valid_text"></div>
             </div>
           </div>
 
 
           <br>
-          <label for="nickname">닉네임</label>
+          <label for="nickname">닉네임 (영문 또는 한글 1~6)</label>
           <div class="row">
             <div class="col-md-9">
-              <input type="text" th:field="*{nickname}" class="form-control" id="nickname" placeholder="" value="" >
+              <input type="text" th:field="*{nickname}" class="form-control shadow-none" id="nickname" placeholder="" value="" >
 
               <div id="nickname_valid_text"></div>
             </div>
@@ -75,7 +84,7 @@
           <label for="email">이메일</label>
           <div class="row">
             <div class="col-md-12">
-              <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="gildong@example.com" >
+              <input type="email" th:field="*{email}" class="form-control shadow-none" id="email" placeholder="gildong@example.com" >
               <div id="email_valid_text"></div>
 
             </div>
@@ -85,27 +94,17 @@
           <label for="email_check">이메일 확인</label>
           <div class="row">
             <div class="col-md-12">
-              <input type="email" class="form-control" id="email_check" placeholder="gildong@example.com" >
+              <input type="email" class="form-control shadow-none" id="email_check" placeholder="gildong@example.com" >
               <div id="email_check_valid_text"></div>
 
             </div>
           </div>
 
           <br>
-          <label for="email">전화번호</label>
+          <label for="birth">생년월일</label>
           <div class="row">
             <div class="col-md-12">
-              <input type="number" th:field="*{phone}" class="form-control" id="phone" placeholder="" >
-              <div id="phone_valid_text"></div>
-
-            </div>
-          </div>
-
-          <br>
-          <label for="email">생년월일</label>
-          <div class="row">
-            <div class="col-md-12">
-              <input type="date" th:field="*{birth}" class="form-control" id="birth" placeholder="" >
+              <input type="date" th:field="*{birth}" class="form-control shadow-none" id="birth" placeholder="" >
               <div id="birth_valid_text"></div>
 
             </div>
@@ -116,7 +115,7 @@
           <label for="address">주소</label>
           <div class="row">
             <div class="col-md-6">
-              <input class="form-control" type="text" id="postcode" placeholder="우편번호"  readonly>
+              <input class="form-control shadow-none" type="text" id="postcode" placeholder="우편번호"  readonly>
             </div>
             <div class="col-md-3 offset-md-3">
               <input class="form-control btn btn-outline-dark btn-block" type="button"
@@ -124,15 +123,14 @@
 
             </div>
             <div class="col-md-12 mb-4">
-              <input class="form-control" type="text" id="detailAddress" placeholder="상세주소" >
-              <div id="detailAddress_valid_text"></div>
+              <input class="form-control shadow-none" type="text" id="detailAddress" placeholder="상세주소" >
 
             </div>
             <div class="col-md-6">
-              <input class="form-control" th:field="*{addr}" type="text" id="address" placeholder="주소"  readonly>
+              <input class="form-control shadow-none" th:field="*{addr}" type="text" id="address" placeholder="주소"  readonly>
             </div>
             <div class="col-md-6">
-              <input class="form-control" type="text" id="extraAddress" placeholder="참고항목"  readonly>
+              <input class="form-control shadow-none" type="text" id="extraAddress" placeholder="참고항목"  readonly>
             </div>
             <div id="address_valid_text"></div>
 
@@ -143,31 +141,37 @@
 
           <div class="row">
             <div class="col-md-3 offset-md-1">
-              <input class="form-check-input category" type="checkbox">Category_1<br>
-              <input class="form-check-input category" type="checkbox">Category_2<br>
-              <input class="form-check-input category" type="checkbox">Category_3<br>
-              <input class="form-check-input category" type="checkbox">Category_4<br>
+              <input class="form-check-input category" type="checkbox" value="1">Category_1<br>
+              <input class="form-check-input category" type="checkbox" value="2">Category_2<br>
+              <input class="form-check-input category" type="checkbox" value="3">Category_3<br>
+              <input class="form-check-input category" type="checkbox" value="4">Category_4<br>
             </div>
             <div class="col-md-3">
-              <input class="form-check-input category" type="checkbox">Category_5<br>
-              <input class="form-check-input category" type="checkbox">Category_6<br>
-              <input class="form-check-input category" type="checkbox">Category_7<br>
-              <input class="form-check-input category" type="checkbox">Category_8<br>
+              <input class="form-check-input category" type="checkbox" value="5">Category_5<br>
+              <input class="form-check-input category" type="checkbox" value="6">Category_6<br>
+              <input class="form-check-input category" type="checkbox" value="7">Category_7<br>
+              <input class="form-check-input category" type="checkbox" value="8">Category_8<br>
             </div>
             <div class="col-md-3">
-              <input class="form-check-input category" type="checkbox">Category_9<br>
-              <input class="form-check-input category" type="checkbox">Category_10<br>
-              <input class="form-check-input category" type="checkbox">Category_11<br>
-              <input class="form-check-input category" type="checkbox">Category_12<br>
+              <input class="form-check-input category" type="checkbox" value="9">Category_9<br>
+              <input class="form-check-input category" type="checkbox" value="10">Category_10<br>
+              <input class="form-check-input category" type="checkbox" value="11">Category_11<br>
+              <input class="form-check-input category" type="checkbox" value="12">Category_12<br>
             </div>
+            <div id="selected_category">
+
+            </div>
+              <input id="category_value" th:field="*{category}" type="hidden" style="font-size: 0px; width: 0px;height: 0px;" value=""></text>
           </div>
 
-          <hr class="mb-4">
+          <!-- <hr class="mb-4">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="agrement" >
             <label class="custom-control-label" for="agrement">개인정보 수집 및 이용에 동의합니다.</label>
-          </div>
-          <div class="mb-4"></div>
+          </div> -->
+          <br>
+          <br>
+          <br>
           <input type="button" class="btn btn-outline-dark btn-lg btn-block"  id="submitForm" value="회원가입">
         </form>
       </div>
@@ -186,6 +190,12 @@
 
 <!-- 유효성 검사 -->
 <script src="/js/validation.js"></script>
+
+<!-- 카테고리 -->
+<script src="/js/category.js"></script>
+
+<!-- 암호화(Crypto js) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- JQuery 스니펫 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>

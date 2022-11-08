@@ -1,17 +1,29 @@
 
 drop table member;
 
+--CREATE TABLE MEMBER (
+--	member_index	number(10)		primary key,
+--	member_id	varchar2(200)		NOT NULL,
+--	member_pw	varchar2(200)		NOT NULL,
+--	member_birth	date		NOT NULL,
+--	member_addr	varchar2(500)		NOT NULL,
+--	member_email	varchar2(200)		NOT NULL,
+--	memeber_phone	varchar2(100)		NOT NULL,
+--	member_nickname	varchar2(50)		NOT NULL,
+--	member_state	number(10)		NOT NULL,
+--	interest_category VARCHAR2(100)
+--);
+
 CREATE TABLE MEMBER (
 	member_index	number(10)		primary key,
 	member_id	varchar2(200)		NOT NULL,
 	member_pw	varchar2(200)		NOT NULL,
-	member_birth	date		NOT NULL,
+	member_birth	date            NOT NULL,
 	member_addr	varchar2(500)		NOT NULL,
 	member_email	varchar2(200)		NOT NULL,
-	memeber_phone	varchar2(100)		NOT NULL,
-	member_nickname	varchar2(50)		NOT NULL,
+	member_nickname	varchar2(50)        NOT NULL,
 	member_state	number(10)		NOT NULL,
-	interest_category VARCHAR2(100)
+	member_category VARCHAR2(100)
 );
 
 drop table POSTS;

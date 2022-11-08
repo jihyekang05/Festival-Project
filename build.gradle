@@ -27,10 +27,23 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// 암호화 API (Spring Security
+	implementation 'org.springframework.security:spring-security-test'
+
+	// Javax mail API
+	implementation 'javax.mail:mail:1.5.0-b01'
+
+	// 이메일 인증 API
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
 //	added
 //	runtimeOnly 'com.h2database:h2'
 //	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {

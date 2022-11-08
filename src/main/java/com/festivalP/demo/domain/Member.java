@@ -27,7 +27,6 @@ public class Member {
     private String member_birth;
     private String member_addr;
     private String member_email;
-    private String member_phone;
     private String member_nickname;
     private String member_category;
     private int member_state=1;

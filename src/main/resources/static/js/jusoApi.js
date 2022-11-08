@@ -44,8 +44,6 @@ function execDaumPostcode() {
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('postcode').value = data.zonecode;
-            document.getElementById('postcode').classList.add('valid');
-
             document.getElementById("address").value = addr;
             document.getElementById('address').classList.add('valid');
             
