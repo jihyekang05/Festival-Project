@@ -30,7 +30,7 @@ public class Posts {
     @Column(name = "festival_title")
     private String festival_title;
 
-    private String review_score_avg;
+    private Long review_score_avg;
 
     private String board_addr; //주소
 
@@ -45,6 +45,8 @@ public class Posts {
     private Date festival_upload_date;
 
     private String festival_category;
+
+
 
 
 

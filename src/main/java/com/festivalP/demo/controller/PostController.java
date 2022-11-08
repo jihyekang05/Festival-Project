@@ -28,14 +28,20 @@ public class PostController {
         return "every_festival_board";
     }
 
+    //같은 페이지에 있는 것끼리 묶어야 하지않나,, 그러면 후기도 post테이블에 있어야하나..
     @GetMapping("/festival/{post_num}")
     public String list(Model model, @PathVariable("post_num") Long post_num) {
         List<Posts> post = festivalService.findOne(post_num);
+
         model.addAttribute("post", post);
         System.out.println("-----------------------------------");
         System.out.println(post);
         return "Each_Festival_board";
     }
+
+
+
+
 
 //    @GetMapping("/favorites")
 //    public String Favorites(Model model) {
