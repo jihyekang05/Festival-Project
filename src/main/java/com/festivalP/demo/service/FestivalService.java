@@ -16,6 +16,13 @@ public class FestivalService {
 
     private final FestivalRepository festivalRepository;
 
+    @Transactional
+    public Long join(Posts posts) {
+
+        festivalRepository.save(posts);
+        return posts.getPost_num();
+    }
+
     public List<Posts> findFestivals() {
         return festivalRepository.findAll();
     }

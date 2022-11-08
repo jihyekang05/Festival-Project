@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity(name="Posts")
-@Table(name = "POSTS")
+@Table
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,7 +19,7 @@ public class Posts {
     @Column(name="post_num")
     private Long post_num;
 
-    private String admin_index;
+    private Long admin_index;
 
     private String content_text;
 
@@ -28,7 +28,7 @@ public class Posts {
     @Column(name = "festival_title")
     private String festival_title;
 
-    private String review_score_avg;
+    private Long review_score_avg;
 
     private Long board_addr; //주소
 
