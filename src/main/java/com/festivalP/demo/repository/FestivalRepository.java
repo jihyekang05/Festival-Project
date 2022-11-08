@@ -17,6 +17,10 @@ public class FestivalRepository {
        return em.createQuery("select p from Posts p", Posts.class).getResultList();
     }
 
+    public void save(Posts posts) {em.persist(posts);}
+
+
+
 //    public Posts findOne(Long post_num) {
 //        return em.find(Posts.class,post_num);
 //    }
