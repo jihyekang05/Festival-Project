@@ -1,0 +1,44 @@
+body {
+  font-family: 'BMJUA';
+  min-height: 100vh;
+
+}
+
+.input-form {
+  max-width: 680px;
+
+  margin-top: 80px;
+  padding: 32px;
+
+  background: #fff;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+}
+
+@font-face {
+font-family: 'BMJUA';
+src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+font-weight: normal;
+font-style: normal;
+}
+
+
+.validText{
+    outline: 10px, red;
+    border: 10px, red;
+    color:green;
+}
+
+.invalidText{
+  color:red;
+  
+}
+
+
+input{
+
+}
