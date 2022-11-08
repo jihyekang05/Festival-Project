@@ -31,7 +31,7 @@
             </div>
         </nav>
         <!-- 누르면 각 페이지 내의 각 부분으로 이동 -->
-        <a class="btn btn-primary btn-xl text-uppercase" href="#services">근처 편의시설</a>
+        <a class="btn btn-primary btn-xl text-uppercase" href="#map">근처 편의시설</a>
         <a class="btn btn-primary btn-xl text-uppercase" href="#review">축제후기</a>
         <!-- ==================================== -->
         <!-- Page content-->
@@ -52,7 +52,10 @@
                             <a class="badge bg-secondary text-decoration-none link-light" href="#!">사과</a>
                         </header>
                         <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" th:src="${post.content_image}" alt="..." /></figure>
+                        <figure class="mb-4">
+<!--                            <img class="img-fluid rounded" th:src="${post.content_image}" alt="..." />-->
+                            <img th:src="${post.content_image}" class="card-img-top" alt="...">
+                        </figure>
                         <!-- Post content-->
                         <section class="mb-5">
                             <p th:text="${post.content_text}"></p>
@@ -71,50 +74,30 @@
                     <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('CE7')">카페</a>
 
                     <!--                    ===================================================================================-->
-<!--                    <&#45;&#45; 후기남기는 부분&ndash;&gt;-->
+                    <!--  후기 남기는 부분                  -->
+
                     <section class="mb-5">
                         <div class="alert alert-success" role="alert" id="review">
                             후기를 남겨보세요!
                         </div>
-                        <div class="card bg-light">
-                            <div class="card-body">
-                                <!-- Comment form-->
-                                <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
-                                <!-- Comment with nested comments-->
-                                <div class="d-flex mb-4">
-                                    <!-- Parent comment-->
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
-                                        <!-- Child comment 1-->
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold">Commenter Name</div>
-                                                And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
-                                            </div>
-                                        </div>
-                                        <!-- Child comment 2-->
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold">Commenter Name</div>
-                                                When you put money directly to a problem, it makes a good headline.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single comment-->
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
-                                    </div>
-                                </div>
-                            </div>
+                        <a class="btn btn-primary btn-l text-uppercase" id="review_submit">제출</a>
+                        <div></div>
+                        <div class="input-group">
+                            <span class="input-group-text">후기와 별점을 입력</span>
+                            <input type="text" aria-label="First name" class="form-control" placeholder="1~5중 별점매기기">
+                            <input type="text" aria-label="Last name" class="form-control" placeholder="리뷰를 작성하시오">
                         </div>
+                    <!--    후기 리스트                    -->
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold" id="review_score">별점 들어갈 부분</div>
+                                    <div class="fw-bold" id="review_text">후기 들어갈 부분</div>
+                                </div>
+                                <span class="badge bg-primary rounded-pill">닉네임 들어갈 부분</span>
+                            </li>
+
+                        </ol>
                     </section>
                 </div>
                 <!-- Side widgets-->

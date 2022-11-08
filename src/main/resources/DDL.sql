@@ -51,13 +51,12 @@ CREATE TABLE Favorite (
 );
 drop table FESTIVAL_REVIEW;
 CREATE TABLE FESTIVAL_REVIEW (
+    review_index number(10) primary key,
 	post_num	number(10)		NOT NULL,
 	member_index	number(10)		NOT NULL,
-	admin_index	number(1)		NOT NULL,
 	review_text	varchar(1000)   NOT	NULL,
 	review_score	number(1)		NOT NULL,
     CONSTRAINT post_num FOREIGN KEY(post_num) REFERENCES POSTS(post_num),
-    CONSTRAINT admin_review_index FOREIGN KEY(admin_index) REFERENCES admin(admin_index),
     CONSTRAINT member_review_index FOREIGN KEY(member_index) REFERENCES member(member_index)
 
 );
