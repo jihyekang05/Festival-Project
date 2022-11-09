@@ -39,10 +39,10 @@
                 <a class="nav-link active" aria-current="page" href="/admin">게시글 관리</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="회원관리.html">회원 관리</a>
+                <a class="nav-link active" aria-current="page" href="/memberManagement">회원 관리</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="공지관리.html">공지 관리</a>
+                <a class="nav-link active" aria-current="page" href="/noticeManagement">공지 관리</a>
               </li> 
             </ul>
           </div>
@@ -62,45 +62,7 @@
           <input class="form-control" type="file" id="formFile" name="content_image">
        </div>
 
-      <div class="form-group">
-        <label>축제기간 등록</label>
-        <div class='col-md-3 col-xs-4'>
-          <div class="form-group">
-              <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                  <input type="date" class="form-control datetimepicker-input" data-target="#datetimepicker1" value="01/11/2020" name="festival_upload_date">
-                  <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class='col-md-3 col-xs-4'>
-          <div class="form-group">
-              <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                  <input type="date" class="form-control datetimepicker-input" data-target="#datetimepicker2" value="01/15/2020">
-                  <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      
-      <script type="text/javascript">
-          $(function () {
-              $('#datetimepicker1').datetimepicker({ format: 'L'});
-              $('#datetimepicker2').datetimepicker({
-                  format: 'L',
-                  useCurrent: false
-              });
-              $("#datetimepicker1").on("change.datetimepicker", function (e) {
-                  $('#datetimepicker2').datetimepicker('minDate', e.date);
-              });
-              $("#datetimepicker2").on("change.datetimepicker", function (e) {
-                  $('#datetimepicker1').datetimepicker('maxDate', e.date);
-              });
-          });
-      </script>
-      </div>
+
       
       <div class="form-group">
         <label >Contents</label>
@@ -109,7 +71,17 @@
       </div>
 
 
+
+        <div>
+            <label >축제 시작 일자</label>
+            <input type="date" name="festival_upload_date">
+        </div>&nbsp;
+
+
+    <div>
+        <label >축제 주소</label>
       <table border="1">
+
         <tr>
             <td width="200">우편번호</td>
             <td><input type="text" name="zipcode" id="zipcode" size="7"
@@ -124,6 +96,7 @@
                 </td>
         </tr>
     </table>
+    </div>
       
     <div class="text-right">
         <input type="hidden" name="mode" value="write">

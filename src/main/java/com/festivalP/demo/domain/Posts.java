@@ -4,11 +4,15 @@ package com.festivalP.demo.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity(name="Posts")
 @Table
+//@Table(name = "POSTS")
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,17 +34,21 @@ public class Posts {
 
     private Long review_score_avg;
 
-    private Long board_addr; //주소
+    private String board_addr; //주소
 
-    private String board_loc_addr; //지역주소
+    private Long board_loc_addr; //지역주소
 
     private String content_image;
 
     private String progress_state; //진행상태
 
-    private String festival_upload_date;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date festival_upload_date;
 
     private String festival_category;
+
+
 
 
 
