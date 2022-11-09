@@ -34,7 +34,7 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-test'
 
 	// Javax mail API
-	implementation 'javax.mail:mail:1.5.0-b01'
+//	implementation 'javax.mail:mail:1.5.0-b01'
 
 	// 이메일 인증 API
 	implementation 'org.springframework.boot:spring-boot-starter-mail'

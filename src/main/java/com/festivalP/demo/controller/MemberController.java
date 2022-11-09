@@ -5,10 +5,20 @@ import com.festivalP.demo.domain.Member;
 import com.festivalP.demo.form.MemberForm;
 import com.festivalP.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.WeakHashMap;
 
 //import javax.validation.Valid;
 
@@ -18,9 +28,16 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+    public WeakHashMap<String, String> authData = new WeakHashMap<>();
 
+
+    @ResponseBody
     @RequestMapping("/login")
-    public String loginPage() {
+    public String loginPage(String login_id, String login_password) {
+
+
+
+
 
         return "login";
     }
@@ -60,12 +77,10 @@ public class MemberController {
 
 
 
-    //    @RequestMapping(value = "/iddupcheck", method = RequestMethod.POST)
     @ResponseBody
     @PostMapping("/iddupcheck")
     public String iddupcheck(String member_id){
 
-        System.out.print("&&&&&&&&&&& id dup check called *************");
         if(memberService.validateDuplicateMemberId(member_id)){
             return "S";
         }
@@ -78,7 +93,6 @@ public class MemberController {
     @PostMapping("/nicknamedupcheck")
     public String nicknamedupcheck(String member_nickname){
 
-        System.out.print("&&&&&&&&&&& nick dup check called *************");
         if(memberService.validateDuplicateMemberNickname(member_nickname)){
             return "S";
         }
@@ -87,12 +101,55 @@ public class MemberController {
         }
     }
 
+    @Autowired
+    JavaMailSender mailSender;
 
-    @RequestMapping("/member/signup")
-    public void signup(@ModelAttribute Member member){
+    @ResponseBody
+    @PostMapping("/emailAuth")
+    public String emailAuth(String email){
+        Random random = new Random();
+        int checkNum = random.nextInt(888888) + 111111;
 
+        // 메일 발송
+        String setFrom = "wowinteresting@naver.com";
+        String toMail = email;
+        String title = "회원가입 인증 메일입니다.";
+        String content =
+                "안녕하세요. XX방문을 감사드립니다."+
+                        "<br><br>"+
+                        "인증번호는 "+checkNum+" 입니다."+
+                        "<br>"+
+                        "해당 번호를 입력하여 인증을 진행해주세요.";
+        try{
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        authData.put(email, Integer.toString(checkNum));
+        return Integer.toString(checkNum);
     }
+
+    @ResponseBody
+    @PostMapping("/emailAuthCheck")
+    public String emailAuthCheckFunction(String email, String emailAuthValue){
+        if(emailAuthValue.equals(authData.get(email))){
+            authData.replace(email, null);
+            System.gc();
+            return "S";
+        }
+        else{
+            return "F";
+        }
+    }
+
 
     @RequestMapping("/findid")
     public String findId() {
