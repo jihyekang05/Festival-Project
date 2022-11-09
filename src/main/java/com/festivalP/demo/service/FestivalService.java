@@ -30,4 +30,8 @@ public class FestivalService {
     public List<Posts> findOne(Long post_num) {
         return festivalRepository.findByPost_num(post_num);
     }
+
+    public List<Posts> deleteByPost_num(Long post_num) {
+        return festivalRepository.deleteByPost_num(post_num);
+    }
 }

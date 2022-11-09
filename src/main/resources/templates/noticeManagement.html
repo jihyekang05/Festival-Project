@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>축제관리</title>
+    <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
   </head>
@@ -38,27 +38,27 @@
 
 
       
-      <button class="btn btn-outline-success" type="submit">글검색</button>
-      <button class="btn btn-outline-success" type="button" onclick="location.href='/festivalWrite'">글작성</button>
+      <button class="btn btn-outline-success" type="submit">공지검색</button>
+      <button class="btn btn-outline-success" type="button" onclick="location.href='/noticeWrite'">공지작성</button>
     </form>
   </div>
 </body>
 
 <body>
   <div id="board">
-    <ol class="list-group list-group-numbered">
-      <li class="list-group-item d-flex justify-content-between align-items-start" th:each="post : ${posts}">
-        <div class="ms-2 me-auto"  >
-          <a class="fw-bold" th:text="${post.festival_title}" th:href="@{|/festival/${post.post_num}|}">공지1</a>
+    <ol class="list-group list-group-numbered" >
+      <li class="list-group-item d-flex justify-content-between align-items-start" th:each="notice : ${notice}">
+        <div class="ms-2 me-auto">
+
+          <a class="fw-bold" th:text="${notice.content_title}" >공지1</a>
 
         </div>
-        <form action="festivalManagement" method="post">
         <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-primary" >수정</button>
-          <button type="button" class="btn btn-primary" th:value="${post.post_num}>삭제</button>
+          <button type="button" class="btn btn-primary">수정</button>
+          <button type="button" class="btn btn-primary">삭제</button>
+          <button type="button" class="btn btn-primary">공지등록</button>
         </div>
       </li>
-      </form>
     </ol>
   </div>
 
