@@ -1,16 +1,14 @@
 package com.festivalP.demo.controller;
 
-import com.festivalP.demo.domain.Member;
 import com.festivalP.demo.domain.Posts;
+import com.festivalP.demo.domain.Review;
 import com.festivalP.demo.service.FestivalService;
-import com.festivalP.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -28,16 +26,42 @@ public class PostController {
         return "every_festival_board";
     }
 
-    //같은 페이지에 있는 것끼리 묶어야 하지않나,, 그러면 후기도 post테이블에 있어야하나..
+
     @GetMapping("/festival/{post_num}")
     public String list(Model model, @PathVariable("post_num") Long post_num) {
         List<Posts> post = festivalService.findOne(post_num);
-
         model.addAttribute("post", post);
-        System.out.println("-----------------------------------");
-        System.out.println(post);
+        List<Review> reviews = festivalService.findReviews();
+        model.addAttribute("reviews",reviews);
         return "Each_Festival_board";
     }
+
+    //후기 제출했을 때 데이터 저장되는 부분
+    @PostMapping("/festival/review")
+    @ResponseBody
+    public HashMap<String, Object> Review(@RequestBody Review data) {
+        festivalService.saveReview(data);
+        return null;
+    }
+
+
+
+
+
+//=============================================================================
+//    @GetMapping("/festival/{post_num}")
+//    public String createReview(Model model){
+//        model.addAttribute("review", new review());
+//        return "Each_Festival_board";
+//    }
+
+
+//    @PostMapping("/festival/{post_num}/stars")
+//    public void funct(@RequestParam int starCnt) {
+//
+////        service.star(starCnt); // -> service에서는 repository.
+//
+//    }
 
 
 

@@ -10,6 +10,7 @@
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/css/styles.css" rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -76,28 +77,60 @@
                     <!--                    ===================================================================================-->
                     <!--  후기 남기는 부분                  -->
 
-                    <section class="mb-5">
+                    <section class="mb-5" >
                         <div class="alert alert-success" role="alert" id="review">
                             후기를 남겨보세요!
                         </div>
-                        <a class="btn btn-primary btn-l text-uppercase" id="review_submit">제출</a>
-                        <div></div>
+                        <input type="hidden" id="post_num" th:value="${post.post_num}" size="70"  >
+                        <form name="enter_review" action="/festival/${post.post_num}" method="post">
+<!--                        <button type="submit" class="btn btn-primary btn-l text-uppercase" id="review_submit" >제출</button>-->
+                            <a  class="btn btn-primary" id="review_submit" type="submit" >제출</a>
+<!--                        th:href="@{|/festival/${post.post_num}|}"-->
+                            <div></div>
                         <div class="input-group">
                             <span class="input-group-text">후기와 별점을 입력</span>
-                            <input type="text" aria-label="First name" class="form-control" placeholder="1~5중 별점매기기">
-                            <input type="text" aria-label="Last name" class="form-control" placeholder="리뷰를 작성하시오">
+                            <tr>
+                                <td>
+                            <input name="review_score" id="review_score" type="text" aria-label="First name" class="form-control" placeholder="1~5중 별점매기기" value="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                            <input name="review_text" id="review_text" type="text" aria-label="Last
+                             name" class="form-control" placeholder="리뷰를 작성하시오" value="" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input name="review_index" id="review_index" type="text" aria-label="Last name" class="form-control" placeholder="post_num" value="" >
+                                </td>
+                            </tr>
+                            <tr>
+<!--                                =============================================로그인 구현 후에 member_index 불러오기 구현하기!!================================================================-->
+                                <td>
+                                    <input id = "member_index" name="member_index" type="text" aria-label="Last name" class="form-control" placeholder="member_index" value="" >
+                                </td>
+
+                            </tr>
+                            <td>
+                                <input id = "review_post_num" th:value="${post.post_num}" name="member_index" type="text" aria-label="Last name" class="form-control" placeholder="게시글번호" value="">
+                            </td>
                         </div>
+                        </form>
                     <!--    후기 리스트                    -->
+                            <form>
                         <ol class="list-group list-group-numbered">
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold" id="review_score">별점 들어갈 부분</div>
-                                    <div class="fw-bold" id="review_text">후기 들어갈 부분</div>
+                            <li class="list-group-item d-flex justify-content-between align-items-start" th:each="review:${reviews}">
+                                <div class="ms-2 me-auto"  >
+<!--                                      -->
+                                    <div class="fw-bold" th:text="${review.review_score}">별점 들어갈 부분</div>
+                                    <div class="fw-bold" th:text="${review.review_text}">후기 들어갈 부분</div>
                                 </div>
-                                <span class="badge bg-primary rounded-pill">닉네임 들어갈 부분</span>
+<!--                                <span class="badge bg-primary rounded-pill">닉네임 들어갈 부분</span>-->
                             </li>
 
                         </ol>
+                            </form>
                     </section>
                 </div>
                 <!-- Side widgets-->
@@ -119,6 +152,7 @@
         <!-- Core theme JS-->
         <script src="/js/scripts.js"></script>
         <script src="/js/api.js"></script>
+        <script src="/js/review.js"></script>
 
     </body>
 </html>

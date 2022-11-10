@@ -4,17 +4,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-@Entity(name="FESTIVAL_REVIEW")
+@Entity(name="Review")
+@Table(name="Festival_Review")
 @Getter @Setter
 @NoArgsConstructor
-public class review {
+public class Review {
 
     @Id
+    @GeneratedValue
     private Long review_index;
 
     private Long post_num;
@@ -24,4 +23,12 @@ public class review {
     private String review_text;
 
     private Long review_score;
+
+//    @OneToOne
+////    @JoinColumn(name="member_index")
+//    private Member member;
+
+
+
+
 }

@@ -38,6 +38,9 @@ dependencies {
 
 	// 이메일 인증 API
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+
+
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
 //	added
 //	runtimeOnly 'com.h2database:h2'

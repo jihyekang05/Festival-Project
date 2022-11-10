@@ -30,7 +30,7 @@ public class Posts {
 
     private Long review_score_avg;
 
-    private Long board_addr; //주소
+    private String board_addr; //주소
 
     private String board_loc_addr; //지역주소
 
