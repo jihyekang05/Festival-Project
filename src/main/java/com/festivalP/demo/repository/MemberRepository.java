@@ -26,7 +26,7 @@ public class MemberRepository {
     }
 
     public List<Member> findByNickname(String nickname){
-        return em.createQuery("select m from Member m where m.member_nickname = : nickname", Member.class).setParameter("nickname", nickname).getResultList();
+        return em.createQuery("delete m from Member m where m.member_nickname = : nickname", Member.class).setParameter("nickname", nickname).getResultList();
     }
 
 
