@@ -31,7 +31,7 @@ public class FestivalService {
         return festivalRepository.findByPost_num(post_num);
     }
 
-    public List<Posts> deleteByPost_num(Long post_num) {
+    public int deleteByPost_num(Long post_num) {
         return festivalRepository.deleteByPost_num(post_num);
     }
 }

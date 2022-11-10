@@ -12,16 +12,22 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class AdminController {
+
+
 
     private final FestivalService festivalService;
     private final MemberService memberService;
@@ -43,23 +49,45 @@ public class AdminController {
     }
 
     @PostMapping("/festivalWrite")
-    public String fes_create( FestivalForm form, BindingResult result){
-        if (result.hasErrors()) {
-            return "members/festivalWrite";
-        }
+    public String fes_create( MultipartHttpServletRequest multi) throws ParseException {
+//        if (result.hasErrors()) {
+//            return "members/festivalWrite";
+//        }
+
 
         Posts posts = new Posts();
 
-        posts.setPost_num(form.getPost_num());
-        posts.setContent_text(form.getContent_text());
-        posts.setAdmin_index(form.getAdmin_index());
-        posts.setContent_text(form.getContent_text());
-        posts.setFestival_title(form.getFestival_title());
-        posts.setFestival_category(form.getFestival_category());
-        posts.setBoard_addr(form.getBoard_addr());
-        posts.setBoard_loc_addr(form.getBoard_loc_addr());
-        posts.setContent_image(form.getContent_image());
-        posts.setFestival_upload_date(form.getFestival_upload_date());
+        posts.setAdmin_index(Long.parseLong(multi.getParameter("admin_index")));
+        posts.setContent_text(multi.getParameter("content_text"));
+        posts.setFestival_title(multi.getParameter("festival_title"));
+        posts.setFestival_category(multi.getParameter("festival_title"));
+        posts.setBoard_addr(multi.getParameter("address"));
+        posts.setBoard_loc_addr(Long.parseLong(multi.getParameter("admin_index")));
+
+        MultipartFile file = multi.getFile("content_image");
+        String filename = file.getOriginalFilename();
+
+        String uploadDir = "D:\\upload"+File.separator;
+        File uploadFolder = new File(uploadDir);
+        if(!uploadFolder.exists()){
+            uploadFolder.mkdir();
+        }
+
+        String fullPath = uploadDir + filename;
+        try {
+            file.transferTo(new File(fullPath));
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        // 문자열 -> Date
+        Date date = formatter.parse(multi.getParameter("festival_upload_date"));
+
+        posts.setFestival_upload_date(date);
 
         posts.setContent_views(0L);
         posts.setReview_score_avg(0L);
@@ -119,14 +147,21 @@ public class AdminController {
         return "redirect:/noticeManagement";
     }
 
-//    @PostMapping("/festivalManagement")
-//    public Long del_post_num(Long post_num) {
-//
-//        festivalService.deleteByPost_num(post_num);
-//
-//        return "redirect:/admin";
-//    }
-//
+    @GetMapping("/admin/delete/{post_num}")
+    public String del_post_num(@PathVariable("post_num") Long post_num) {
+        System.out.println(post_num);
+        int result = festivalService.deleteByPost_num(post_num);
+        System.out.println("result : "+result);
 
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/modify/{post_num}")
+    public String modify_post_num(Model model,@PathVariable("post_num") Long post_num) {
+        List<Posts> festivals = festivalService.findOne(post_num);
+        model.addAttribute("posts",festivals);
+
+        return "festivalWrite";
+    }
 
 }
