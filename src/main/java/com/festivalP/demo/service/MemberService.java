@@ -23,19 +23,16 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    private Member encryptFunc(Member member){
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(30);
-
-
-        String pw = member.getMember_pw();
-        String securePw = encoder.encode(pw);
-
-        member.setMember_pw(securePw);
-        return member;
-    }
-
-
+//    @Transactional
+//    private Member encryptFunc(Member member){
+//
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(30);
+//        String pw = member.getMember_pw();
+//        String securePw = encoder.encode(pw);
+//
+//        member.setMember_pw(securePw);
+//        return member;
+//    }
 
 // 암호화 함수 사용 전
 //    @Transactional
@@ -46,13 +43,22 @@ public class MemberService {
 //        return member.getMember_id();
 //    }
 
+    // 암호화 함수 사용 전
     @Transactional
     public String join(Member member){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        member.setMember_pw(encoder.encode(member.getMember_pw()));
         System.out.println("MemberService.join");
-
-        memberRepository.save(encryptFunc(member));
+        memberRepository.save(member);
         return member.getMember_id();
     }
+
+//    @Transactional
+//    public String join(Member member){
+//        System.out.println("MemberService.join");
+//        memberRepository.save(encryptFunc(member));
+//        return member.getMember_id();
+//    }
 
     @Transactional
     public boolean validateDuplicateMemberId(String member_id){
@@ -83,27 +89,12 @@ public class MemberService {
             return true;
         }
     }
+
+    @Transactional
+    public boolean validateDuplicateMemberPassword(String member_pw){
+
+
+        return true;
+    }
+
 }
-
-//    @Transactional
-//    public String join(Member member){
-//        System.out.println("MemberService.join");
-//        // member 중복 검증
-////        validateDuplicateMember(member);
-//        memberRepository.save(member);
-//        return member.getMember_id();
-//    }
-
-
-//    private void validateDuplicateMember(Member member){
-//        List<Member> findMem = memberRepository.findById(member.getMember_id());
-//        if(!findMem.isEmpty()){
-//            // 중복된 아이디가 있을 경우 동작
-//            throw new IllegalStateException();
-//        }
-//        else{
-//            // 죽복된 아이디가 없을 경우 동작
-//            System.out.println("회원가입 성공~");
-//
-//        }
-//    }

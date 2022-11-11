@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 //@Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class FestivalService {
+public class FestivalService{
 
     private final FestivalRepository festivalRepository;
 
@@ -33,5 +33,11 @@ public class FestivalService {
 
     public int deleteByPost_num(Long post_num) {
         return festivalRepository.deleteByPost_num(post_num);
+    }
+
+    @Transactional
+    public Long  modifyByPost_num(Posts posts) {
+         festivalRepository.modifyByPost(posts);
+         return posts.getPost_num();
     }
 }

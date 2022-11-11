@@ -41,10 +41,24 @@ public class FestivalRepository {
         return result;
     }
 
-    public int modifyByPost_num(Long post_num){
-        int result = em.createQuery ("Update Posts p where p.post_num = :post_num")
-                .setParameter("post_num",post_num).executeUpdate();
-        return result;
+    public void modifyByPost(Posts posts){
+          em.createQuery ("Update Posts p set p.admin_index= :admin_index," +
+                          " p.content_text= :content_text," +
+                          " p.board_loc_addr= :board_loc_addr," +
+                          " p.board_addr= :board_addr," +
+                          " p.content_image= :content_image," +
+                          " p.festival_title= :festival_title," +
+                          " p.festival_upload_date= :festival_upload_date " +
+                          " where p.post_num = :post_num")
+                  .setParameter("post_num", posts.getPost_num())
+                  .setParameter("admin_index",posts.getAdmin_index())
+                  .setParameter("content_text",posts.getContent_text())
+                  .setParameter("board_loc_addr",posts.getBoard_loc_addr())
+                  .setParameter("board_addr",posts.getBoard_addr())
+                  .setParameter("content_image",posts.getContent_image())
+                  .executeUpdate();
+
+        //return result;
     }
 
 }

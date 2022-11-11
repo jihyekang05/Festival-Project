@@ -17,6 +17,8 @@ public class MemberRepository {
 
     public void save(Member member) {
         // JPA에서 save 함수는 매개변수를 insert 해주는 동작
+        System.out.println("MemberRepository.save");
+
         em.persist(member);
     }
 
@@ -28,6 +30,15 @@ public class MemberRepository {
     public List<Member> findByNickname(String nickname){
         return em.createQuery("delete m from Member m where m.member_nickname = : nickname", Member.class).setParameter("nickname", nickname).getResultList();
     }
+
+//    public Member findByIdAndPw(String id, String pw){
+//
+//        return em.createQuery("select m from Member m where m.member_id = :id and m.member_pw = :pw", Member.class).setParameter("id", id, "pw", pw).getFirstResult();
+//    }
+
+
+
+
 
 
 //    public void save(Member member) {

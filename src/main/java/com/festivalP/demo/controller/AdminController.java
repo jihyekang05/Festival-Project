@@ -156,12 +156,59 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+
+
     @GetMapping("/admin/modify/{post_num}")
     public String modify_post_num(Model model,@PathVariable("post_num") Long post_num) {
         List<Posts> festivals = festivalService.findOne(post_num);
         model.addAttribute("posts",festivals);
 
-        return "festivalWrite";
+        return "festivalModify";
     }
+
+    @PostMapping("/admin/modify/{post_num}")
+    public String fes_Modify(@PathVariable("post_num") Long post_num,  MultipartHttpServletRequest multi) throws ParseException {
+
+        Posts posts = new Posts();
+        posts.setPost_num(post_num);
+
+        posts.setAdmin_index(Long.parseLong(multi.getParameter("admin_index")));
+        posts.setContent_text(multi.getParameter("content_text"));
+        posts.setFestival_title(multi.getParameter("festival_title"));
+        posts.setFestival_category(multi.getParameter("festival_title"));
+        posts.setBoard_addr(multi.getParameter("address"));
+        posts.setBoard_loc_addr(Long.parseLong(multi.getParameter("admin_index")));
+
+        MultipartFile file = multi.getFile("content_image");
+        String filename = file.getOriginalFilename();
+
+        String uploadDir = "D:\\upload"+File.separator;
+        File uploadFolder = new File(uploadDir);
+        if(!uploadFolder.exists()){
+            uploadFolder.mkdir();
+        }
+
+        String fullPath = uploadDir + filename;
+        try {
+            file.transferTo(new File(fullPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    //date
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = formatter.parse(multi.getParameter("festival_upload_date"));
+
+        posts.setFestival_upload_date(date);
+
+        posts.setContent_views(0L);
+        posts.setReview_score_avg(0L);
+
+        System.out.println("posts ================"+posts);
+        festivalService.modifyByPost_num(posts);
+
+        return "redirect:/admin";
+    }
+
+
 
 }
