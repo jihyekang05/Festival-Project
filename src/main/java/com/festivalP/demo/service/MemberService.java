@@ -19,7 +19,9 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-
+    public List<Member> findMembers() {
+        return memberRepository.findAll();
+    }
 
 //    @Transactional
 //    private Member encryptFunc(Member member){
