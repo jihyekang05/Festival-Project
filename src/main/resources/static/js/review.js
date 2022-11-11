@@ -16,23 +16,25 @@ submitBtn.addEventListener('click' , (e) => {
     var post_num = $("#post_num").val();
     var review_post_num = $("#review_post_num").val();
     var member_index = $("#member_index").val();
-    const reviewData = {review_score,review_text,post_num,review_post_num,member_index}
+    const reviewData = {review_score,review_text,post_num,review_post_num,member_index};
 
+    console.log(reviewData);
 
     try {
-            res = fetch('/festival/review',
-            {
-                method:'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(reviewData)
-            });
-            alert('리뷰가 정상적으로 등록되었습니다');
+        res = fetch('/festival/review',
+        {
+            method:'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(reviewData)
+        });
+        alert('리뷰가 정상적으로 등록되었습니다');
 
-            } catch(err) {
-                alert(err);
-            }
+    }catch(err) {
+        alert(err);
+    }
+
 
 
 

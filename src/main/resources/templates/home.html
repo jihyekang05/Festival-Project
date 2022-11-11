@@ -309,24 +309,24 @@
                   <form>
                     <div class="mb-3">
                       <label for="recipient-name" class="col-form-label">아이디</label>
-                      <input type="text" class="form-control" id="recipient-name">
+                      <input type="text" class="form-control" id="login_id">
                     </div>
                     <div class="mb-3">
                       <label for="message-text" class="col-form-label">비밀번호</label>
-                      <input class="form-control" id="message-text" type="password"></textarea>
+                      <input class="form-control" id="login_password" type="password"></textarea>
                     </div>
-                    <p>회원가입은 여기로 가시오<a href="#" class="tooltip-test" title="Tooltip">이곳으로</a></p> 
-                    <p>아이디 혹은 비밀번호를 잊었다면 <a href="#" class="tooltip-test" title="Tooltip">이곳으로</a></p>
+                    <p><a href="#" class="tooltip-test" title="Tooltip" onclick="window.open('/signup')">회원가입</a></p> 
+                    <p><a href="#" class="tooltip-test" title="Tooltip">아이디/비밀번호 찾기</a></p>
                   </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                  <button type="button" class="btn btn-primary">로그인</button>
+                  <button type="button" class="btn btn-primary" id="login_btn">로그인</button>
                 </div>
               </div>
             </div>
           </div>
-
+          
 
         <!-- ============================= -->
         <!-- Footer-->
@@ -562,6 +562,15 @@
         <!-- Core theme JS-->
 <!--        수정해야할 부분==================================-->
         <script src="/js/scripts.js"></script>
+        
+        
+        <!-- 로그인 -->
+        <script src="/js/login.js"></script>
+
+        <!-- Jquery cdn -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <!-- * *                               SB Forms JS                               * *-->
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->

@@ -4,21 +4,23 @@ import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.domain.Review;
 import com.festivalP.demo.service.FestivalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-//@RequestMapping("/post")
 public class PostController {
 
     private final FestivalService festivalService;
 
-
+    //전체 축제리스트 불러오는 부분
     @GetMapping("/allfestival")
     public String list(Model model) {
         List<Posts> festivals = festivalService.findFestivals();
@@ -27,11 +29,12 @@ public class PostController {
     }
 
 
+    //각 축제별 정보와 리뷰리스트 불러오는 부분
     @GetMapping("/festival/{post_num}")
     public String list(Model model, @PathVariable("post_num") Long post_num) {
         List<Posts> post = festivalService.findOne(post_num);
         model.addAttribute("post", post);
-        List<Review> reviews = festivalService.findReviews();
+        List<Review> reviews = festivalService.findReviews(post_num);
         model.addAttribute("reviews",reviews);
         return "Each_Festival_board";
     }
@@ -44,6 +47,13 @@ public class PostController {
         return null;
     }
 
+    //검색
+    @GetMapping("/allfestival/search")
+    public String search(String keyword, Model model){
+        List<Posts> postsList = festivalService.searchPosts(keyword);
+        model.addAttribute("posts", postsList);
+        return "every_festival_board";
+    }
 
 
 

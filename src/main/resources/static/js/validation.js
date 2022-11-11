@@ -19,6 +19,9 @@ const email_check = document.getElementById("email_check");
 const email_valid_text = document.getElementById("email_valid_text");
 const email_check_valid_text = document.getElementById("email_check_valid_text");
 
+const email_auth_btn = document.getElementById("email_auth_btn");
+const email_auth_submit_btn = document.getElementById("email_auth_submit_btn");
+
 
 const birth = document.getElementById("birth");
 const birth_valid_text = document.getElementById("birth_valid_text");
@@ -53,21 +56,21 @@ const forms = document.getElementsByClassName('validation-form');
 
 
 
-// Vlid 메세지
-function validTextChange(flag, validObject, text){
+// Valid 메세지
+function validTextChange(flag, validObject, text) {
 
 
-    if(flag){
+    if (flag) {
         validObject.innerHTML = text;
         validObject.classList.remove('invalidText');
         validObject.classList.add('validText');
     }
-    else{
-        validObject.innerHTML=text;
+    else {
+        validObject.innerHTML = text;
         validObject.classList.remove('validText');
         validObject.classList.add('invalidText');
 
-    }    
+    }
 
 }
 
@@ -82,7 +85,7 @@ id.addEventListener("input", () => {
     id_dup_check.disabled = false;
 
     validTextChange(false, id_valid_text, "아이디를 확인하세요.");
-    
+
 
 });
 
@@ -92,25 +95,25 @@ id_dup_check.addEventListener('click', function (event) {
 
     pattern_check = false;
     dup_check = false;
-    
+
     // Ajax POST 로 ID 중복체크
     $.ajax({
         url: "/iddupcheck",
         async: true,
-        data: {member_id : id.value},
+        data: { member_id: id.value },
         method: "POST",
         dataType: "text"
     })
         .done(function (text) {
             // Ajax 통신 성공했을 경우
-            
+
             console.log("AJAX SUCCESS");
             dup_check = true;
 
-            if(text=='S'){
+            if (text == 'S') {
                 dup_check = true;
             }
-            else{
+            else {
                 dup_check = false;
             }
 
@@ -124,7 +127,7 @@ id_dup_check.addEventListener('click', function (event) {
             }
 
             if (pattern_check && dup_check) {
-                $("#id_valid_msg").textContent="중복체크 완료";
+                $("#id_valid_msg").textContent = "중복체크 완료";
                 Swal.fire({
                     title: '유효한 아이디입니다.',
                     text: '이 아이디를 사용하시겠습니까?',
@@ -138,7 +141,7 @@ id_dup_check.addEventListener('click', function (event) {
                         id_dup_check.disabled = true;
                         validTextChange(true, id_valid_text, "사용 가능한 아이디입니다.");
 
-        
+
                     }
                     else {
                         id.value = '';
@@ -166,7 +169,7 @@ id_dup_check.addEventListener('click', function (event) {
         .fail(function (xhr, status, errorThrown) {
             // alert("아이디 사용 불가능");
             console.log("AJAX FAIL");
-            console.log("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+errorThrown);
+            console.log("code:" + xhr.status + "\n" + "message:" + xhr.responseText + "\n" + "error:" + errorThrown);
             // 실패했을 경우
         })
 });
@@ -237,7 +240,7 @@ nickname.addEventListener("input", () => {
     nickname_dup_check.disabled = false;
 
     validTextChange(false, nickname_valid_text, "사용 불가능한 닉네임입니다.");
-    
+
 
 });
 
@@ -253,22 +256,22 @@ nickname_dup_check.addEventListener("click", () => {
     $.ajax({
         url: "/nicknamedupcheck",
         async: true,
-        data: {member_nickname : nickname.value},
+        data: { member_nickname: nickname.value },
         method: "POST",
         dataType: "text"
     })
 
         .done(function (text) {
             // Ajax 통신 성공했을 경우
-            
+
             console.log(text);
             console.log("AJAX SUCCESS");
-            
-            
-            if(text=='S'){
+
+
+            if (text == 'S') {
                 dup_check = true;
             }
-            else{
+            else {
                 dup_check = false;
             }
 
@@ -311,7 +314,7 @@ nickname_dup_check.addEventListener("click", () => {
                     text: '닉네임을 확인하세요',
                     confirmButtonText: '확인',
                 });
-        
+
                 nickname.value = '';
                 nickname.focus();
                 validTextChange(false, nickname_valid_text, "닉네임을 확인하세요.");
@@ -322,7 +325,7 @@ nickname_dup_check.addEventListener("click", () => {
 
         .fail(function (xhr, status, errorThrown) {
             console.log("AJAX FAIL");
-            console.log("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+errorThrown);
+            console.log("code:" + xhr.status + "\n" + "message:" + xhr.responseText + "\n" + "error:" + errorThrown);
         })
 });
 
@@ -332,59 +335,149 @@ nickname_dup_check.addEventListener("click", () => {
 
 email.addEventListener("input", () => {
 
+    email_auth_submit_btn.disabled=true;        
+    email_auth_btn.disabled=false;
+
+    email_check.classList.remove('valid');
+    email_check.value="";
+
+
     if (email_pattern.test(email.value)) {
-        email.classList.add('valid');
-        email_check.classList.remove('valid');
+        // email.classList.add('valid');
+        email_auth_btn.disabled=false;
         validTextChange(true, email_valid_text, "사용 가능한 이메일입니다.");
 
     }
     else {
-        email.classList.remove('valid');
+        email_auth_btn.disabled=true;
+        // email.classList.remove('valid');
+        
         validTextChange(false, email_valid_text, "이메일을 확인하세요.");
-
     }
+});
 
-    if (email_check.value == email.value) {
-        email_check.classList.add('valid');
-        validTextChange(true, email_check_valid_text, "이메일과 일치합니다.");
 
-    }
-    else {
-        email_check.classList.remove('valid');
-        validTextChange(false, email_check_valid_text, "이메일과 일치하지 않습니다.");
+email_auth_btn.addEventListener('click', () => {
 
-    }
+    var email = $('#email').val();
+    email_check.classList.remove('valid');
+    validTextChange(false, email_check_valid_text, "이메일 인증을 완료해주세요.");
 
+    $.ajax({
+        type: "POST",
+        async:true,
+
+        url: "/emailAuth",
+        data: { email: email }
+    })
+        .done(function (data) {
+            Swal.fire({
+                title: '인증번호가 발송되었습니다.',
+                text: '인증 절차를 완료해주세요.',
+                confirmButtonText: '확인',
+            });
+
+            email_auth_cd = data;
+            console.log("email_auth_cd: " + email_auth_cd);
+            console.log("data: " + data);
+
+
+
+            email_auth_submit_btn.disabled=false;
+            email_check.readOnly=false;
+
+        })
+
+        .fail(function (data) {
+            Swal.fire({
+                icon: 'error',
+                title: '인증번호 발송에 실패했습니다.',
+                text: '잠시 후 다시 시도해주세요.',
+                confirmButtonText: '확인',
+            });
+        });
+
+    email_auth_submit_btn.disabled=false;        
 
 });
 
+
+
+email_auth_submit_btn.addEventListener('click', ()=>{
+    
+    var email = $('#email').val();
+    var emailAuthValue = $("#email_check").val();
+
+    $.ajax({
+        type: "POST",
+        async:true,
+        url: "/emailAuthCheck",
+        data: {
+            email: email,
+            emailAuthValue: emailAuthValue
+        }
+    })
+    .done(function(text){
+        if(text=='S'){
+            // 성공
+            
+            Swal.fire({
+                title: '인증에 성공했습니다.',
+                confirmButtonText: '확인',
+            });
+
+
+            email_check.classList.add('valid');
+            email_auth_submit_btn.disabled=true;
+            email_check.readOnly=true;
+            validTextChange(true, email_check_valid_text, "인증되었습니다.");
+            email_auth_btn.disabled=true;
+
+        }
+        else{
+            // 실패
+            Swal.fire({
+                icon: 'error',
+                title: '인증번호가 틀립니다.',
+                text: '옳바른 인증번호를 입력하세요.',
+                confirmButtonText: '확인',
+            });
+        }
+
+    })
+    .fail(function(){
+        
+        alert("Ajax Failed!!!!T^T");
+
+    });
+});
 
 //////////////////////////////////////////////////////////
 // email_check 유효성 검증 로직
 
-email_check.addEventListener("input", () => {
-    if (email_check.value == email.value) {
-        email_check.classList.add('valid');
-        validTextChange(true, email_check_valid_text, "이메일과 일치합니다.");
+// email_check.addEventListener("input", () => {
+//     if (email_check.value == email.value) {
+//         email_check.classList.add('valid');
+//         validTextChange(true, email_check_valid_text, "이메일과 일치합니다.");
 
-    }
-    else {
-        email_check.classList.remove('valid');
-        validTextChange(false, email_check_valid_text, "이메일과 일치하지 않습니다.");
+//     }
+//     else {
+//         email_check.classList.remove('valid');
+//         validTextChange(false, email_check_valid_text, "이메일과 일치하지 않습니다.");
 
-    }
-});
+//     }
+// });
 
 ////////////////////////////////////////////////////////
 // 생년월일 검증 로직
 
 
-birth.addEventListener("change", ()=>{
-    if(birth.value!=null){
+birth.addEventListener("change", () => {
+    if (birth.value != null) {
         birth.classList.add("valid");
-        validTextChange(true, birth_valid_text, "옳바른 생년월일입니다.");
+        validTextChange(true, birth_valid_text, "생년월일이 입력되었습니다.");
     }
-    else{
+    else {
         birth.classList.remove("valid");
         validTextChange(false, birth_valid_text, "생년월일을 입력해주세요.");
     }
@@ -398,9 +491,9 @@ birth.addEventListener("change", ()=>{
 // 주소 유효성 검증 로직
 
 
-address.addEventListener("input", ()=>{
+address.addEventListener("input", () => {
 
-    if(address.value!=''){
+    if (address.value != '') {
         address.classList.add('valid');
         address_valid_text.classList.add()
         validTextChange(true, address_valid_text, "주소가 입력되었습니다.");
@@ -416,12 +509,12 @@ const category_value = document.getElementById("category_value");
 
 
 
-function category_insert(){
+function category_insert() {
 
-    Array.prototype.forEach.call(category, (e)=>{
-    
-        if(e.checked){
-                category_value.value+=e.value+",";
+    Array.prototype.forEach.call(category, (e) => {
+
+        if (e.checked) {
+            category_value.value += e.value + ",";
         }
     });
 };
@@ -438,24 +531,24 @@ let validFlag = false;
 
 
 
-function validCheck(){
+function validCheck() {
 
     validCnt = document.getElementsByClassName("valid");
 
     // valid 개수 카운팅 후 flag
 
-    if(validCnt.length>=0){
-    // valid 개수 맞으면
-        validFlag=true;
+    if (validCnt.length >= 7) {
+        // valid 개수 맞으면
+        validFlag = true;
     }
-    else{
-    // valid 개수 적으면
-        validFlag=false;
+    else {
+        // valid 개수 적으면
+        validFlag = false;
     }
 }
 
 submitBtn.addEventListener("click", (event) => {
-    
+
 
     validCheck();
 
@@ -469,15 +562,15 @@ submitBtn.addEventListener("click", (event) => {
             denyButtonText: `취소`,
         }).then((result) => {
             if (result.isConfirmed) {
-                
+
                 category_insert();
                 $("#signUpForm").submit();
             }
             else {
-                
+
             }
         });
-        
+
     }
     else {
 
@@ -486,11 +579,15 @@ submitBtn.addEventListener("click", (event) => {
             icon: 'error',
             title: '회원가입 실패',
             text: '필수항목을 입력해주세요.',
-            confirmButtonText:'확인'
+            confirmButtonText: '확인'
         });
     }
 
 });
+
+
+
+
 
 
 

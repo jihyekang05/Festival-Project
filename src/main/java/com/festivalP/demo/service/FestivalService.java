@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,10 +31,19 @@ public class FestivalService {
         return festivalRepository.findAll();
     }
 
+    //오래된 순 정렬
+    public List<Posts> sortOldFestivals() { return festivalRepository.findAllOrderByFestival_Upload_Date_Old();}
+
+    //최신 순 정렬
+    public List<Posts> sortNewFestivals() {return festivalRepository.findAllOrderByFestival_Upload_Date_New();}
+
+    //조회수 정렬
+    public List<Posts> sortViewFestivals() {return festivalRepository.findAllOrderByFestival_Content_Views();}
 
     public List<Posts> findOne(Long post_num) {
         return festivalRepository.findByPost_num(post_num);
     }
+
 
     @Transactional
     public Long saveReview(Review review) {
@@ -42,9 +52,26 @@ public class FestivalService {
         return review.getReview_index();
     }
 
-    public List<Review> findReviews() {
-        System.out.println("===========");
-        System.out.println("동작함!");
-        return reviewRepository.findAllReview();}
+    public List<Review> findReviews(Long post_num) {
+        return reviewRepository.findAllReview(post_num);}
+
+
+    public List<Posts> deleteByPost_num(Long post_num) {
+        return festivalRepository.deleteByPost_num(post_num);
+    }
+
+    //검색기능
+    @Transactional
+    public List<Posts> searchPosts(String keyword) {
+        List<Posts> posts = festivalRepository.findByFestival_Title(keyword);
+
+
+        if(keyword.isEmpty()) return findFestivals();
+        else {
+            return posts;
+        }
+    }
+
+
 
 }

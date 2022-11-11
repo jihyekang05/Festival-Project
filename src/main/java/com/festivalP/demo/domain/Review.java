@@ -16,6 +16,7 @@ public class Review {
     @GeneratedValue
     private Long review_index;
 
+    @Column(name="post_num")
     private Long post_num;
 
     private Long member_index;
