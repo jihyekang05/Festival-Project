@@ -40,7 +40,7 @@ CREATE TABLE POSTS (
 	festival_title	varchar2(1000)		NULL,
 	festival_upload_date	DATE		NULL,
     CONSTRAINT admin_index FOREIGN KEY(admin_index) REFERENCES admin(admin_index),
-    festival_category VARCHAR2(100)
+    festival_category VARCHAR2(100),
 );
 drop table Favorite;
 CREATE TABLE Favorite (
@@ -56,7 +56,7 @@ CREATE TABLE FESTIVAL_REVIEW (
 	member_index	number(10)		NOT NULL,
 	review_text	varchar(1000)   NOT	NULL,
 	review_score	number(1)		NOT NULL,
-    CONSTRAINT post_num FOREIGN KEY(post_num) REFERENCES POSTS(post_num),
+    CONSTRAINT post_num FOREIGN KEY(post_num) REFERENCES POSTS(post_num) on delete cascade,
     CONSTRAINT member_review_index FOREIGN KEY(member_index) REFERENCES member(member_index)
 
 );

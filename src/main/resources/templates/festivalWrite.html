@@ -22,6 +22,7 @@
         }).open();
       }
     </script>
+
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -52,7 +53,7 @@
 
 
   <div class="container">
-    <form action="festivalWrite" method="POST">
+    <form action="festivalWrite" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label>제목</label>
         <input type="text" class="form-control" name="festival_title" placeholder="Title Input">
@@ -100,12 +101,13 @@
       
     <div class="text-right">
         <input type="hidden" name="mode" value="write">
-        <button type="submit" class="btn btn-outline-secondary">글등록</button>
+        <button type="submit" class="btn btn-outline-secondary" id="btnWrite">글등록</button>
         <button type="button" class="btn btn-outline-danger" onclick="history.back(-1);">취소</button>
     </div>
         <input type="text" name="content_views">
         <input type="text" name="admin_index">
     </form>
+      <script src="/js/modify.js" th:inline="javascript"></script>
 </div>
 
 

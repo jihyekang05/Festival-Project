@@ -41,7 +41,7 @@ public class MemberController {
     public String createForm(Model model){
         model.addAttribute("memberForm", new MemberForm());
         // resource 의 HTML 경로
-        return "member/signUpForm";
+            return "member/signUpForm";
     }
 
     @PostMapping("/member/signup")
@@ -166,5 +166,18 @@ public class MemberController {
         else{
             return "F";
         }
+    }
+
+
+    @RequestMapping("/findid")
+    public String findId() {
+
+        return "findId";
+    }
+
+    @RequestMapping("/mypage")
+    public String myPage(){
+
+        return "myPage";
     }
 }

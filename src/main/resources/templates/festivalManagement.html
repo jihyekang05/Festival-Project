@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="style.css">
 
     
+
+
   </head>
   <body>
 
@@ -57,8 +59,13 @@
         </div>
         <form action="festivalManagement" method="post">
         <div class="btn-group" role="group" aria-label="Basic example">
+<<<<<<< HEAD
           <button type="button" class="btn btn-primary" >수정</button>
           <button type="button" class="btn btn-primary" th:value="${post.post_num}">삭제</button>
+=======
+          <button type="button" class="btn btn-primary" th:onclick="|javascript:post_modify(${post.post_num})|">수정</button>
+          <button type="button" class="btn btn-primary" th:onclick="|javascript:post_delete(${post.post_num})|">삭제</button>
+>>>>>>> c73efdde2c2b3a3235cd2f3e0642936095062f29
         </div>
       </li>
       </form>
@@ -75,5 +82,8 @@
       <li class="page-item"><a class="page-link" href="#">Next</a></li>
     </ul>
   </nav>
+  <script src="/js/modify.js"></script>
   </body>
+
+
 </html>

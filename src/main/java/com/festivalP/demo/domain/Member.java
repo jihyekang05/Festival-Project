@@ -23,13 +23,23 @@ public class Member {
     private Long member_index;
 
     private String member_id;
+
     private String member_pw;
+
     private String member_birth;
+
     private String member_addr;
+
     private String member_email;
+
     private String member_nickname;
+
     private String member_category;
+
     private int member_state=1;
+
+
+
 
 
 

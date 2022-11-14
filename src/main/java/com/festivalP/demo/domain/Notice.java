@@ -9,8 +9,6 @@ import javax.persistence.*;
 
 @Entity(name="Notice")
 @Table
-//@Table(name = "POSTS")
-
 @Getter
 @Setter
 @NoArgsConstructor
