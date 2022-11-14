@@ -3,12 +3,14 @@ package com.festivalP.demo.controller;
 import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.domain.Review;
 import com.festivalP.demo.service.FestivalService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,6 +56,21 @@ public class PostController {
         model.addAttribute("posts", postsList);
         return "every_festival_board";
     }
+
+    //지역별 축제
+    @GetMapping("/localFestival")
+    public String local() {
+        return "Local_Festival_board";
+    }
+
+    //지역주소 받아오고 지역별 축제 보여주기
+    @PostMapping("/local")
+    @ResponseBody
+    public List local_Addr(Long local) {
+        List<Posts> addr = festivalService.findOne2(local);
+        return addr;
+    }
+
 
 
 

@@ -44,6 +44,9 @@ public class FestivalService{
         return festivalRepository.findByPost_num(post_num);
     }
 
+    //지역별축제기능
+    public List<Posts> findOne2(Long board_loc_addr){ return festivalRepository.findByBoard_loc_addr(board_loc_addr);}
+
 
     @Transactional
     public Long saveReview(Review review) {
@@ -68,8 +71,6 @@ public class FestivalService{
             return posts;
         }
     }
-
-
 
 
     public int deleteByPost_num(Long post_num) {
