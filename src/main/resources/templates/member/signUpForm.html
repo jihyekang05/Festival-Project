@@ -30,11 +30,16 @@
       <div class="input-form col-md-12 mx-auto">
         <div class="d-flex justify-content-center">
           <h4 class="mb-3">회원가입</h4>
+          
         </div>
         <br><p style="color: red;">관심 카테고리를 제외한 모든 항목은 필수입력사항입니다.</p><br><br>
 
         <form role="form" th:object="${memberForm}" class="validation-form" method="post" id="signUpForm" name="signUpForm">
+          <input type="checkbox" class="form-check-input" id="admin_check" >
+          <label for="admin_check" >** 관리자 계정 **</label>
+          <input id="admin_check_val" th:field="*{state}" type="hidden" style="font-size: 0px; width: 0px;height: 0px;" value='2'></text>
 
+          <br>
           <label for="id">아이디 (영문 또는 숫자 혼합 5~7)</label>
           <div class="row">
             <div class="col-md-9">
@@ -176,6 +181,7 @@
           <br>
           <br>
           <br>
+
           <input type="button" class="btn btn-outline-dark btn-lg btn-block"  id="submitForm" value="회원가입">
         </form>
       </div>

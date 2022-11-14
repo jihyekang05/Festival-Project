@@ -98,7 +98,7 @@ id_dup_check.addEventListener('click', function (event) {
 
     // Ajax POST 로 ID 중복체크
     $.ajax({
-        url: "/iddupcheck",
+        url: "/member/iddupcheck",
         async: true,
         data: { member_id: id.value },
         method: "POST",
@@ -254,7 +254,7 @@ nickname_dup_check.addEventListener("click", () => {
 
 
     $.ajax({
-        url: "/nicknamedupcheck",
+        url: "/member/nicknamedupcheck",
         async: true,
         data: { member_nickname: nickname.value },
         method: "POST",
@@ -367,7 +367,7 @@ email_auth_btn.addEventListener('click', () => {
         type: "POST",
         async:true,
 
-        url: "/emailAuth",
+        url: "/member/emailAuth",
         data: { email: email }
     })
         .done(function (data) {
@@ -411,7 +411,7 @@ email_auth_submit_btn.addEventListener('click', ()=>{
     $.ajax({
         type: "POST",
         async:true,
-        url: "/emailAuthCheck",
+        url: "/member/emailAuthCheck",
         data: {
             email: email,
             emailAuthValue: emailAuthValue
@@ -521,8 +521,27 @@ function category_insert() {
 
 
 
+//////////////////////////////////////////////////
+// 관리자 체크박스
+
+const admin_check = document.getElementById("admin_check");
+const admin_check_val = document.getElementById("admin_check_val");
 
 
+function admin_check_Func(){
+
+    console.log("체크박스: "+admin_check.checked);
+    
+    
+
+    if(admin_check.checked){
+        console.log("조건만족: "+admin_check.checked);
+        admin_check_val.value=2;
+    }
+    else{
+        admin_check_val.value=0;
+    }
+}
 
 ///////////////////////////////////////////////////
 // submit 정의
@@ -564,6 +583,7 @@ submitBtn.addEventListener("click", (event) => {
             if (result.isConfirmed) {
 
                 category_insert();
+                admin_check_Func();
                 $("#signUpForm").submit();
             }
             else {

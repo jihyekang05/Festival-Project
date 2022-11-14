@@ -33,12 +33,22 @@ dependencies {
 	// 암호화 API (Spring Security
 	implementation 'org.springframework.security:spring-security-test'
 
+	// Java jwt
+	implementation 'com.auth0:java-jwt:4.2.1'
+
+	// Json Web Token
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
 	// Javax mail API
 //	implementation 'javax.mail:mail:1.5.0-b01'
 
 	// 이메일 인증 API
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+//	타임리프-spring security5 뷰 단계에서 현재 로그인 된 사용자 정보 가져오기 위함
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
 //	added
 //	runtimeOnly 'com.h2database:h2'
 //	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
