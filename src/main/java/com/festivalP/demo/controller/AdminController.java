@@ -27,11 +27,11 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-<<<<<<< HEAD
 
-=======
+
+
 import javax.servlet.http.HttpSession;
->>>>>>> 4ae17e07eaa145be9ab7506a1cfe3084edbb6b0a
+
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -41,6 +41,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+
 public class AdminController {
 
 
@@ -58,7 +59,6 @@ public class AdminController {
 
 
     @RequestMapping("/admin")
-<<<<<<< HEAD
     public String festivalManagement(Model model, @PageableDefault(size =5,page=0, direction = Sort.Direction.DESC) Pageable pageable, String  searchKeyword) {
     // 관리자 메인 페이지 (페스티벌 글 목록)
 //        Pageable pageWithTenElements =PageRequest.of(2 - 1, 5);
@@ -86,10 +86,8 @@ public class AdminController {
 
         model.addAttribute("posts", festivals);
         model.addAttribute("maxPage", 5);
+        return "festivalManagement";}
 
-
-        return "festivalManagement";
-=======
     public String festivalManagement(Model model, HttpSession session) {
     // 관리자 메인 페이지 (페스티벌 글 목록)
         List<Posts> festivals = festivalService.findFestivals();
@@ -103,24 +101,24 @@ public class AdminController {
         else{
             return "redirect:/";
         }
->>>>>>> 4ae17e07eaa145be9ab7506a1cfe3084edbb6b0a
+
     }
 
     @RequestMapping("/festivalWrite")
-
     public String festivalWrite() {
         // 축제 작성 페이지
         return "festivalWrite";
     }
 
-    @PostMapping("/festivalWrite")
-    public String fes_create( MultipartHttpServletRequest multi) throws ParseException {
+        @PostMapping("/festivalWrite")
+        public String fes_create( MultipartHttpServletRequest multi) throws ParseException {
 //        if (result.hasErrors()) {
 //            return "members/festivalWrite";
 //        }
 
 
         Posts posts = new Posts();
+
 
         posts.setAdmin_index(Long.parseLong(multi.getParameter("admin_index")));
         posts.setContent_text(multi.getParameter("content_text"));
@@ -179,18 +177,16 @@ public class AdminController {
     @RequestMapping("/memberManagement")
     public String memberManagement(Model model) {
     // 회원관리
-<<<<<<< HEAD
+
         List<Member> members = memberService.findMembers();
         model.addAttribute("members",members);
 
         return "memberManagement";
     }
-=======
+
 //        List<Member> members = memberService.findMembers();
 //        model.addAttribute("members",members);
 
-        return "memberManagement";
-    }
 //
 //    @RequestMapping("/memberManagement")
 //    public String memberManagement(Model model) {
@@ -200,7 +196,7 @@ public class AdminController {
 //
 //        return "memberManagement";
 //    }
->>>>>>> 4ae17e07eaa145be9ab7506a1cfe3084edbb6b0a
+
 
 
     @RequestMapping("/noticeWrite")

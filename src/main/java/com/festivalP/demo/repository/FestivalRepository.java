@@ -82,7 +82,8 @@ public class FestivalRepository {
 
 
     public Posts findOne(Long post_num) {
-
+        return em.find(Posts.class, post_num);
+    }
     //지역별로 데이터찾기
     public List<Posts> findByBoard_loc_addr(Long board_loc_addr) {
         return em.createQuery("select p from Posts p where p.board_loc_addr LIKE :board_loc_addr", Posts.class).setParameter("board_loc_addr",board_loc_addr).getResultList();
@@ -99,8 +100,7 @@ public class FestivalRepository {
     }
 
 
-        return em.find(Posts.class, post_num);
-    }
+
 
 
 
