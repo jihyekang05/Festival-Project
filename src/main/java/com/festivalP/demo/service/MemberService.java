@@ -3,11 +3,15 @@ package com.festivalP.demo.service;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.festivalP.demo.domain.Member;
+import com.festivalP.demo.domain.Notice;
 import com.festivalP.demo.form.AuthInfo;
 import com.festivalP.demo.form.MemberForm;
 import com.festivalP.demo.repository.MemberRepository;
+import com.festivalP.demo.repository.PageMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,6 +29,14 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PageMemberRepository pageMemberRepository;
+
+
+    public Page<Member> paging(Pageable pageable) {
+        // Page<Posts> Pages= pageRepository.findAll(pageable);
+        return pageMemberRepository.findAll(pageable);
+    }
+
 
     public List<Member> findMembers() {
         return memberRepository.findAll();

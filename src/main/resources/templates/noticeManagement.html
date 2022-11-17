@@ -19,13 +19,13 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/admin">게시글 관리</a>
+                <a class="nav-link active" aria-current="page" href="/admin/festivalManagement">게시글 관리</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/memberManagement">회원 관리</a>
+                <a class="nav-link active" aria-current="page" href="/admin/memberManagement">회원 관리</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/noticeManagement">공지 관리</a>
+                <a class="nav-link active" aria-current="page" href="/admin/noticeManagement">공지 관리</a>
               </li> 
             </ul>
           </div>
@@ -39,7 +39,7 @@
 
       
       <button class="btn btn-outline-success" type="submit">공지검색</button>
-      <button class="btn btn-outline-success" type="button" onclick="location.href='/noticeWrite'">공지작성</button>
+      <button class="btn btn-outline-success" type="button" onclick="location.href='/admin/noticeWrite'">공지작성</button>
     </form>
   </div>
 </body>
@@ -50,28 +50,45 @@
       <li class="list-group-item d-flex justify-content-between align-items-start" th:each="notice : ${notice}">
         <div class="ms-2 me-auto">
 
-          <a class="fw-bold" th:text="${notice.content_title}" >공지1</a>
+          <a class="fw-bold" th:text="${notice.content_title}" ></a>
 
         </div>
         <div class="btn-group" role="group" aria-label="Basic example">
           <button type="button" class="btn btn-primary">수정</button>
           <button type="button" class="btn btn-primary" th:onclick="|javascript:notice_delete(${notice.post_num})|" >삭제</button>
-          <button type="button" class="btn btn-primary" th:onclick="|javascript:changeBtnName(${notice.post_num})|" >공지등록</button>
-
         </div>
       </li>
     </ol>
   </div>
 
 
-  <nav name="Page-navigation" aria-label="Page navigation example">
+  <!--페이징-->
+  <nav style="text-align: center;" name="Page-navigation" aria-label="Page navigation example"
+       th:with="start=${(notice.number/maxPage)*maxPage + 1},
+                  end=(${(notice.totalPages == 0) ? 1 : (start + (maxPage - 1) < notice.totalPages ? start + (maxPage - 1) : notice.totalPages)})" >
     <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      <li th:if="${start > 1}" class="page-item">
+        <a th:href="@{/admin/noticeManagement?(page=0)}" th:text="'처음으로 이동'" class="page-link"></a></li>
+      </li>
+
+      <li th:if="${start > 1}" class="page-item">
+        <a th:href="@{/admin/noticeManagement(page=${start - maxPage})}" th:text="'이전'" class="page-link"></a>
+      </li>
+
+
+      <li th:each="page: ${#numbers.sequence(start, end)}" class="page-item">
+        <a th:href="@{/admin/noticeManagement?(page=${page-1})}" th:text="${page}" class="page-link"></a></li>
+      </li>
+
+      <li th:if="${end < notice.totalPages}" class="page-item">
+        <a th:href="@{/admin/noticeManagement?(page=${start + maxPage})}" th:text="'다음'" class="page-link"></a>
+      </li>
+
+      <li th:if="${end < notice.totalPages}" class="page-item">
+        <a th:href="@{/admin/noticeManagement?(page=${notice.totalPages-1})}" th:text="'마지막페이지로이동'" class="page-link"></a>
+      </li>
     </ul>
+
   </nav>
   <script src="/js/modify.js"></script>
   </body>

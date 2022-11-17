@@ -30,20 +30,7 @@ public class FestivalRepository {
     }
 
 
-     public List<Posts> findAll2(Pageable pageable) {
-        //return em.createQuery("select p from Posts p", Posts.class).getResultList();
-
-    //return  em.find(Posts.class , pageable);
-        return    em.createQuery("select p from Posts p", Posts.class).getResultList();
-    }
-
-
-
-
-
     public void save(Posts posts) {em.persist(posts);}
-
-
 
     public List<Posts> findByPost_num(Long post_num) {
         return em.createQuery("select p from Posts p where p.post_num = :post_num", Posts.class).setParameter("post_num",post_num).getResultList();

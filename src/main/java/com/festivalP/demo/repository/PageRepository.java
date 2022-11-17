@@ -1,5 +1,6 @@
 package com.festivalP.demo.repository;
 
+import com.festivalP.demo.domain.Member;
 import com.festivalP.demo.domain.Posts;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -15,19 +16,11 @@ import java.util.List;
 @Repository
 public interface PageRepository extends PagingAndSortingRepository<Posts, Long> {
 
-//    @Override
-//    Page<Posts> findAll(Posts posts, Pageable pageable);
 
-
-//    @Override
-//    Page<Posts> findAll(Pageable pageable);
-
-//    @Override
-//    List<Posts> findAll(Sort sort);
 
     @Override
     Page<Posts> findAll( Pageable pageable);
 
-//    @Override
-//    Page<Posts> findAllById(Iterable<Long> longs, Pageable pageable );
+
+    
 }

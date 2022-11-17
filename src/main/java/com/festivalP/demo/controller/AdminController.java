@@ -41,7 +41,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-
+@RequestMapping("/admin")
 public class AdminController {
 
 
@@ -58,35 +58,23 @@ public class AdminController {
 
 
 
-    @RequestMapping("/admin")
+    @RequestMapping("/festivalManagement")
     public String festivalManagement(Model model, @PageableDefault(size =5,page=0, direction = Sort.Direction.DESC) Pageable pageable, String  searchKeyword) {
-    // 관리자 메인 페이지 (페스티벌 글 목록)
-//        Pageable pageWithTenElements =PageRequest.of(2 - 1, 5);
+
         System.out.println(pageable.getPageNumber());
 
         System.out.println(123123);
         Page<Posts> festivals = festivalService.paging(pageable);
-        //model.addAttribute("posts",festivals);
-//        if(searchKeyword == null) {
-//            festivals = festivalService.paging(pageable);
-//        }else {
-//            festivals = festivalService.paging(searchKeyword, pageable);
-//        }
 
-//        int nowPage = festivals.getPageable().getPageNumber() + 1;
-//        int startPage = Math.max(nowPage - 4, 1);
-//        int endPage = Math.min(nowPage + 5, festivals.getTotalPages());
-
-//        System.out.println(nowPage);
-//        System.out.println(startPage);
-//        System.out.println(endPage);
-//        model.addAttribute("nowPage", nowPage);
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
 
         model.addAttribute("posts", festivals);
         model.addAttribute("maxPage", 5);
         return "festivalManagement";}
+
+
+
+
+
 
     public String festivalManagement(Model model, HttpSession session) {
     // 관리자 메인 페이지 (페스티벌 글 목록)
@@ -161,9 +149,15 @@ public class AdminController {
 
 
     @RequestMapping("/noticeManagement")
-    public String noticeManagement(Model model) {
-        List<Notice> notice = noticeService.findNotice();
+    public String noticeManagement(Model model, @PageableDefault(size =5,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
+
+
+
+        Page<Notice> notice = noticeService.paging(pageable);
+
+        model.addAttribute("maxPage", 5);
         model.addAttribute("notice",notice);
+
     // 공지관리
         return "noticeManagement";
     }
@@ -175,10 +169,11 @@ public class AdminController {
     }
 
     @RequestMapping("/memberManagement")
-    public String memberManagement(Model model) {
+    public String memberManagement(Model model, @PageableDefault(size =5,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
     // 회원관리
 
-        List<Member> members = memberService.findMembers();
+        Page<Member> members = memberService.paging(pageable);
+        model.addAttribute("maxPage", 5);
         model.addAttribute("members",members);
 
         return "memberManagement";
