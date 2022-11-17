@@ -3,6 +3,7 @@ package com.festivalP.demo.controller;
 import com.festivalP.demo.domain.Member;
 import com.festivalP.demo.domain.Notice;
 import com.festivalP.demo.domain.Posts;
+import com.festivalP.demo.form.AuthInfo;
 import com.festivalP.demo.form.FestivalForm;
 import com.festivalP.demo.service.FestivalService;
 import com.festivalP.demo.service.MemberService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -37,11 +39,19 @@ public class AdminController {
     private final NoticeService noticeService;
 
     @RequestMapping("/admin")
-    public String festivalManagement(Model model) {
+    public String festivalManagement(Model model, HttpSession session) {
     // 관리자 메인 페이지 (페스티벌 글 목록)
         List<Posts> festivals = festivalService.findFestivals();
         model.addAttribute("posts",festivals);
-        return "festivalManagement";
+
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+
+        if(authInfo.getState() ==2){
+            return "festivalManagement";
+        }
+        else{
+            return "redirect:/";
+        }
     }
 
     @RequestMapping("/festivalWrite")
@@ -114,6 +124,15 @@ public class AdminController {
     public String noticeManagementDetail() {
     // 공지 관리 상세 사항
         return "noticeManagementDetail";
+    }
+
+    @RequestMapping("/memberManagement")
+    public String memberManagement(Model model) {
+    // 회원관리
+//        List<Member> members = memberService.findMembers();
+//        model.addAttribute("members",members);
+
+        return "memberManagement";
     }
 //
 //    @RequestMapping("/memberManagement")

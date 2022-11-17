@@ -2,8 +2,14 @@ package com.festivalP.demo.service;
 
 
 import com.festivalP.demo.domain.Member;
+import com.festivalP.demo.form.AuthInfo;
+import com.festivalP.demo.form.MemberForm;
 import com.festivalP.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +29,15 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-//    @Transactional
-//    private Member encryptFunc(Member member){
-//
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(30);
-//        String pw = member.getMember_pw();
-//        String securePw = encoder.encode(pw);
-//
-//        member.setMember_pw(securePw);
-//        return member;
-//    }
+    @Transactional
+    private Member encryptFunc(Member member){
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String pw = member.getMember_pw();
+        String securePw = encoder.encode(pw);
+        member.setMember_pw(securePw);
+        return member;
+    }
 
 // 암호화 함수 사용 전
 //    @Transactional
@@ -44,21 +49,21 @@ public class MemberService {
 //    }
 
     // 암호화 함수 사용 전
-    @Transactional
-    public String join(Member member){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        member.setMember_pw(encoder.encode(member.getMember_pw()));
-        System.out.println("MemberService.join");
-        memberRepository.save(member);
-        return member.getMember_id();
-    }
-
 //    @Transactional
 //    public String join(Member member){
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        member.setMember_pw(encoder.encode(member.getMember_pw()));
 //        System.out.println("MemberService.join");
-//        memberRepository.save(encryptFunc(member));
+//        memberRepository.save(member);
 //        return member.getMember_id();
 //    }
+
+    @Transactional
+    public String join(Member member){
+        System.out.println("MemberService.join");
+        memberRepository.save(encryptFunc(member));
+        return member.getMember_id();
+    }
 
     @Transactional
     public boolean validateDuplicateMemberId(String member_id){
@@ -91,10 +96,42 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean validateDuplicateMemberPassword(String member_pw){
+    public boolean memberExistCheck(String member_id, String member_pw){
 
-
-        return true;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        List<Member> findMem =memberRepository.findById(member_id);
+        if(findMem.isEmpty()){
+            return false;
+        }
+        else{
+            return encoder.matches(member_pw,findMem.get(0).getMember_pw());
+        }
     }
 
+
+    @Transactional
+    public AuthInfo getMemberAuthInfo(String member_id){
+        List<Member> findMem =memberRepository.findById(member_id);
+        Member mem = findMem.get(0);
+        AuthInfo authInfo = new AuthInfo();
+        authInfo.setId(member_id);
+        authInfo.setEmail(mem.getMember_email());
+        authInfo.setNickname(mem.getMember_nickname());
+        authInfo.setState(mem.getMember_state());
+
+        return authInfo;
+    }
+
+    @Transactional
+    public Member getMemberAllInfo(String member_id){
+        List<Member> findMem =memberRepository.findById(member_id);
+        Member mem = findMem.get(0);
+        return mem;
+    }
+
+
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return null;
+//    }
 }

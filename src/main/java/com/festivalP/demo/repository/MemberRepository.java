@@ -31,10 +31,12 @@ public class MemberRepository {
         return em.createQuery("delete m from Member m where m.member_nickname = : nickname", Member.class).setParameter("nickname", nickname).getResultList();
     }
 
-//    public Member findByIdAndPw(String id, String pw){
-//
-//        return em.createQuery("select m from Member m where m.member_id = :id and m.member_pw = :pw", Member.class).setParameter("id", id, "pw", pw).getFirstResult();
-//    }
+    public List<Member> findByIdAndPw(String id, String pw){
+
+        return em.createQuery("select m from Member m where m.member_id = :id and m.member_pw = :pw", Member.class)
+                .setParameter("id", id)
+                .setParameter("pw", pw).getResultList();
+    }
 
 
 
