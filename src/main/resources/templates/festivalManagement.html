@@ -32,48 +32,81 @@
           </div>
         </div>
       </nav>
-  </body>
+
   <div>
     <form class="d-flex" role="search">
       <input class="form-control me-2" type="search" placeholder="Search" >
 
-
-      
       <button class="btn btn-outline-success" type="submit">글검색</button>
       <button class="btn btn-outline-success" type="button" onclick="location.href='/festivalWrite'">글작성</button>
     </form>
   </div>
-</body>
 
-<body>
   <div id="board">
     <ol class="list-group list-group-numbered">
       <li class="list-group-item d-flex justify-content-between align-items-start" th:each="post : ${posts}">
         <div class="ms-2 me-auto"  >
-          <a class="fw-bold" th:text="${post.festival_title}" th:href="@{|/festival/${post.post_num}|}">공지1</a>
+          <a class="fw-bold" th:text="${post.festival_title}" th:href="@{|/festival/${post.post_num}|}"></a>
 
         </div>
         <form action="festivalManagement" method="post">
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-primary" th:onclick="|javascript:post_modify(${post.post_num})|">수정</button>
-          <button type="button" class="btn btn-primary" th:onclick="|javascript:post_delete(${post.post_num})|">삭제</button>
-        </div>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" th:onclick="|javascript:post_modify(${post.post_num})|">수정</button>
+            <button type="button" class="btn btn-primary" th:onclick="|javascript:post_delete(${post.post_num})|">삭제</button>
+          </div>
+        </form>
       </li>
-      </form>
     </ol>
   </div>
 
 
-  <nav name="Page-navigation" aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-  </nav>
-  <script src="/js/modify.js"></script>
+<!--  <nav name="Page-navigation" aria-label="Page navigation example">-->
+<!--    <ul class="pagination">-->
+<!--      <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
+<!--      <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--      <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--      <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--      <li class="page-it
+
+em"><a class="page-link" href="#">Next</a></li>-->
+<!--    </ul>-->
+<!--  </nav>-->
+
+    <nav style="text-align: center;" name="Page-navigation" aria-label="Page navigation example"
+         th:with="start=${(posts.number/maxPage)*maxPage + 1},
+                  end=(${(posts.totalPages == 0) ? 1 : (start + (maxPage - 1) < posts.totalPages ? start + (maxPage - 1) : posts.totalPages)})" >
+      <ul class="pagination">
+        <li th:if="${start > 1}" class="page-item">
+          <a th:href="@{/admin?(page=0)}" th:text="'처음으로 이동'" class="page-link"></a></li>
+        </li>
+
+        <li th:if="${start > 1}" class="page-item">
+          <a th:href="@{/admin?(page=${start - maxPage})}" th:text="'이전'" class="page-link"></a>
+        </li>
+
+
+
+
+
+
+        
+        <li th:each="page: ${#numbers.sequence(start, end)}" class="page-item">
+          <a th:href="@{/admin?(page=${page-1})}" th:text="${page}" class="page-link"></a></li>
+        </li>
+
+        <li th:if="${end < posts.totalPages}" class="page-item">
+          <a th:href="@{/admin?(page=${start + maxPage})}" th:text="'다음'" class="page-link"></a>
+        </li>
+
+        <li th:if="${end < posts.totalPages}" class="page-item">
+          <a th:href="@{/admin?(page=${posts.totalPages-1})}" th:text="'마지막페이지로이동'" class="page-link"></a>
+        </li>
+      </ul>
+
+    </nav>
+
+
+    <script src="/js/modify.js"></script>
   </body>
 
 

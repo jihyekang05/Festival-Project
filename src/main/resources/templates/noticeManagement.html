@@ -55,8 +55,9 @@
         </div>
         <div class="btn-group" role="group" aria-label="Basic example">
           <button type="button" class="btn btn-primary">수정</button>
-          <button type="button" class="btn btn-primary">삭제</button>
-          <button type="button" class="btn btn-primary">공지등록</button>
+          <button type="button" class="btn btn-primary" th:onclick="|javascript:notice_delete(${notice.post_num})|" >삭제</button>
+          <button type="button" class="btn btn-primary" th:onclick="|javascript:changeBtnName(${notice.post_num})|" >공지등록</button>
+
         </div>
       </li>
     </ol>
@@ -72,5 +73,6 @@
       <li class="page-item"><a class="page-link" href="#">Next</a></li>
     </ul>
   </nav>
+  <script src="/js/modify.js"></script>
   </body>
 </html>

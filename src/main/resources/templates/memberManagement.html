@@ -75,14 +75,9 @@
         <td >[[${member.member_email}]]</td>
         <td >[[${member.member_state}]]</td>
         <td class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            회원정보수정
+          <button class="btn btn-outline-success" type="button"  th:onclick="|javascript:member_state_modify(${member.member_id})|">
+            회원정지
           </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">전체</a></li>
-            <li><a class="dropdown-item" href="#">정지</a></li>
-            <li><a class="dropdown-item" href="#">일반</a></li>
-          </ul>
         </td>
       </tr>
 

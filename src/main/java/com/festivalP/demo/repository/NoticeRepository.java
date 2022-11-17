@@ -22,5 +22,11 @@ public class NoticeRepository {
         return em.createQuery("select p from Notice p", Notice.class).getResultList();
     }
 
+    public int deleteByNotice_num(Long post_num){
+
+        int result = em.createQuery ("delete from Notice p where p.post_num = :post_num")
+                .setParameter("post_num",post_num).executeUpdate();
+        return result;
+    }
 
 }

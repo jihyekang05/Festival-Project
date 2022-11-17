@@ -29,7 +29,7 @@ public class Posts {
 
     private Long content_views;
 
-    @Column(name = "festival_title")
+    @Column(name = "festivalTitle")
     private String festival_title;
 
     private Long review_score_avg;

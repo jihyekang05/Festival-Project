@@ -4,6 +4,7 @@ import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.domain.festival;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,20 @@ public class FestivalRepository {
 
     public List<Posts> findAll() {
        return em.createQuery("select p from Posts p", Posts.class).getResultList();
+
     }
+
+
+     public List<Posts> findAll2(Pageable pageable) {
+        //return em.createQuery("select p from Posts p", Posts.class).getResultList();
+
+    //return  em.find(Posts.class , pageable);
+        return    em.createQuery("select p from Posts p", Posts.class).getResultList();
+    }
+
+
+
+
 
     public void save(Posts posts) {em.persist(posts);}
 
@@ -62,27 +77,12 @@ public class FestivalRepository {
         return em.createQuery("select p from Posts p order by p.content_views desc", Posts.class).getResultList();
     }
 
+    public Posts findOne(Long post_num) {
 
-
-    public void modifyByPost(Posts posts){
-          em.createQuery ("Update Posts p set p.admin_index= :admin_index," +
-                          " p.content_text= :content_text," +
-                          " p.board_loc_addr= :board_loc_addr," +
-                          " p.board_addr= :board_addr," +
-                          " p.content_image= :content_image," +
-                          " p.festival_title= :festival_title," +
-                          " p.festival_upload_date= :festival_upload_date " +
-                          " where p.post_num = :post_num")
-                  .setParameter("post_num", posts.getPost_num())
-                  .setParameter("admin_index",posts.getAdmin_index())
-                  .setParameter("content_text",posts.getContent_text())
-                  .setParameter("board_loc_addr",posts.getBoard_loc_addr())
-                  .setParameter("board_addr",posts.getBoard_addr())
-                  .setParameter("content_image",posts.getContent_image())
-                  .executeUpdate();
-
-        //return result;
+        return em.find(Posts.class, post_num);
     }
+
+
 
 
 }

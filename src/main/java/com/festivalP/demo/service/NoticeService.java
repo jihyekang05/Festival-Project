@@ -28,4 +28,9 @@ public class NoticeService {
     public List<Notice> findNotice() {
         return noticeRepository.findAll();
     }
+
+    @Transactional
+    public int deleteByNotice_num(Long post_num) {
+        return noticeRepository.deleteByNotice_num(post_num);
+    }
 }

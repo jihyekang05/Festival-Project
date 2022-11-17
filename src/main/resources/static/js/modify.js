@@ -5,24 +5,27 @@
 	function post_delete($postNum){
         //console.log("post num : "+$postNum)
         location.href = "admin/delete/"+$postNum; // admin/delete/7
-    };
+    }
 
     function post_modify($postNum){
             //console.log("post num : "+$postNum)
-            location.href = "admin/modify/"+$postNum; // admin/delete/7
+         location.href = "admin/modify/"+$postNum; // admin/delete/7
             //post_existing();
 
          changeBtnName();
-        };
-
-    function post_existing($postNum){
-
     }
 
-    function changeBtnName()  {
-      const btnElement = document.getElementById('btnWrite');
-      btnElement.innerText = '새이름!';
+    function notice_delete($postNum){
+        console.log("post num : "+$postNum)
+        location.href = "noticeManagement/delete_notice/"+$postNum; // admin/delete/7
     }
 
+    function changeBtnName($postNum)  {
+        console.log("123")
+      const btnElement
+        = document.getElementById('btn123');
+
+      btnElement.innerText = "공지해제!";
+    }
 
 
