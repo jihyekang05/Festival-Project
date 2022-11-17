@@ -53,11 +53,10 @@ drop table FESTIVAL_REVIEW;
 CREATE TABLE FESTIVAL_REVIEW (
     review_index number(10) primary key,
 	post_num	number(10)		NOT NULL,
-	member_index	number(10)		NOT NULL,
-	review_text	varchar(1000)   NOT	NULL,
+	member_index VARCHAR2(30) NOT NULL,
+	review_text	varchar2(1000)   NOT	NULL,
 	review_score	number(1)		NOT NULL,
-    CONSTRAINT post_num FOREIGN KEY(post_num) REFERENCES POSTS(post_num) on delete cascade,
-    CONSTRAINT member_review_index FOREIGN KEY(member_index) REFERENCES member(member_index)
+    CONSTRAINT post_num FOREIGN KEY(post_num) REFERENCES POSTS(post_num) on delete cascade
 
 );
 drop table NOTICE;
@@ -66,6 +65,7 @@ CREATE TABLE NOTICE (
 	admin_index	number(1)		NOT NULL,
 	content_title	varchar2(200)		NOT NULL,
 	content_text	varchar2(4000)		NOT NULL,
+    notice_date DATE NOT NULL, //추가
     CONSTRAINT admin_notice_index FOREIGN KEY(admin_index) REFERENCES admin(admin_index)
 );
 drop table message;
@@ -95,4 +95,13 @@ CREATE TABLE CATEGORY(
     interest_code Number(10) primary key,
     interest_text VARCHAR2(100)
 );
+--추가
+DROP TABLE CONTACT;
+CREATE TABLE CONTACT (
+    contact_index NUMBER(10) primary key,
+    contact_name VARCHAR2(100),
+    contact_email VARCHAR2(200),
+--    contact_number VARCHAR2(200),
+    contact_text VARCHAR2(400)
 
+);

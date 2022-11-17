@@ -29,8 +29,26 @@ public class NoticeService {
         return noticeRepository.findAll();
     }
 
+
     @Transactional
     public int deleteByNotice_num(Long post_num) {
         return noticeRepository.deleteByNotice_num(post_num);
     }
+
+    public List<Notice> findOne(Long post_num) {
+        return noticeRepository.findByPost_num(post_num);
+    }
+
+    //검색
+    @Transactional
+    public List<Notice> searchNotice(String keyword) {
+        List<Notice> notices = noticeRepository.findByNotice_Title(keyword);
+        if(keyword.isEmpty()) return findNotice();
+        else {
+            return notices;
+        }
+
+    }
+
+
 }

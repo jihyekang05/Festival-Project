@@ -66,10 +66,25 @@ public class FestivalService{
         return festivalRepository.findByPost_num(post_num);
     }
 
+    //지역별축제기능
+    public List<Posts> findOne2(Long board_loc_addr){ return festivalRepository.findByBoard_loc_addr(board_loc_addr);}
+
+    //홈페이지 조회수 많은축제 탑3
+    public List<Posts> sort3ViewFestivals() {
+        System.out.println("여기@@@@@@@@@@@");
+        List<Posts> posts = festivalRepository.findOneOrderByFestival_Content_Views();
+        System.out.println(posts);
+        return posts;
+    }
+    //홈페이지 새로운축제 탑3
+    public List<Posts> sort3NewFestivals() {
+        List<Posts> date = festivalRepository.findOndOrderByUpload_Date();
+        return date;
+    }
+
 
     @Transactional
     public Long saveReview(Review review) {
-
         reviewRepository.save(review);
         return review.getReview_index();
     }
@@ -83,13 +98,12 @@ public class FestivalService{
     @Transactional
     public List<Posts> searchPosts(String keyword) {
         List<Posts> posts = festivalRepository.findByFestival_Title(keyword);
-
-
         if(keyword.isEmpty()) return findFestivals();
         else {
             return posts;
         }
     }
+
 
     public int deleteByPost_num(Long post_num) {
         return festivalRepository.deleteByPost_num(post_num);

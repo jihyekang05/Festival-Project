@@ -2,12 +2,14 @@ package com.festivalP.demo.controller;
 
 import com.festivalP.demo.domain.Member;
 
+import com.festivalP.demo.form.AuthInfo;
 import com.festivalP.demo.form.MemberForm;
 import com.festivalP.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -31,36 +35,23 @@ public class MemberController {
     public WeakHashMap<String, String> authData = new WeakHashMap<>();
 
 
-    @ResponseBody
-    @RequestMapping("/login")
-    public String loginPage(String login_id, String login_password) {
-
-
-
-
-
-        return "login";
-    }
-
 
     // 회원가입 페이지
-    @GetMapping("/signup")
+    @GetMapping("/member/signup")
     public String createForm(Model model){
         model.addAttribute("memberForm", new MemberForm());
         // resource 의 HTML 경로
             return "member/signUpForm";
     }
 
-
-
-    @PostMapping("/signup")
+    @PostMapping("/member/signup")
     public String create(MemberForm form, BindingResult result){
         if(result.hasErrors()){
             return "member/signUpForm";
         }
 
         Member member = new Member();
-
+        System.out.println("form.state: "+form.getState());
         member.setMember_id(form.getId());
         member.setMember_pw(form.getPw());
         member.setMember_birth(form.getBirth());
@@ -68,17 +59,40 @@ public class MemberController {
         member.setMember_email(form.getEmail());
         member.setMember_nickname(form.getNickname());
         member.setMember_category(form.getCategory());
+        member.setMember_state(form.getState());
 
+        System.out.println("member.state: "+member.getMember_state());
         memberService.join(member);
         System.out.println("회원가입성공");
         // 회원가입 완료 시 리턴 페이지
-        return "member/signUpForm";
+        return "redirect:/";
     }
 
 
 
+
+    // 마이페이지
+    @GetMapping("/member/mypage")
+    public String mypage(HttpSession session, Model model){
+
+
+        try{
+            AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+
+            Member member = (Member) session.getAttribute("member");
+
+            return "member/myPageForm";
+        }catch(Exception e){
+
+            return "/";
+        }
+
+
+    }
+
+    // 아이디 중복체크
     @ResponseBody
-    @PostMapping("/iddupcheck")
+    @PostMapping("/member/iddupcheck")
     public String iddupcheck(String member_id){
 
         if(memberService.validateDuplicateMemberId(member_id)){
@@ -89,8 +103,9 @@ public class MemberController {
         }
     }
 
+    // 닉네임 중복체크
     @ResponseBody
-    @PostMapping("/nicknamedupcheck")
+    @PostMapping("/member/nicknamedupcheck")
     public String nicknamedupcheck(String member_nickname){
 
         if(memberService.validateDuplicateMemberNickname(member_nickname)){
@@ -104,8 +119,10 @@ public class MemberController {
     @Autowired
     JavaMailSender mailSender;
 
+    
+    // 인증메일 발송
     @ResponseBody
-    @PostMapping("/emailAuth")
+    @PostMapping("/member/emailAuth")
     public String emailAuth(String email){
         Random random = new Random();
         int checkNum = random.nextInt(888888) + 111111;
@@ -137,8 +154,9 @@ public class MemberController {
         return Integer.toString(checkNum);
     }
 
+    // 이메일 인증번호 체크
     @ResponseBody
-    @PostMapping("/emailAuthCheck")
+    @PostMapping("/member/emailAuthCheck")
     public String emailAuthCheckFunction(String email, String emailAuthValue){
         if(emailAuthValue.equals(authData.get(email))){
             authData.replace(email, null);
@@ -162,6 +180,4 @@ public class MemberController {
 
         return "myPage";
     }
-
-
 }
