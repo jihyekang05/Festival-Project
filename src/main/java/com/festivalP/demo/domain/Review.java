@@ -19,7 +19,7 @@ public class Review {
     @Column(name="post_num")
     private Long post_num;
 
-    private Long member_index;
+    private String member_index; //작성자 닉네임
 
     private String review_text;
 

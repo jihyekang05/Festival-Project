@@ -39,7 +39,7 @@
                         <li class="nav-item"><a class="nav-link" href="/allfestival">전체목록</a></li>
                         <li class="nav-item"><a class="nav-link" href="/favorites">내 즐겨찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/localFestival">지역별 축제</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                         <li class="nav-item"><a class="nav-link" href="/notice">공지사항</a></li>
                         <li th:if="${session.authInfo != null} and ${session.authInfo.state==2}" class="nav-item"><a class="nav-link" href="/admin">관리자 페이지</a></li>
 
@@ -60,53 +60,58 @@
                 <!--  -->
             </div>
         </header>
-        <!-- 실시간 핫한 축제-->
-        <section class="page-section" id="about">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">실시간 핫한 축제</h2>
-                    <h3 class="section-subheading text-muted">실시간으로 핫한 축제를 즐겨보실까용</h3>
-                </div>
-                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
-                    <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img src="./assets/img/festival_example.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                          <h5>First slide label</h5>
-                          <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                      </div>
-                      <div class="carousel-item">
-                        <img src="./assets/img/festival_example.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                          <h5>Second slide label</h5>
-                          <p>Some representative placeholder content for the second slide.</p>
-                        </div>
-                      </div>
-                      <div class="carousel-item">
-                        <img src="./assets/img/festival_example.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                          <h5>Third slide label</h5>
-                          <p>Some representative placeholder content for the third slide.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
-                  </div>
-                
-        </section>
+<!--        &lt;!&ndash; 실시간 핫한 축제&ndash;&gt;-->
+<!--        <section class="page-section" id="about">-->
+<!--            <div class="container" >-->
+<!--                <div class="text-center">-->
+<!--                    <h2 class="section-heading text-uppercase">실시간 핫한 축제</h2>-->
+<!--                    <h3 class="section-subheading text-muted">실시간으로 핫한 축제를 즐겨보실까용</h3>-->
+<!--                </div>-->
+<!--                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false" >-->
+<!--                    <div >-->
+<!--                    <div class="carousel-indicators">-->
+<!--                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>-->
+<!--                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>-->
+<!--                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>-->
+<!--                    </div>-->
+<!--                    <div class="carousel-inner" >-->
+<!--                      <div class="carousel-item active" >-->
+<!--                        <img th:src="${topview.content_image}" class="d-block w-100" alt="...">-->
+<!--                        <div class="carousel-caption d-none d-md-block">-->
+<!--                          <h5 th:text="${topview.festival_title}">First slide label</h5>-->
+<!--                            <p>조회수</p>-->
+<!--                          <p th:text="${post.content_views}"></p>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--&lt;!&ndash;                      <div class="carousel-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <img src="./assets/img/festival_example.jpg" class="d-block w-100" alt="...">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="carousel-caption d-none d-md-block">&ndash;&gt;-->
+<!--&lt;!&ndash;                          <h5>Second slide label</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <p>Some representative placeholder content for the second slide.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <div class="carousel-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <img src="./assets/img/festival_example.jpg" class="d-block w-100" alt="...">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="carousel-caption d-none d-md-block">&ndash;&gt;-->
+<!--&lt;!&ndash;                          <h5>Third slide label</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <p>Some representative placeholder content for the third slide.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                      </div>&ndash;&gt;-->
+<!--                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">-->
+<!--                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--                            <span class="visually-hidden">Previous</span>-->
+<!--                        </button>-->
+<!--                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">-->
+<!--                            <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--                            <span class="visually-hidden">Next</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+
+<!--                   </div>-->
+<!--                  </div>-->
+<!--            </div>-->
+<!--                -->
+<!--        </section>-->
         <!-- 많이 찾는 축제-->
         <section class="page-section" id="services">
             <div class="container">
@@ -116,39 +121,21 @@
                 </div>
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4" th:each="topview : ${topview}">
                             <div class="card" style="width: 100%;">
-                                <img src="./assets/img/festival_example.jpg" class="card-img-top" alt="...">
+                                <img th:src="${topview.content_image}" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                  <h5 class="card-title">축제1</h5>
-                                  <p class="card-text">유명가수초대예정</p>
-                                  <a href="#" class="btn btn-primary">자세히보기</a>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card" style="width: 100%;">
-                                <img src="./assets/img/festival_example.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">축제2</h5>
-                                  <p class="card-text">인디가수초대예정</p>
-                                  <a href="#" class="btn btn-primary">자세히보기</a>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card" style="width: 100%;">
-                                <img src="./assets/img/festival_example.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">축제3</h5>
-                                  <p class="card-text">지상최대의 서커스쇼</p>
-                                  <a href="#" class="btn btn-primary">자세히보기</a>
+                                  <h5 th:text="${topview.festival_title}" class="card-title">축제1</h5>
+                                    <p>조회수</p>
+                                  <p th:text="${topview.content_views}"></p>
+                                  <a th:href="@{|/festival/${topview.post_num}|}" class="btn btn-primary">자세히보기</a>
                                 </div>
                               </div>
                         </div>
                     </div>
                 </div>
-        </section> -->
+            </div>
+        </section>
         <!-- 새로운 축제-->
         <section class="page-section bg-light" id="new_festival">
             <div class="container">
@@ -158,126 +145,22 @@
                 </div>
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4" th:each="topdate : ${topdate}">
                             <div class="card" style="width: 100%;">
-                                <img src="./assets/img/festival_example.jpg" class="card-img-top" alt="...">
+                                <img th:src="${topdate.content_image}" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                  <h5 class="card-title">축제1</h5>
-                                  <p class="card-text">유명가수초대예정</p>
-                                  <a href="#" class="btn btn-primary">자세히보기</a>
+                                  <h5 th:text="${topdate.festival_title}" class="card-title">축제명</h5>
+                                  <p th:text="${topdate.festival_upload_date}" class="card-text">게시일자</p>
+                                  <a th:href="@{|/festival/${topdate.post_num}|}" class="btn btn-primary">자세히보기</a>
                                 </div>
                               </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card" style="width: 100%;">
-                                <img src="./assets/img/festival_example.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">축제2</h5>
-                                  <p class="card-text">인디가수초대예정</p>
-                                  <a href="#" class="btn btn-primary">자세히보기</a>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card" style="width: 100%;">
-                                <img src="./assets/img/festival_example.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">축제3</h5>
-                                  <p class="card-text">지상최대의 서커스쇼</p>
-                                  <a href="#" class="btn btn-primary">자세히보기</a>
-                                </div>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-                
-        </section>
-        
-        
-        <!-- Clients-->
-        <div class="py-5">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/microsoft.svg" alt="..." aria-label="Microsoft Logo" /></a>
-                    </div>
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/google.svg" alt="..." aria-label="Google Logo" /></a>
-                    </div>
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/facebook.svg" alt="..." aria-label="Facebook Logo" /></a>
-                    </div>
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/ibm.svg" alt="..." aria-label="IBM Logo" /></a>
+
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Contact-->
-        <section class="page-section" id="contact">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Contact Us</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-                </div>
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- * * SB Forms Contact Form * *-->
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- This form is pre-integrated with SB Forms.-->
-                <!-- To make this form functional, sign up at-->
-                <!-- https://startbootstrap.com/solution/contact-forms-->
-                <!-- to get an API token!-->
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                    <div class="row align-items-stretch mb-5">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <!-- Name input-->
-                                <input class="form-control" id="name" type="text" placeholder="Your Name *" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                            </div>
-                            <div class="form-group">
-                                <!-- Email address input-->
-                                <input class="form-control" id="email" type="email" placeholder="Your Email *" data-sb-validations="required,email" />
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                            </div>
-                            <div class="form-group mb-md-0">
-                                <!-- Phone number input-->
-                                <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-textarea mb-md-0">
-                                <!-- Message input-->
-                                <textarea class="form-control" id="message" placeholder="Your Message *" data-sb-validations="required"></textarea>
-                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Submit success message-->
-                    <!---->
-                    <!-- This is what your users will see when the form-->
-                    <!-- has successfully submitted-->
-                    <div class="d-none" id="submitSuccessMessage">
-                        <div class="text-center text-white mb-3">
-                            <div class="fw-bolder">Form submission successful!</div>
-                            To activate this form, sign up at
-                            <br />
-                            <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                        </div>
-                    </div>
-                    <!-- Submit error message-->
-                    <!---->
-                    <!-- This is what your users will see when there is-->
-                    <!-- an error submitting the form-->
-                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                    <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Send Message</button></div>
-                </form>
-            </div>
         </section>
+
         <!-- ========================================================== -->
         <!-- 공지사항 모달창 -->
         <!-- Button trigger modal -->
@@ -286,7 +169,7 @@
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">공지제목</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel2">공지제목</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
