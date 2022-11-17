@@ -1,8 +1,11 @@
 package com.festivalP.demo.controller;
 
 
+import com.festivalP.demo.domain.Admin;
 import com.festivalP.demo.domain.Member;
 import com.festivalP.demo.form.AuthInfo;
+import com.festivalP.demo.form.MemberForm;
+import com.festivalP.demo.service.AdminService;
 import com.festivalP.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,7 @@ public class LoginController {
 
 
     private final MemberService memberService;
+    private final AdminService adminService;
 
     // 로그인
     @ResponseBody
@@ -34,9 +38,10 @@ public class LoginController {
 
                 AuthInfo authInfo = memberService.getMemberAuthInfo(login_id);
                 Member member = memberService.getMemberAllInfo(login_id);
-
+                if(member.getMember_state()==1)
+                    return "F";
+                member.setMember_pw(null);
                 HttpSession session = request.getSession();
-
                 session.setAttribute("authInfo", authInfo);
                 session.setAttribute("member", member);
 
@@ -53,14 +58,48 @@ public class LoginController {
         }
     }
 
+    @ResponseBody
+    @PostMapping("/member/adminlogin")
+    public String adminlogin(String login_id, String login_password, HttpServletRequest request) {
+
+        System.out.println("login_id: " + login_id);
+        System.out.println("login_password: " + login_password);
+
+
+        if (adminService.adminExistCheck(login_id, login_password)) {
+            try {
+
+                AuthInfo authInfo = new AuthInfo();
+                Admin admin = adminService.getAdminInfo(login_id);
+
+                authInfo.setId(login_id);
+                authInfo.setState(2);
+
+                HttpSession session = request.getSession();
+                session.setAttribute("authInfo", authInfo);
+                session.setAttribute("admin", admin);
+
+                return "S";
+            } catch (Exception e) {
+                System.out.println("login failed: "+e.toString());
+                return "F";
+
+            }
+        }
+
+        else {
+            return "F";
+        }
+    }
+
     // 로그아웃
+
     @ResponseBody
     @PostMapping("/member/logout")
     public String logout(HttpSession session) {
 
         // 로그아웃 시 세션 삭제
         session.invalidate();
-        return "success";
-
+        return "redirect:/";
     }
 }

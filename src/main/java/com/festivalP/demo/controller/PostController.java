@@ -47,6 +47,7 @@ public class PostController {
         return "Each_Festival_board";
     }
 
+
     //후기 제출했을 때 데이터 저장되는 부분
     @PostMapping("/festival/review")
     @ResponseBody

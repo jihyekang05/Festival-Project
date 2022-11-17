@@ -3,9 +3,11 @@ package com.festivalP.demo.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.persistence.criteria.Order;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class Member {
 
     private String member_pw;
 
-    private String member_birth;
+    private Date member_birth;
 
     private String member_addr;
 
