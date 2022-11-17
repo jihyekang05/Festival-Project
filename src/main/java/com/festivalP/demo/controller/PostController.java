@@ -1,35 +1,41 @@
 package com.festivalP.demo.controller;
 
+//import com.festivalP.demo.domain.Contact;
+import com.festivalP.demo.domain.Contact;
 import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.domain.Review;
 import com.festivalP.demo.service.FestivalService;
-import lombok.Data;
+//import com.festivalP.demo.service.MailService;
+import com.festivalP.demo.service.MailService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.Banner;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.Date;
+import java.awt.print.Pageable;
 import java.util.HashMap;
 import java.util.List;
-
+@Log4j2
 @Controller
 @RequiredArgsConstructor
 public class PostController {
 
+
     private final FestivalService festivalService;
+
+//    private final MailService mailService;
 
     //전체 축제리스트 불러오는 부분
     @GetMapping("/allfestival")
     public String list(Model model) {
         List<Posts> festivals = festivalService.findFestivals();
         model.addAttribute("posts",festivals);
+        log.info("DEBUG");
         return "every_festival_board";
     }
-
 
     //각 축제별 정보와 리뷰리스트 불러오는 부분
     @GetMapping("/festival/{post_num}")
@@ -46,6 +52,7 @@ public class PostController {
     @ResponseBody
     public HashMap<String, Object> Review(@RequestBody Review data) {
         festivalService.saveReview(data);
+        System.out.println(festivalService.saveReview(data));
         return null;
     }
 
@@ -70,6 +77,15 @@ public class PostController {
         List<Posts> addr = festivalService.findOne2(local);
         return addr;
     }
+
+    //contact
+    @GetMapping("/contact")
+    public String contact() {
+        return "contact";
+    }
+
+
+
 
 
 

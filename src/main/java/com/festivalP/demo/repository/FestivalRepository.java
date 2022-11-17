@@ -42,10 +42,13 @@ public class FestivalRepository {
     }
 
 
-    //제목 검색할 때 필요
-    public List<Posts> findByFestival_Title(String festival_title) {
-        return em.createQuery("select p from Posts p where p.festival_title LIKE :festival_title", Posts.class).setParameter("festival_title", festival_title).getResultList();
+//    제목 검색할 때 필요
+    public List<Posts> findByFestival_Title(String keyword) {
+
+        return em.createQuery("select p from Posts p where p.festival_title LIKE concat('%',:keyword,'%')",Posts.class).setParameter("keyword",keyword).getResultList();
     }
+
+
 
     //오래된 순 정렬
     public List<Posts> findAllOrderByFestival_Upload_Date_Old() {
@@ -67,6 +70,15 @@ public class FestivalRepository {
         return em.createQuery("select p from Posts p where p.board_loc_addr LIKE :board_loc_addr", Posts.class).setParameter("board_loc_addr",board_loc_addr).getResultList();
     }
 
+    //많이 찾는 축제찾기
+    public List<Posts> findOneOrderByFestival_Content_Views() {
+       return em.createQuery("select p from Posts p order by p.content_views desc", Posts.class).setFirstResult(0).setMaxResults(3).getResultList();
+    }
+
+    //새로운 축제찾기
+    public List<Posts> findOndOrderByUpload_Date() {
+        return em.createQuery("select p from Posts p order by p.festival_upload_date desc", Posts.class).setFirstResult(0).setMaxResults(3).getResultList();
+    }
 
 
     public void modifyByPost(Posts posts){

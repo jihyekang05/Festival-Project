@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/hover.css" rel="stylesheet" />
 </head>
 <body id="page-top">
 <!-- Navigation-->
@@ -28,10 +29,11 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                 <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#login-Modal" >로그인</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">메인페이지</a></li>
                 <li class="nav-item"><a class="nav-link" href="/allfestival">전체목록</a></li>
                 <li class="nav-item"><a class="nav-link" href="/favorites">내 즐겨찾기</a></li>
                 <li class="nav-item"><a class="nav-link" href="/localFestival">지역별 축제</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                 <li class="nav-item"><a class="nav-link" href="/notice">공지사항</a></li>
             </ul>
         </div>
@@ -43,13 +45,12 @@
 </header>
 <!-- 이미지 폴리곤 -->
 <div  style="text-align : center;">
-    <img src = "/assets/img/map.png" usemap ="#imgmap20221114105523" width="900px">
+    <img   src = "/assets/img/map.png" usemap ="#imgmap20221114105523" width="900px">
 </div>
-    <map id="imgmap20221114105523" name="imgmap20221114105523">
+    <map  id="imgmap20221114105523" name="imgmap20221114105523">
 <!--    제주도-->
-<!--    <form method="post" onclick="ajax()">-->
-    <area shape="poly"  id="jeju" onclick="localChk(1)" alt="" title="" coords="180,937,129,969,143,996,205,995,245,959,256,928,234,918,193,930"  href="#" target=""/>
-<!--    </form>-->
+    <area  class="map01" shape="poly"  id="jeju" onclick="localChk(1)" alt="" title="" coords="180,937,129,969,143,996,205,995,245,959,256,928,234,918,193,930"  href="#" target=""/>
+
 <!--    전라남도,광주-->
     <area shape="poly"  id="jeonnam" onclick="localChk(2)" alt="" title="" coords="247,632,266,658,293,641,307,623,324,647,330,632,344,655,370,657,388,657,402,649,419,665,442,698,448,721,448,794,451,813,413,824,376,817,356,822,330,844,315,868,266,878,178,838,162,755,185,697,240,638,241,638" href="#" target="" />
 
@@ -95,7 +96,10 @@
         <tbody id="boardList">
         </tbody>
     </table>
-
+<!-- hover때문에 추가한 부분-->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>

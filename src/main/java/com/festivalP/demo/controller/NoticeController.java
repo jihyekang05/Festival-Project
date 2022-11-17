@@ -1,6 +1,8 @@
 package com.festivalP.demo.controller;
 
 import com.festivalP.demo.domain.Notice;
+import com.festivalP.demo.domain.Posts;
+import com.festivalP.demo.domain.Review;
 import com.festivalP.demo.service.FestivalService;
 import com.festivalP.demo.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,23 @@ public class NoticeController {
         return "notice";
     }
 
+    //각 공지사항 들어가는 부분
+    @GetMapping("/notice/{post_num}")
+    public String list(Model model, @PathVariable("post_num") Long post_num) {
+        List<Notice> notices = noticeService.findOne(post_num);
+        model.addAttribute("notice",notices);
+        return "noticePage";
+    }
 
+    //검색
+    @GetMapping("/notice/search")
+    public String search(String keyword2, Model model){
+        List<Notice> notice = noticeService.searchNotice(keyword2);
+        System.out.println("here!!!!!!!");
+        System.out.println(notice.size());
+        model.addAttribute("notice", notice);
+        return "notice";
+    }
 
 
 }
