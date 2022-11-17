@@ -6,7 +6,7 @@ import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.domain.Review;
 import com.festivalP.demo.service.FestivalService;
 //import com.festivalP.demo.service.MailService;
-import com.festivalP.demo.service.MailService;
+//import com.festivalP.demo.service.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
