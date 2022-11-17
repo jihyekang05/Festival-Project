@@ -37,6 +37,7 @@ const detailAddress_valid_text = document.getElementById("detailAddress_valid_te
 const address = document.getElementById("address");
 const address_valid_text = document.getElementById("address_valid_text");
 
+
 const category = document.getElementsByClassName("category");
 
 
@@ -363,6 +364,12 @@ email_auth_btn.addEventListener('click', () => {
     email_check.classList.remove('valid');
     validTextChange(false, email_check_valid_text, "이메일 인증을 완료해주세요.");
 
+    Swal.fire({
+        title: '인증번호가 발송되었습니다.',
+        text: '인증번호가 도착하는데 잠깐의 시간이 소요될 수 있습니다.',
+        confirmButtonText: '확인',
+    });
+
     $.ajax({
         type: "POST",
         async:true,
@@ -371,12 +378,6 @@ email_auth_btn.addEventListener('click', () => {
         data: { email: email }
     })
         .done(function (data) {
-            Swal.fire({
-                title: '인증번호가 발송되었습니다.',
-                text: '인증 절차를 완료해주세요.',
-                confirmButtonText: '확인',
-            });
-
             email_auth_cd = data;
             console.log("email_auth_cd: " + email_auth_cd);
             console.log("data: " + data);
@@ -500,6 +501,33 @@ address.addEventListener("input", () => {
     }
 });
 
+detailAddress.addEventListener("input", () => {
+
+    if (address.value != '') {
+        detailAddress.classList.add('valid');
+        address_valid_text.classList.add()
+        validTextChange(true, detailAddress_valid_text, "상세주소가 입력되었습니다.");
+        detailAddress.classList.add('valid');
+    }
+    else{
+        validTextChange(false, detailAddress_valid_text, "상세주소를 입력해주세요.");
+        detailAddress.classList.remove('valid');
+    }
+});
+
+
+const addr_value = document.getElementById("addr_value");
+
+function addrMerge(){
+
+
+    addr_value.value = address.value+" "+detailAddress.value;
+    
+    console.log(addr_value);
+    console.log(address.value);
+    console.log(detailAddress.value);
+}
+
 
 ////////////////////////////////////////////////
 // 카테고리 로직
@@ -520,35 +548,10 @@ function category_insert() {
 };
 
 
-
-//////////////////////////////////////////////////
-// 관리자 체크박스
-
-const admin_check = document.getElementById("admin_check");
-const admin_check_val = document.getElementById("admin_check_val");
-
-
-function admin_check_Func(){
-
-    console.log("체크박스: "+admin_check.checked);
-    
-    
-
-    if(admin_check.checked){
-        console.log("조건만족: "+admin_check.checked);
-        admin_check_val.value=2;
-    }
-    else{
-        admin_check_val.value=0;
-    }
-}
-
 ///////////////////////////////////////////////////
 // submit 정의
 
 let validFlag = false;
-
-
 
 function validCheck() {
 
@@ -556,7 +559,7 @@ function validCheck() {
 
     // valid 개수 카운팅 후 flag
 
-    if (validCnt.length >= 7) {
+    if (validCnt.length >= 8) {
         // valid 개수 맞으면
         validFlag = true;
     }
@@ -581,16 +584,15 @@ submitBtn.addEventListener("click", (event) => {
             denyButtonText: `취소`,
         }).then((result) => {
             if (result.isConfirmed) {
-
+                
+                addrMerge();
                 category_insert();
-                admin_check_Func();
                 $("#signUpForm").submit();
             }
             else {
 
             }
         });
-
     }
     else {
 

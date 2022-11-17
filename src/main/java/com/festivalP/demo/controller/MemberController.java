@@ -1,9 +1,12 @@
 package com.festivalP.demo.controller;
 
+import com.festivalP.demo.domain.Admin;
 import com.festivalP.demo.domain.Member;
 
+import com.festivalP.demo.form.AdminForm;
 import com.festivalP.demo.form.AuthInfo;
 import com.festivalP.demo.form.MemberForm;
+import com.festivalP.demo.service.AdminService;
 import com.festivalP.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +22,9 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLOutput;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.WeakHashMap;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.sql.Date;
 
 //import javax.validation.Valid;
 
@@ -32,16 +34,61 @@ import java.util.WeakHashMap;
 public class MemberController {
 
     private final MemberService memberService;
+    private final AdminService adminService;
     public WeakHashMap<String, String> authData = new WeakHashMap<>();
 
 
 
-    // 회원가입 페이지
+    //////////////////
+    // 어드민 회원가입 페이지
+    @GetMapping("/member/adminsignup")
+    public String createAdminForm(Model model){
+        model.addAttribute("adminForm", new AdminForm());
+        // resource 의 HTML 경로
+            return "member/adminSignUpForm";
+    }
+
+    @PostMapping("/member/adminsignup")
+    public String create(AdminForm adminForm, BindingResult result){
+        if(result.hasErrors()){
+            return "member/adminSignUpForm";
+        }
+
+        Admin admin = new Admin();
+        admin.setAdmin_id(adminForm.getId());
+        admin.setAdmin_pw(adminForm.getPw());
+
+        adminService.join(admin);
+        System.out.println("관리자 회원가입성공");
+        // 회원가입 완료 시 리턴 페이지
+        return "redirect:/";
+    }
+
+    
+    ////////////////////////////////
+    // admin 아이디 중복체크
+    @ResponseBody
+    @PostMapping("/admin/iddupcheck")
+    public String adminiddupcheck(String admin_id){
+
+        if(adminService.validateDuplicateAdminId(admin_id)){
+            return "S";
+        }
+        else{
+            return "F";
+        }
+    }
+    
+    
+    
+
+    /////////////////////////
+    // 멤버 회원가입
     @GetMapping("/member/signup")
     public String createForm(Model model){
         model.addAttribute("memberForm", new MemberForm());
         // resource 의 HTML 경로
-            return "member/signUpForm";
+        return "member/signUpForm";
     }
 
     @PostMapping("/member/signup")
@@ -51,7 +98,6 @@ public class MemberController {
         }
 
         Member member = new Member();
-        System.out.println("form.state: "+form.getState());
         member.setMember_id(form.getId());
         member.setMember_pw(form.getPw());
         member.setMember_birth(form.getBirth());
@@ -61,13 +107,20 @@ public class MemberController {
         member.setMember_category(form.getCategory());
         member.setMember_state(form.getState());
 
-        System.out.println("member.state: "+member.getMember_state());
         memberService.join(member);
         System.out.println("회원가입성공");
         // 회원가입 완료 시 리턴 페이지
         return "redirect:/";
     }
 
+    @PostMapping("/member/delete")
+    public String delete(HttpSession session){
+
+        Member member = (Member) session.getAttribute("member");
+        memberService.deleteMember(member);
+        session.invalidate();
+        return "redirect:/";
+    }
 
 
 
@@ -84,10 +137,67 @@ public class MemberController {
             return "member/myPageForm";
         }catch(Exception e){
 
-            return "/";
+            return "redirect:/";
         }
+    }
+
+    @ResponseBody
+    @PostMapping("/member/mypage/modifyconfirm")
+    public String modify(@RequestParam("nickname")String nickname, @RequestParam("addr")String addr, @RequestParam("birth")Date birth, @RequestParam("category")String category, @RequestParam("email")String email, HttpSession session){
+
+        Member member = (Member) session.getAttribute("member");
+
+        System.out.println(member.getMember_nickname());
+        System.out.println(member.getMember_addr());
+        System.out.println(member.getMember_birth());
+        System.out.println(member.getMember_category());
+        System.out.println(member.getMember_email());
 
 
+        member.setMember_nickname(nickname);
+        member.setMember_addr(addr);
+        member.setMember_birth(birth);
+        member.setMember_email(email);
+        member.setMember_category(category);
+
+        session.setAttribute("member", memberService.updateInfo(member));
+        System.out.println(member.getMember_nickname());
+        System.out.println(member.getMember_addr());
+        System.out.println(member.getMember_birth());
+        System.out.println(member.getMember_category());
+        System.out.println(member.getMember_email());
+
+        System.out.println("$$$ wowwowow modifyyyy");
+        return "modify success";
+    }
+
+    @ResponseBody
+    @PostMapping("/member/mypage/modify")
+    public String modify(@RequestParam("login_id")String login_id, @RequestParam("login_password")String login_password){
+
+        if (memberService.memberExistCheck(login_id, login_password)) {
+
+            try {
+                return "S";
+            } catch (Exception e) {
+                System.out.println("login failed: "+e.toString());
+                return "F";
+
+            }
+        }
+        else {
+            return "F";
+        }
+    }
+
+    @GetMapping("/member/modifypage")
+    public String modifypage(HttpSession session){
+
+        Member member = (Member)session.getAttribute("member");
+
+        System.out.println(member.getMember_id());
+        System.out.println(member.getMember_pw());
+        return "member/memberModifyPage";
     }
 
     // 아이디 중복체크
@@ -128,7 +238,7 @@ public class MemberController {
         int checkNum = random.nextInt(888888) + 111111;
 
         // 메일 발송
-        String setFrom = "wowinteresting@naver.com";
+        String setFrom = "wowinteresting234@gmail.com";
         String toMail = email;
         String title = "회원가입 인증 메일입니다.";
         String content =
@@ -175,9 +285,4 @@ public class MemberController {
         return "findId";
     }
 
-    @RequestMapping("/mypage")
-    public String myPage(){
-
-        return "myPage";
-    }
 }

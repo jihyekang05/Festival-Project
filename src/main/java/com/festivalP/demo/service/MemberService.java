@@ -1,6 +1,7 @@
 package com.festivalP.demo.service;
 
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.festivalP.demo.domain.Member;
 import com.festivalP.demo.form.AuthInfo;
 import com.festivalP.demo.form.MemberForm;
@@ -113,10 +114,10 @@ public class MemberService {
     public AuthInfo getMemberAuthInfo(String member_id){
         List<Member> findMem =memberRepository.findById(member_id);
         Member mem = findMem.get(0);
+
+//        Member mem = memberRepository.findById(member_id);
         AuthInfo authInfo = new AuthInfo();
         authInfo.setId(member_id);
-        authInfo.setEmail(mem.getMember_email());
-        authInfo.setNickname(mem.getMember_nickname());
         authInfo.setState(mem.getMember_state());
 
         return authInfo;
@@ -129,6 +130,19 @@ public class MemberService {
         return mem;
     }
 
+    @Transactional
+    public Member updateInfo(Member member){
+        Member resMember =  memberRepository.memberInfoUpdate(member);
+
+        return resMember;
+    }
+
+    @Transactional
+    public Member deleteMember(Member member){
+        memberRepository.memberDelete(member);
+
+        return member;
+    }
 
 //    @Override
 //    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
