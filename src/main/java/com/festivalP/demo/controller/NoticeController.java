@@ -30,9 +30,9 @@ public class NoticeController {
     }
 
     //각 공지사항 들어가는 부분
-    @GetMapping("/notice/{post_num}")
-    public String list(Model model, @PathVariable("post_num") Long post_num) {
-        List<Notice> notices = noticeService.findOne(post_num);
+    @GetMapping("/notice/{postNum}")
+    public String list(Model model, @PathVariable("postNum") Long postNum) {
+        List<Notice> notices = noticeService.findOne(postNum);
         model.addAttribute("notice",notices);
         return "noticePage";
     }

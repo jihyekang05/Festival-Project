@@ -69,13 +69,13 @@
       </thead>
       <tbody th:each="member : ${members}">
       <tr>
-        <td>[[${member.member_index}]]</td>
-        <td >[[${member.member_id}]]</td>
+        <td>[[${member.memberIndex}]]</td>
+        <td >[[${member.memberId}]]</td>
         <td >21</td>
-        <td >[[${member.member_email}]]</td>
-        <td >[[${member.member_state}]]</td>
+        <td >[[${member.memberEmail}]]</td>
+        <td >[[${member.memberState}]]</td>
         <td class="dropdown">
-<!--        //  <button class="btn btn-outline-success" type="button"  th:onclick="|javascript:member_state_modify(${member.member_id})|">-->
+<!--        //  <button class="btn btn-outline-success" type="button"  th:onclick="|javascript:memberState_modify(${member.memberId})|">-->
             회원정지
           </button>
         </td>

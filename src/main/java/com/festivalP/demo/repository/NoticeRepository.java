@@ -26,29 +26,39 @@ public class NoticeRepository {
     }
 
 
-    public int deleteByNotice_num(Long post_num){
+    public int deleteByNotice_num(Long postNum){
 
-        int result = em.createQuery ("delete from Notice p where p.post_num = :post_num")
-                .setParameter("post_num",post_num).executeUpdate();
+        int result = em.createQuery ("delete from Notice p where p.postNum = :postNum")
+                .setParameter("postNum",postNum).executeUpdate();
         return result;
     }
 
     //각 공지 들어갈 때
+
     public List<Notice> findByPost_num(Long post_num) {
         return em.createQuery("select n from Notice n where n.post_num = :post_num", Notice.class).setParameter("post_num", post_num).getResultList();
     }
 
+    public List<Notice> findBypostNum(Long postNum) {
+        return em.createQuery("select n from Notice n where n.postNum = :postNum",Notice.class).setParameter("postNum",postNum).getResultList();}
+
+
+
 
 
     public List<Notice> findByNotice_Title(String keyword) {
-        return em.createQuery("select n from Notice n where n.content_text LIKE concat('%',:keyword,'%')", Notice.class).setParameter("keyword", keyword).getResultList();
+
+        return em.createQuery("select n from Notice n where n.contentText LIKE concat('%',:keyword,'%')", Notice.class).setParameter("keyword", keyword).getResultList();
     }
 
 
     //최근공지
     public List<Notice> findByNotice_Date() {
-        return em.createQuery("select n from Notice n order by n.notice_date desc", Notice.class).setFirstResult(0).setMaxResults(1).getResultList();
+        return em.createQuery("select n from Notice n order by n.noticeDate desc", Notice.class).setFirstResult(0).setMaxResults(1).getResultList();
     }
+
+
+//        return em.createQuery("select n from Notice n where n.contentTitle LIKE concat('%',:keyword,'%')",Notice.class).setParameter("keyword",keyword).getResultList();}
 
 }
 

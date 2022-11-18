@@ -21,34 +21,46 @@ public class Posts {
     @Id
     @GeneratedValue
     @Column(name="post_num")
-    private Long post_num;
+    private Long postNum;
 
-    private Long admin_index;
+    @Column(name="admin_index")
+    private Long adminIndex;
 
-    private String content_text;
+    @Column(name="content_text")
+    private String contentText;
 
-    private Long content_views;
+    @Column(name="content_views")
+    private Long contentViews;
 
-    @Column(name = "festivalTitle")
-    private String festival_title;
+    @Column(name = "festival_title")
+    private String festivalTitle;
 
-    private Long review_score_avg;
+    @Column(name="reviewScore_avg")
+    private Long reviewScoreAvg;
 
-    private String board_addr; //주소
+    @Column(name="board_addr")
+    private String boardAddr; //주소
 
-    private Long board_loc_addr; //지역주소
+    @Column(name="board_loc_addr")
+    private Long boardLocAddr; //지역주소
+    
+    @Column(name="content_image")
+    private String contentImage;
 
-    private String content_image;
-
-    private String progress_state; //진행상태
+    @Column(name="progress_state")
+    private String progressState; //진행상태
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date festival_upload_date;
+    @Column(name="festival_upload_date")
+    private Date festivalUploadDate;
 
-    private String festival_category;
+    @Column(name="festival_category")
+    private String festivalCategory;
 
 
+    //db없음
+    //private int fav;
 
 
 

@@ -29,7 +29,7 @@ public class AdminRepository {
         System.out.println("#####this is ID : "+id.getClass().getName());
 
         try{
-            return em.createQuery("select m from Admin m where m.admin_id = :id", Admin.class).setParameter("id", id).getSingleResult();
+            return em.createQuery("select m from Admin m where m.adminId = :id", Admin.class).setParameter("id", id).getSingleResult();
         }catch(NoResultException e){
             return null;
         }

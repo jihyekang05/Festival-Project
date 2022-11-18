@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 public class NoticeForm {
 
-    private Long post_num;
-    private Long admin_index;
-    private String content_title;
-    private String content_text;
+    private Long postNum;
+    private Long adminIndex;
+    private String contentTitle;
+    private String contentText;
 }

@@ -32,9 +32,9 @@ public class PostController {
 
     //전체 축제리스트 불러오는 부분
     @GetMapping("/allfestival")
-    public String list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable, String  searchKeyword) {
+    public String list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
 //        List<Posts> festivals = festivalService.findFestivals();
-        Page<Posts> festivals = festivalService.paging(pageable);
+        Page<Posts> festivals = festivalService.paging2( pageable);
         model.addAttribute("posts",festivals);
 //        System.out.println();
         return "every_festival_board";
@@ -43,11 +43,11 @@ public class PostController {
     //페이지 ajax
     @PostMapping("/allfestival/scroll")
     @ResponseBody
-    public  Page<Posts> list(Model model,  @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
+    public Page<Posts> list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable, String  keyword) {
         System.out.println("=========================");
 //        System.out.println(page);
         System.out.println(pageable.getPageNumber());
-        Page<Posts> festivals = festivalService.paging(pageable);
+        Page<Posts> festivals = festivalService.paging(keyword, pageable);
 //        model.addAttribute("posts", festivals);
         System.out.println(festivals.getTotalPages()); //2
         return festivals;
@@ -56,11 +56,11 @@ public class PostController {
 
 
     //각 축제별 정보와 리뷰리스트 불러오는 부분
-    @GetMapping("/festival/{post_num}")
-    public String list(Model model, @PathVariable("post_num") Long post_num) {
-        List<Posts> post = festivalService.findOne(post_num);
+    @GetMapping("/festival/{postNum}")
+    public String list(Model model, @PathVariable("postNum") Long postNum) {
+        List<Posts> post = festivalService.findOne(postNum);
         model.addAttribute("post", post);
-        List<Review> reviews = festivalService.findReviews(post_num);
+        List<Review> reviews = festivalService.findReviews(postNum);
         model.addAttribute("reviews",reviews);
         return "Each_Festival_board";
     }
@@ -94,6 +94,8 @@ public class PostController {
     @ResponseBody
     public List local_Addr(Long local) {
         List<Posts> addr = festivalService.findOne2(local);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(addr.size());
         return addr;
     }
 
@@ -111,14 +113,14 @@ public class PostController {
 
 
 //=============================================================================
-//    @GetMapping("/festival/{post_num}")
+//    @GetMapping("/festival/{postNum}")
 //    public String createReview(Model model){
 //        model.addAttribute("review", new review());
 //        return "Each_Festival_board";
 //    }
 
 
-//    @PostMapping("/festival/{post_num}/stars")
+//    @PostMapping("/festival/{postNum}/stars")
 //    public void funct(@RequestParam int starCnt) {
 //
 ////        service.star(starCnt); // -> service에서는 repository.

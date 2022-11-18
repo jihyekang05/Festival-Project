@@ -38,9 +38,9 @@ public class LoginController {
 
                 AuthInfo authInfo = memberService.getMemberAuthInfo(login_id);
                 Member member = memberService.getMemberAllInfo(login_id);
-                if(member.getMember_state()==1)
+                if(member.getMemberState()==1)
                     return "F";
-                member.setMember_pw(null);
+                member.setMemberPw(null);
                 HttpSession session = request.getSession();
                 session.setAttribute("authInfo", authInfo);
                 session.setAttribute("member", member);

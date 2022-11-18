@@ -53,19 +53,19 @@
         <!-- Post header-->
         <header class="mb-4">
           <!-- Post title-->
-          <h1 class="fw-bolder mb-1" th:text="${notice.content_title}">공지제목</h1>
+          <h1 class="fw-bolder mb-1" th:text="${notice.contentTitle}">공지제목</h1>
           <p></p>
           <!-- Post meta content-->
           <p>게시일자</p>
           <p>-----------------------------------------------------------------------------------------------</p>
-          <div class="text-muted fst-italic mb-4" th:text="${notice.notice_date}">게시일자 : 게시일자 들어갈 자리
+          <div class="text-muted fst-italic mb-4" th:text="${notice.noticeDate}">게시일자 : 게시일자 들어갈 자리
           </div>
 
         </header>
 
         <!-- Post content-->
         <section class="mb-5">
-          <p th:text="${notice.content_text}">공지글 들어갈 자리</p>
+          <p th:text="${notice.contentText}">공지글 들어갈 자리</p>
         </section>
       </article>
 

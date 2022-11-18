@@ -101,7 +101,7 @@ id_dup_check.addEventListener('click', function (event) {
     $.ajax({
         url: "/member/iddupcheck",
         async: true,
-        data: { member_id: id.value },
+        data: { memberId: id.value },
         method: "POST",
         dataType: "text"
     })
@@ -257,7 +257,7 @@ nickname_dup_check.addEventListener("click", () => {
     $.ajax({
         url: "/member/nicknamedupcheck",
         async: true,
-        data: { member_nickname: nickname.value },
+        data: { memberNickname: nickname.value },
         method: "POST",
         dataType: "text"
     })

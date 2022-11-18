@@ -19,15 +19,20 @@ public class Notice {
     @Id
     @GeneratedValue
     @Column(name="post_num")
-    private Long post_num;
+    private Long postNum;
 
-    private Long admin_index;
+    @Column(name="admin_index")
+    private Long adminIndex;
 
-    private String content_title;
 
-    private String content_text;
+    @Column(name="content_title")
+    private String contentTitle;
+
+    @Column(name="content_text")
+    private String contentText;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date notice_date;
+    @Column(name="notice_date")
+    private Date noticeDate;
 }

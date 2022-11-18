@@ -22,18 +22,18 @@ $(window).scroll(function() {
             pageNum++;
             let json =  JSON.parse(result);
 //            console.log(json.content);
-            console.log(json.content.length);
+//            console.log(json.content[0]);
             if(json.content.length > 0 ){
             var str = '';
             $.each(json.content , function(i) {
                             str += "<div class='col-md-4'>\
                                         <div class='card' style='width: 100%;' >\
-                                           <img src='"+ json.content[i].content_image + "' class='card-img-top' alt='...'>\
+                                           <img src='"+ json.content[i].contentImage + "' class='card-img-top' alt='...'>\
                                            <div class='card-body'>\
-                                             <h5 class='festival-title'>"+json.content[i].festival_title+"</h5>\
+                                             <h5 class='festivalTitle'>"+json.content[i].festivalTitle+"</h5>\
                                              <p>조회수</p>\
-                                             <p class='festival-text'>"+ json.content[i].content_views +"</p>\
-                                             <a href='/festival/"+ json.content[i].post_num +"' class='btn btn-primary'>자세히보기</a>\
+                                             <p class='festival-text'>"+ json.content[i].contentViews +"</p>\
+                                             <a href='/festival/"+ json.content[i].postNum +"' class='btn btn-primary'>자세히보기</a>\
                                            </div>\
                                          </div>\
                                        </div>"

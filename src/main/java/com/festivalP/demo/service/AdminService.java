@@ -25,9 +25,9 @@ public class AdminService {
     @Transactional
     private Admin encryptFunc(Admin admin){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String pw = admin.getAdmin_pw();
+        String pw = admin.getAdminPw();
         String securePw = encoder.encode(pw);
-        admin.setAdmin_pw(securePw);
+        admin.setAdminPw(securePw);
         return admin;
     }
 
@@ -35,12 +35,12 @@ public class AdminService {
     public String join(Admin admin){
         System.out.println("AdminService.join");
         adminRepository.save(encryptFunc(admin));
-        return admin.getAdmin_id();
+        return admin.getAdminId();
     }
 
     @Transactional
-    public boolean validateDuplicateAdminId(String admin_id){
-        Admin admin = adminRepository.findById(admin_id);
+    public boolean validateDuplicateAdminId(String adminId){
+        Admin admin = adminRepository.findById(adminId);
         if(admin!=null) {
             // 중복된 ID 있을 경우
             System.out.println("@@@@@@@ duplicate! @@@@");
@@ -55,22 +55,22 @@ public class AdminService {
 
 
     @Transactional
-    public boolean adminExistCheck(String admin_id, String admin_pw){
+    public boolean adminExistCheck(String adminId, String adminPw){
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        Admin admin =adminRepository.findById(admin_id);
+        Admin admin =adminRepository.findById(adminId);
         if(admin==null){
             return false;
         }
         else{
-            return encoder.matches(admin_pw,admin.getAdmin_pw());
+            return encoder.matches(adminPw,admin.getAdminPw());
         }
     }
 
     @Transactional
-    public Admin getAdminInfo(String admin_id){
+    public Admin getAdminInfo(String adminId){
 
-        Admin resAdmin = adminRepository.findById(admin_id);
+        Admin resAdmin = adminRepository.findById(adminId);
         return resAdmin;
     }
 }

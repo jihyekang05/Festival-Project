@@ -26,8 +26,17 @@ public class HomeController {
     public String home(Model model) {
         List<Posts> topThree = festivalService.sort3ViewFestivals();
         List<Posts> topDate =  festivalService.sort3NewFestivals();
+
         List<Notice> notices = noticeService.NewNotice();
         model.addAttribute("notice",notices);
+
+        System.out.println("here!!!!!!!!!!!!!!!!!!!!!");
+//        System.out.println(topThree.size());
+//        for (Posts p:topThree) {
+//            System.out.println(p.getcontentViews());
+//
+//        }
+
         model.addAttribute("topview",topThree);
         model.addAttribute("topdate",topDate);
         return "home";

@@ -53,9 +53,9 @@
                 <!-- Post header-->
                 <header class="mb-4">
                     <!-- Post title-->
-                    <h1 class="fw-bolder mb-1" th:text="${post.festival_title}">축제이름</h1>
+                    <h1 class="fw-bolder mb-1" th:text="${post.festivalTitle}">축제이름</h1>
                     <!-- Post meta content-->
-                    <div class="text-muted fst-italic mb-4" th:text="${post.festival_upload_date}">게시일자 : 게시일자 들어갈 자리
+                    <div class="text-muted fst-italic mb-4" th:text="${post.festivalUploadDate}">게시일자 : 게시일자 들어갈 자리
                     </div>
                     <!-- Post categories-->
                     <a class="badge bg-secondary text-decoration-none link-light" href="#!">청송</a>
@@ -67,35 +67,35 @@
                 <!-- ==================================== -->
                 <!-- Preview image figure-->
                 <figure class="mb-4">
-                    <img class="img-fluid rounded" th:src="${post.content_image}" alt="...">
+                    <img class="img-fluid rounded" th:src="${post.contentImage}" alt="...">
                 </figure>
                 <!-- Post content-->
                 <section class="mb-5">
-                    <p th:text="${post.content_text}"></p>
+                    <p th:text="${post.contentText}"></p>
                 </section>
             </article>
             <!--api 들어갈 부분-->
-            <input type="hidden" id="address" th:value="${post.board_addr}" size="70">
+            <input type="hidden" id="address" th:value="${post.boardAddr}" size="70">
             <div id="map" style="width:100%;height:450px;"></div>
 
             <div id="coordXY"></div>
 
-            <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f0ea3c6cbdf7a79d08988e31487b46ad&libraries=services"></script>
+            <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f0ea3c6cbdf7a79d08988e31487b46ad&libraries=services"></script>
             <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('CS2')">편의점</a>
             <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('SW8')">지하철역</a>
             <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('PK6')">주차장</a>
             <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('CE7')">카페</a>
 
-            <!--                    ===================================================================================-->
+
             <!--  후기 남기는 부분                  -->
 
             <section class="mb-5">
                 <div class="alert alert-success" role="alert" id="review">
                     후기를 남겨보세요!
                 </div>
-                <input type="hidden" id="post_num" th:value="${post.post_num}" size="70">
-                <form name="enter_review" action="/festival/${post.post_num}" method="post">
+
+                <input type="hidden" id="post_num" th:value="${post.postNum}" size="70">
+                <form name="enter_review" action="/festival/${post.postNum}" method="post">
                     <!--                        <button type="submit" class="btn btn-primary btn-l text-uppercase" id="review_submit" >제출</button>-->
                     <a class="btn btn-primary" id="review_submit" type="submit">제출</a>
                     <!--                        th:href="@{|/festival/${post.post_num}|}"-->
@@ -130,7 +130,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <input id="review_post_num" th:value="${post.post_num}" name="member_index" type="text"
+                                <input id="review_post_num" th:value="${post.postNum}" name="member_index" type="text"
                                        aria-label="Last name" class="form-control" placeholder="게시글번호" value="">
                             </td>
                         </tr>
@@ -149,9 +149,9 @@
                     </thead>
                     <tbody id="reviewList" th:each="review : ${reviews}">
                     <tr>
-                        <td th:text="${review.review_score}"></td>
-                        <td th:text="${review.review_text}"></td>
-                        <td th:text="${review.member_index}"></td>
+                        <td th:text="${review.reviewScore}"></td>
+                        <td th:text="${review.reviewText}"></td>
+                        <td th:text="${review.memberIndex}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -159,6 +159,142 @@
             </section>
         </div>
     </div>
+
+            </div>
+        </nav>
+<!--        &lt;!&ndash; 누르면 각 페이지 내의 각 부분으로 이동 &ndash;&gt;-->
+<!--        <a class="btn btn-primary btn-xl text-uppercase" href="#map">근처 편의시설</a>-->
+<!--        <a class="btn btn-primary btn-xl text-uppercase" href="#review">축제후기</a>-->
+<!--        &lt;!&ndash; ==================================== &ndash;&gt;-->
+<!--        &lt;!&ndash; Page content&ndash;&gt;-->
+<!--        <div class="container mt-5" th:each="post : ${post}">-->
+<!--            <div class="row">-->
+<!--                <div class="col-lg-8" >-->
+<!--                    &lt;!&ndash; Post content&ndash;&gt;-->
+<!--                    <article>-->
+<!--                        &lt;!&ndash; Post header&ndash;&gt;-->
+<!--                        <header class="mb-4">-->
+<!--                            &lt;!&ndash; Post title&ndash;&gt;-->
+<!--                            <h1 class="fw-bolder mb-1" th:text="${post.festivalTitle}">2022 사과 축제!</h1>-->
+<!--                            &lt;!&ndash; Post meta content&ndash;&gt;-->
+<!--                            <div class="text-muted fst-italic mb-4" th:text="${post.festivalUploadDate}">게시일자 : 게시일자 들어갈 자리-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash; Post categories&ndash;&gt;-->
+<!--                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">청송</a>-->
+<!--                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">사과</a>-->
+<!--                        </header>-->
+<!--                        &lt;!&ndash; Preview image figure&ndash;&gt;-->
+<!--                        <figure class="mb-4">-->
+<!--                            <img class="img-fluid rounded"  th:src="${post.contentImage}"  alt="...">-->
+<!--                        </figure>-->
+<!--                        &lt;!&ndash; Post content&ndash;&gt;-->
+<!--                        <section class="mb-5">-->
+<!--                            <p th:text="${post.contentText}"></p>-->
+<!--                        </section>-->
+<!--                    </article>-->
+<!--                    &lt;!&ndash;api 들어갈 부분&ndash;&gt;-->
+<!--                    <input type="hidden" id="address" th:value="${post.boardAddr}" size="70"  >-->
+<!--                    <div id="map" style="width:100%;height:450px;"></div>-->
+
+<!--                    <div id="coordXY"></div>-->
+
+<!--                    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f0ea3c6cbdf7a79d08988e31487b46ad&libraries=services"></script>-->
+<!--                    <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('CS2')">편의점</a>-->
+<!--                    <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('SW8')">지하철역</a>-->
+<!--                    <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('PK6')">주차장</a>-->
+<!--                    <a class="btn btn-primary btn-xl text-uppercase" onclick="addressChk('CE7')">카페</a>-->
+
+<!--                    &lt;!&ndash;                    ===================================================================================&ndash;&gt;-->
+<!--                    &lt;!&ndash;  후기 남기는 부분                  &ndash;&gt;-->
+
+<!--                    <section class="mb-5" >-->
+<!--                        <div class="alert alert-success" role="alert" id="review">-->
+<!--                            후기를 남겨보세요!-->
+<!--                        </div>-->
+<!--                        <input type="hidden" id="postNum" th:value="${post.postNum}" size="70"  >-->
+<!--                        <form name="enter_review" action="/festival/${post.postNum}" method="post">-->
+<!--&lt;!&ndash;                        <button type="submit" class="btn btn-primary btn-l text-uppercase" id="review_submit" >제출</button>&ndash;&gt;-->
+<!--                            <a  class="btn btn-primary" id="review_submit" type="submit" >제출</a>-->
+<!--&lt;!&ndash;                        th:href="@{|/festival/${post.postNum}|}"&ndash;&gt;-->
+<!--                            <div></div>-->
+<!--                        <div class="input-group">-->
+<!--                            <span class="input-group-text">후기와 별점을 입력</span>-->
+<!--&lt;!&ndash;                            별점&ndash;&gt;-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                            <input name="reviewScore" id="reviewScore" type="text" aria-label="First name" class="form-control" placeholder="1~5중 별점매기기" value="">-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--&lt;!&ndash;                            리뷰 내용&ndash;&gt;-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                            <input name="reviewText" id="reviewText" type="text" aria-label="Last-->
+<!--                             name" class="form-control" placeholder="리뷰를 작성하시오" value="" >-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--&lt;!&ndash;                            리뷰 번호&ndash;&gt;-->
+<!--&lt;!&ndash;                            <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <input name="reviewIndex"  id="reviewIndex" type="text" aria-label="Last name" class="form-control" placeholder="리뷰 번호" value="" >&ndash;&gt;-->
+<!--&lt;!&ndash;                                </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </tr>&ndash;&gt;-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <input id ="memberIndex" name="memberIndex" type="text" aria-label="Last name" class="form-control" placeholder="닉네임" value="" >-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <input id = "review_postNum" th:value="${post.postNum}" name="memberIndex" type="text" aria-label="Last name" class="form-control" placeholder="게시글번호" value="">-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </div>-->
+<!--                        </form>-->
+<!--                    &lt;!&ndash;    후기 리스트                    &ndash;&gt;-->
+<!--                        &lt;!&ndash;선택한 지역의 리스트 뜨는 부분&ndash;&gt;-->
+<!--                        &lt;!&ndash; 축제 리스트  &ndash;&gt;-->
+<!--                        <table class="table table-stripped" >-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th>별점</th>-->
+<!--                                <th>리뷰</th>-->
+<!--                                <th>닉네임</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody id="reviewList" th:each="review : ${reviews}">-->
+<!--                            <tr>-->
+<!--                                <td th:text="${review.reviewScore}"></td>-->
+<!--                                <td th:text="${review.reviewText}"></td>-->
+<!--                                <td th:text="${review.memberIndex}"></td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                            <form>-->
+<!--                        <ol class="list-group list-group-numbered">-->
+<!--                            <li class="list-group-item d-flex justify-content-between align-items-start" th:each="review:${reviews}">-->
+<!--                                <div class="ms-2 me-auto" >-->
+<!--&lt;!&ndash;                                      &ndash;&gt;-->
+<!--                                    <div class="fw-bold" th:text="${review.reviewScore}">별점 들어갈 부분</div>-->
+<!--                                    <div class="fw-bold" th:text="${review.reviewText}">후기 들어갈 부분</div>-->
+<!--                                </div>-->
+<!--&lt;!&ndash;                                <span class="badge bg-primary rounded-pill">닉네임 들어갈 부분</span>&ndash;&gt;-->
+<!--                            </li>-->
+
+<!--                        </ol>-->
+<!--                            </form>-->
+                    </section>
+                </div>
+                <!-- Side widgets-->
+<!--                <div class="col-lg-4">-->
+<!--                    &lt;!&ndash; 채팅창 들어갈 자리&ndash;&gt;-->
+<!--                    <div class="card mb-4">-->
+<!--                        <div class="card-header">채팅</div>-->
+<!--                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>

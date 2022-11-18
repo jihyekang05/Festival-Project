@@ -11,11 +11,11 @@ const email = document.getElementById("email");
 const email_auth_btn = document.getElementById("email_auth_btn");
 
 
-const member_nickname = document.getElementById("member_nickname");
-const member_addr = document.getElementById("member_addr");
-const member_birth = document.getElementById("member_birth");
-const member_email = document.getElementById("member_email");
-const member_category = document.getElementById("member_category");
+const memberNickname = document.getElementById("memberNickname");
+const memberAddr = document.getElementById("memberAddr");
+const memberBirth = document.getElementById("memberBirth");
+const memberEmail = document.getElementById("memberEmail");
+const memberCategory = document.getElementById("memberCategory");
 
 const nickname_modify_btn = document.getElementById("nickname_modify_btn");
 const addr_modify_btn = document.getElementById("addr_modify_btn");
@@ -57,7 +57,7 @@ nickname_dup_check.addEventListener("click", () => {
     $.ajax({
         url: "/member/nicknamedupcheck",
         async: true,
-        data: { member_nickname: nickname.value },
+        data: { memberNickname: nickname.value },
         method: "POST",
         dataType: "text"
     })
@@ -134,7 +134,7 @@ nickname.addEventListener("input", () => {
 });
 
 nickname_modify_btn.addEventListener('click', () => {
-    member_nickname.value = nickname.value;
+    memberNickname.value = nickname.value;
     nickname_modify_btn.disabled = true;
     nickname.value=null;
 });
@@ -162,7 +162,7 @@ address.addEventListener("input", () => {
 
 
 addr_modify_btn.addEventListener('click', () => {
-    member_addr.value = address.value + " " + detailAddress.value;
+    memberAddr.value = address.value + " " + detailAddress.value;
     addr_modify_btn.disabled = true;
 });
 /////////////////////////////////////////////////////
@@ -178,7 +178,7 @@ birth.addEventListener('input',()=>{
 
 birth_modify_btn.addEventListener('click', ()=>{
     birth_modify_btn.disabled=true;
-    member_birth.value=birth.value;
+    memberBirth.value=birth.value;
     birth.value=null;
 });
 
@@ -299,8 +299,8 @@ email_auth_submit_btn.addEventListener('click', ()=>{
 
 email_modify_btn.addEventListener('click',()=>{
     console.log("email_modify_btn click");
-    member_email.value = email.value;
-    console.log(member_email.value);
+    memberEmail.value = email.value;
+    console.log(memberEmail.value);
     email_modify_btn.disabled=true;
     email.value=null;
 });
@@ -313,16 +313,16 @@ email_modify_btn.addEventListener('click',()=>{
 category_modify_btn.addEventListener('click', ()=>{
 
     category_insert();
-    member_category.value = category_value.value;
+    memberCategory.value = category_value.value;
     category_check();
     console.log("category.value: "+category.value);
-    console.log("member_category.value: "+member_category.value);
+    console.log("memberCategory.value: "+memberCategory.value);
 });
 
 
 function category_check(){
 
-    var category_string =  member_category.value.split(',');
+    var category_string =  memberCategory.value.split(',');
     category_string = category_string.slice(0,-1);
     console.log(category_string);
 
@@ -381,12 +381,12 @@ modify_btn.addEventListener('click', ()=>{
 
 function sendModify(){
 
-    var nickname = $('#member_nickname').val();
-    var addr = $('#member_addr').val();
-    var birth = $('#member_birth').val();
-    var email = $('#member_email').val();
+    var nickname = $('#memberNickname').val();
+    var addr = $('#memberAddr').val();
+    var birth = $('#memberBirth').val();
+    var email = $('#memberEmail').val();
     console.log(email);
-    var category = $('#member_category').val();
+    var category = $('#memberCategory').val();
 
     console.log(nickname);
     console.log(birth);
