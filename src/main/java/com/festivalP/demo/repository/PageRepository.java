@@ -12,9 +12,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface PageRepository extends PagingAndSortingRepository<Posts, Long> {
+public interface PageRepository extends JpaRepository<Posts, Long> {
 
 
 
@@ -22,5 +23,5 @@ public interface PageRepository extends PagingAndSortingRepository<Posts, Long> 
     Page<Posts> findAll( Pageable pageable);
 
 
-    
+    Page<Posts> findByFestivalTitleContaining(String keyword, Pageable pageable);
 }

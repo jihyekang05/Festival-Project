@@ -38,10 +38,13 @@
       </nav>
 
   <div>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" >
 
-      <button class="btn btn-outline-success" type="submit">글검색</button>
+
+
+<!--    검색-->
+    <form action="/admin/festivalManagement" method="GET" class=class="d-flex" role="search">
+      <input type="text" name="keyword" class="form-control me-2" id="search" placeholder="검색">
+      <button class="btn btn-success bi bi-search">글제목검색</button>
       <button class="btn btn-outline-success" type="button" onclick="location.href='/admin/festivalWrite'">글작성</button>
     </form>
   </div>
@@ -50,14 +53,14 @@
     <ol class="list-group list-group-numbered">
       <li class="list-group-item d-flex justify-content-between align-items-start" th:each="post : ${posts}">
         <div class="ms-2 me-auto"  >
-          <a class="fw-bold" th:text="${post.festival_title}" th:href="@{|/festival/${post.post_num}|}"></a>
+          <a class="fw-bold" th:text="${post.festivalTitle}" th:href="@{|/festival/${post.postNum}|}"></a>
 
         </div>
         <form action="festivalManagement" method="post">
 
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-primary" th:onclick="|javascript:post_modify(${post.post_num})|">수정</button>
-            <button type="button" class="btn btn-primary" th:onclick="|javascript:post_delete(${post.post_num})|">삭제</button>
+            <button type="button" class="btn btn-primary" th:onclick="|javascript:post_modify(${post.postNum})|">수정</button>
+            <button type="button" class="btn btn-primary" th:onclick="|javascript:post_delete(${post.postNum})|">삭제</button>
           </div>
         </form>
 

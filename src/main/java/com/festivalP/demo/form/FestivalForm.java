@@ -12,32 +12,32 @@ import java.util.Date;
 
 @Getter@Setter
 public class FestivalForm {
-    private Long post_num;
+    private Long postNum;
 
-    private Long admin_index;
+    private Long adminIndex;
 
-    private String content_text;
+    private String contentText;
 
-    private Long content_views;
+    private Long contentViews;
 
-    @Column(name = "festival_title")
-    private String festival_title;
+    @Column(name = "festivalTitle")
+    private String festivalTitle;
 
-    private Long review_score_avg ;
+    private Long reviewScoreAvg ;
 
-    private String board_addr; //주소
+    private String boardAddr; //주소
 
-    private Long board_loc_addr; //지역주소
+    private Long boardLocAddr; //지역주소
 
-    private String content_image;
+    private String contentImage;
 
-    private String progress_state; //진행상태
+    private String progressState; //진행상태
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date festival_upload_date;
+    private Date festivalUploadDate;
 
-    private String festival_category;
+    private String festivalCategory;
 
 
 }

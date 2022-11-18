@@ -76,11 +76,11 @@
 <!--                    </div>-->
 <!--                    <div class="carousel-inner" >-->
 <!--                      <div class="carousel-item active" >-->
-<!--                        <img th:src="${topview.content_image}" class="d-block w-100" alt="...">-->
+<!--                        <img th:src="${topview.contentImage}" class="d-block w-100" alt="...">-->
 <!--                        <div class="carousel-caption d-none d-md-block">-->
-<!--                          <h5 th:text="${topview.festival_title}">First slide label</h5>-->
+<!--                          <h5 th:text="${topview.festivalTitle}">First slide label</h5>-->
 <!--                            <p>조회수</p>-->
-<!--                          <p th:text="${post.content_views}"></p>-->
+<!--                          <p th:text="${post.contentViews}"></p>-->
 <!--                        </div>-->
 <!--                      </div>-->
 <!--&lt;!&ndash;                      <div class="carousel-item">&ndash;&gt;-->
@@ -123,12 +123,12 @@
                     <div class="row">
                         <div class="col-md-4" th:each="topview : ${topview}">
                             <div class="card" style="width: 100%;">
-                                <img th:src="${topview.content_image}" class="card-img-top" alt="...">
+                                <img th:src="${topview.contentImage}" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                  <h5 th:text="${topview.festival_title}" class="card-title">축제1</h5>
+                                  <h5 th:text="${topview.festivalTitle}" class="card-title">축제1</h5>
                                     <p>조회수</p>
-                                  <p th:text="${topview.content_views}"></p>
-                                  <a th:href="@{|/festival/${topview.post_num}|}" class="btn btn-primary">자세히보기</a>
+                                  <p th:text="${topview.contentViews}"></p>
+                                  <a th:href="@{|/festival/${topview.postNum}|}" class="btn btn-primary">자세히보기</a>
                                 </div>
                               </div>
                         </div>
@@ -147,11 +147,11 @@
                     <div class="row">
                         <div class="col-md-4" th:each="topdate : ${topdate}">
                             <div class="card" style="width: 100%;">
-                                <img th:src="${topdate.content_image}" class="card-img-top" alt="...">
+                                <img th:src="${topdate.contentImage}" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                  <h5 th:text="${topdate.festival_title}" class="card-title">축제명</h5>
-                                  <p th:text="${topdate.festival_upload_date}" class="card-text">게시일자</p>
-                                  <a th:href="@{|/festival/${topdate.post_num}|}" class="btn btn-primary">자세히보기</a>
+                                  <h5 th:text="${topdate.festivalTitle}" class="card-title">축제명</h5>
+                                  <p th:text="${topdate.festivalUploadDate}" class="card-text">게시일자</p>
+                                  <a th:href="@{|/festival/${topdate.postNum}|}" class="btn btn-primary">자세히보기</a>
                                 </div>
                               </div>
                         </div>
@@ -202,7 +202,7 @@
                             <span class="text-center">관리자</span>
                         </div>
 
-                        <span th:if="${session.authInfo.state==0}" class="text-center align-self-center">[[${session.member.member_nickname}]]</span>
+                        <span th:if="${session.authInfo.state==0}" class="text-center align-self-center">[[${session.member.memberNickname}]]</span>
                         <span th:if="${session.authInfo.state==2}" class="text-center align-self-center">관리자</span>
                         <span class="text-center"> 님 환영합니다!</span>
                       

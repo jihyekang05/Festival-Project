@@ -16,8 +16,8 @@ public class ReviewRepository {
 
     public void save(Review review) {em.persist(review);}
 
-    public List<Review> findAllReview(Long post_num) {
-        return em.createQuery("select r from Review r where r.post_num = :post_num", Review.class).setParameter("post_num",post_num).getResultList();
-        //return em.createQuery("select p from Posts p where p.post_num = :post_num", Posts.class).setParameter("post_num",post_num).getResultList();
+    public List<Review> findAllReview(Long postNum) {
+        return em.createQuery("select r from Review r where r.postNum = :postNum", Review.class).setParameter("postNum",postNum).getResultList();
+        //return em.createQuery("select p from Posts p where p.postNum = :postNum", Posts.class).setParameter("postNum",postNum).getResultList();
     }
 }

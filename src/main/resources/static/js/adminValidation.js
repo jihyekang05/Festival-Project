@@ -68,7 +68,7 @@ id_dup_check.addEventListener('click', function (event) {
     $.ajax({
         url: "/admin/iddupcheck",
         async: true,
-        data: { admin_id: id.value },
+        data: { adminId: id.value },
         method: "POST",
         dataType: "text"
     })

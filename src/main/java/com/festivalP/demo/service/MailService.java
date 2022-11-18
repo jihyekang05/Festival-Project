@@ -14,9 +14,9 @@
 //
 //    public void mailSend(Contact contact) {
 //        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom(contact.getContact_email());
+//        message.setFrom(contact.getcontactEmail());
 //        message.setTo(TO_ADDRESS);
-//        message.setText(contact.getContact_text());
+//        message.setText(contact.getcontactText());
 //
 //        mailSender.send(message);
 //

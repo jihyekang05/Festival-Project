@@ -27,7 +27,7 @@ public class HomeController {
         System.out.println("here!!!!!!!!!!!!!!!!!!!!!");
 //        System.out.println(topThree.size());
 //        for (Posts p:topThree) {
-//            System.out.println(p.getContent_views());
+//            System.out.println(p.getcontentViews());
 //
 //        }
         model.addAttribute("topview",topThree);

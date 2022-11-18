@@ -31,7 +31,7 @@ public class FestivalService{
     public Long join(Posts posts) {
 
         festivalRepository.save(posts);
-        return posts.getPost_num();
+        return posts.getPostNum();
     }
 
 
@@ -39,40 +39,35 @@ public class FestivalService{
         return festivalRepository.findAll();
     }
 
-//    @Transactional
-//    public Page<Posts> findFestivals2(Long post_num,Pageable pageable) {
-//        return pageRepository.findAll(post_num, pageable);
-//
-//
-//    }
+
 
     //@Transactional(readOnly = true)
-    public  Page<Posts> paging(Pageable pageable) {
-       // Page<Posts> Pages= pageRepository.findAll(pageable);
-        return pageRepository.findAll(pageable);
+    public  Page<Posts> paging(String keyword, Pageable pageable) {
+        Page<Posts> Pages= pageRepository.findByFestivalTitleContaining(keyword, pageable);
+        return Pages;
     }
 
 
     //오래된 순 정렬
-    public List<Posts> sortOldFestivals() { return festivalRepository.findAllOrderByFestival_Upload_Date_Old();}
+    public List<Posts> sortOldFestivals() { return festivalRepository.findAllOrderByfestivalUploadDate_Old();}
 
     //최신 순 정렬
-    public List<Posts> sortNewFestivals() {return festivalRepository.findAllOrderByFestival_Upload_Date_New();}
+    public List<Posts> sortNewFestivals() {return festivalRepository.findAllOrderByfestivalUploadDate_New();}
 
     //조회수 정렬
-    public List<Posts> sortViewFestivals() {return festivalRepository.findAllOrderByFestival_Content_Views();}
+    public List<Posts> sortViewFestivals() {return festivalRepository.findAllOrderByFestival_contentViews();}
 
-    public List<Posts> findOne(Long post_num) {
-        return festivalRepository.findByPost_num(post_num);
+    public List<Posts> findOne(Long postNum) {
+        return festivalRepository.findBypostNum(postNum);
     }
 
     //지역별축제기능
-    public List<Posts> findOne2(Long board_loc_addr){ return festivalRepository.findByBoard_loc_addr(board_loc_addr);}
+    public List<Posts> findOne2(Long boardLocAddr){ return festivalRepository.findByboardLocAddr(boardLocAddr);}
 
     //홈페이지 조회수 많은축제 탑3
     public List<Posts> sort3ViewFestivals() {
         System.out.println("여기@@@@@@@@@@@");
-        List<Posts> posts = festivalRepository.findOneOrderByFestival_Content_Views();
+        List<Posts> posts = festivalRepository.findOneOrderByFestival_contentViews();
         System.out.println(posts);
         return posts;
     }
@@ -86,18 +81,18 @@ public class FestivalService{
     @Transactional
     public Long saveReview(Review review) {
         reviewRepository.save(review);
-        return review.getReview_index();
+        return review.getReviewIndex();
     }
 
-    public List<Review> findReviews(Long post_num) {
-        return reviewRepository.findAllReview(post_num);}
+    public List<Review> findReviews(Long postNum) {
+        return reviewRepository.findAllReview(postNum);}
 
 
 
     //검색기능
     @Transactional
     public List<Posts> searchPosts(String keyword) {
-        List<Posts> posts = festivalRepository.findByFestival_Title(keyword);
+        List<Posts> posts = festivalRepository.findByfestivalTitle(keyword);
         if(keyword.isEmpty()) return findFestivals();
         else {
             return posts;
@@ -105,19 +100,19 @@ public class FestivalService{
     }
 
 
-    public int deleteByPost_num(Long post_num) {
-        return festivalRepository.deleteByPost_num(post_num);
+    public int deleteBypostNum(Long postNum) {
+        return festivalRepository.deleteBypostNum(postNum);
     }
 
 
     @Transactional
-    public void updatePosts(Long post_num, Posts posts ) {
-        Posts post = festivalRepository.findOne(post_num);
-        post.setContent_text(posts.getContent_text());
-        post.setFestival_title(posts.getFestival_title());
-        post.setContent_image(posts.getContent_image());
-        post.setFestival_upload_date(posts.getFestival_upload_date());
-        post.setBoard_addr(posts.getBoard_addr());
+    public void updatePosts(Long postNum, Posts posts ) {
+        Posts post = festivalRepository.findOne(postNum);
+        post.setContentText(posts.getContentText());
+        post.setFestivalTitle(posts.getFestivalTitle());
+        post.setContentImage(posts.getContentImage());
+        post.setFestivalUploadDate(posts.getFestivalUploadDate());
+        post.setBoardAddr(posts.getBoardAddr());
 
     }
 

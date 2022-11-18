@@ -50,12 +50,12 @@
       <li class="list-group-item d-flex justify-content-between align-items-start" th:each="notice : ${notice}">
         <div class="ms-2 me-auto">
 
-          <a class="fw-bold" th:text="${notice.content_title}" ></a>
+          <a class="fw-bold" th:text="${notice.contentTitle}" ></a>
 
         </div>
         <div class="btn-group" role="group" aria-label="Basic example">
           <button type="button" class="btn btn-primary">수정</button>
-          <button type="button" class="btn btn-primary" th:onclick="|javascript:notice_delete(${notice.post_num})|" >삭제</button>
+          <button type="button" class="btn btn-primary" th:onclick="|javascript:notice_delete(${notice.postNum})|" >삭제</button>
         </div>
       </li>
     </ol>

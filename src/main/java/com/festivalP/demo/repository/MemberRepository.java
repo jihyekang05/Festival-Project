@@ -1,7 +1,11 @@
 package com.festivalP.demo.repository;
 
 import com.festivalP.demo.domain.Member;
+import com.festivalP.demo.domain.Posts;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -9,6 +13,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+
 // 롬복 사용하여 생성자 의존성 주입
 public class MemberRepository {
 
@@ -23,30 +28,30 @@ public class MemberRepository {
 
     public List<Member> findById(String id) {
 
-        return em.createQuery("select m from Member m where m.member_id = : id", Member.class).setParameter("id", id).getResultList();
+        return em.createQuery("select m from Member m where m.memberId = : id", Member.class).setParameter("id", id).getResultList();
     }
 
 
     public List<Member> findByNickname(String nickname){
-        return em.createQuery("select m from Member m where m.member_nickname = : nickname", Member.class).setParameter("nickname", nickname).getResultList();
+        return em.createQuery("select m from Member m where m.memberNickname = : nickname", Member.class).setParameter("nickname", nickname).getResultList();
     }
 
     public List<Member> findByIdAndPw(String id, String pw){
-        return em.createQuery("select m from Member m where m.member_id = :id and m.member_pw = :pw", Member.class)
+        return em.createQuery("select m from Member m where m.memberId = :id and m.memberPw = :pw", Member.class)
                 .setParameter("id", id)
                 .setParameter("pw", pw).getResultList();
     }
 
     public Member memberInfoUpdate(Member member){
 
-        Member resMember = em.find(Member.class, member.getMember_index());
+        Member resMember = em.find(Member.class, member.getMemberIndex());
 
 
-        resMember.setMember_nickname(member.getMember_nickname());
-        resMember.setMember_birth(member.getMember_birth());
-        resMember.setMember_email(member.getMember_email());
-        resMember.setMember_addr(member.getMember_addr());
-        resMember.setMember_category(member.getMember_category());
+        resMember.setMemberNickname(member.getMemberNickname());
+        resMember.setMemberBirth(member.getMemberBirth());
+        resMember.setMemberEmail(member.getMemberEmail());
+        resMember.setMemberAddr(member.getMemberAddr());
+        resMember.setMemberCategory(member.getMemberCategory());
 
         System.out.println("#$#### memberInfoUpdate complete!!");
         return resMember;
@@ -54,9 +59,9 @@ public class MemberRepository {
 
     public Member memberDelete(Member member){
 
-        Member delMember = em.find(Member.class, member.getMember_index());
+        Member delMember = em.find(Member.class, member.getMemberIndex());
 
-        delMember.setMember_state(1);
+        delMember.setMemberState(1);
         return delMember;
     }
 

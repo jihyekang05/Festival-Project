@@ -44,9 +44,9 @@
                         <!-- Post header-->
                         <header class="mb-4">
                             <!-- Post title-->
-                            <h1 class="fw-bolder mb-1" th:text="${post.festival_title}">2022 사과 축제!</h1>
+                            <h1 class="fw-bolder mb-1" th:text="${post.festivalTitle}">2022 사과 축제!</h1>
                             <!-- Post meta content-->
-                            <div class="text-muted fst-italic mb-4" th:text="${post.festival_upload_date}">게시일자 : 게시일자 들어갈 자리
+                            <div class="text-muted fst-italic mb-4" th:text="${post.festivalUploadDate}">게시일자 : 게시일자 들어갈 자리
                             </div>
                             <!-- Post categories-->
                             <a class="badge bg-secondary text-decoration-none link-light" href="#!">청송</a>
@@ -54,15 +54,15 @@
                         </header>
                         <!-- Preview image figure-->
                         <figure class="mb-4">
-                            <img class="img-fluid rounded"  th:src="${post.content_image}"  alt="...">
+                            <img class="img-fluid rounded"  th:src="${post.contentImage}"  alt="...">
                         </figure>
                         <!-- Post content-->
                         <section class="mb-5">
-                            <p th:text="${post.content_text}"></p>
+                            <p th:text="${post.contentText}"></p>
                         </section>
                     </article>
                     <!--api 들어갈 부분-->
-                    <input type="hidden" id="address" th:value="${post.board_addr}" size="70"  >
+                    <input type="hidden" id="address" th:value="${post.boardAddr}" size="70"  >
                     <div id="map" style="width:100%;height:450px;"></div>
 
                     <div id="coordXY"></div>
@@ -80,41 +80,41 @@
                         <div class="alert alert-success" role="alert" id="review">
                             후기를 남겨보세요!
                         </div>
-                        <input type="hidden" id="post_num" th:value="${post.post_num}" size="70"  >
-                        <form name="enter_review" action="/festival/${post.post_num}" method="post">
+                        <input type="hidden" id="postNum" th:value="${post.postNum}" size="70"  >
+                        <form name="enter_review" action="/festival/${post.postNum}" method="post">
 <!--                        <button type="submit" class="btn btn-primary btn-l text-uppercase" id="review_submit" >제출</button>-->
                             <a  class="btn btn-primary" id="review_submit" type="submit" >제출</a>
-<!--                        th:href="@{|/festival/${post.post_num}|}"-->
+<!--                        th:href="@{|/festival/${post.postNum}|}"-->
                             <div></div>
                         <div class="input-group">
                             <span class="input-group-text">후기와 별점을 입력</span>
 <!--                            별점-->
                             <tr>
                                 <td>
-                            <input name="review_score" id="review_score" type="text" aria-label="First name" class="form-control" placeholder="1~5중 별점매기기" value="">
+                            <input name="reviewScore" id="reviewScore" type="text" aria-label="First name" class="form-control" placeholder="1~5중 별점매기기" value="">
                                 </td>
                             </tr>
 <!--                            리뷰 내용-->
                             <tr>
                                 <td>
-                            <input name="review_text" id="review_text" type="text" aria-label="Last
+                            <input name="reviewText" id="reviewText" type="text" aria-label="Last
                              name" class="form-control" placeholder="리뷰를 작성하시오" value="" >
                                 </td>
                             </tr>
 <!--                            리뷰 번호-->
 <!--                            <tr>-->
 <!--                                <td>-->
-<!--                                    <input name="review_index"  id="review_index" type="text" aria-label="Last name" class="form-control" placeholder="리뷰 번호" value="" >-->
+<!--                                    <input name="reviewIndex"  id="reviewIndex" type="text" aria-label="Last name" class="form-control" placeholder="리뷰 번호" value="" >-->
 <!--                                </td>-->
 <!--                            </tr>-->
                             <tr>
                                 <td>
-                                    <input id ="member_index" name="member_index" type="text" aria-label="Last name" class="form-control" placeholder="닉네임" value="" >
+                                    <input id ="memberIndex" name="memberIndex" type="text" aria-label="Last name" class="form-control" placeholder="닉네임" value="" >
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input id = "review_post_num" th:value="${post.post_num}" name="member_index" type="text" aria-label="Last name" class="form-control" placeholder="게시글번호" value="">
+                                    <input id = "review_postNum" th:value="${post.postNum}" name="memberIndex" type="text" aria-label="Last name" class="form-control" placeholder="게시글번호" value="">
                                 </td>
                             </tr>
                         </div>
@@ -132,9 +132,9 @@
                             </thead>
                             <tbody id="reviewList" th:each="review : ${reviews}">
                             <tr>
-                                <td th:text="${review.review_score}"></td>
-                                <td th:text="${review.review_text}"></td>
-                                <td th:text="${review.member_index}"></td>
+                                <td th:text="${review.reviewScore}"></td>
+                                <td th:text="${review.reviewText}"></td>
+                                <td th:text="${review.memberIndex}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -143,8 +143,8 @@
 <!--                            <li class="list-group-item d-flex justify-content-between align-items-start" th:each="review:${reviews}">-->
 <!--                                <div class="ms-2 me-auto" >-->
 <!--&lt;!&ndash;                                      &ndash;&gt;-->
-<!--                                    <div class="fw-bold" th:text="${review.review_score}">별점 들어갈 부분</div>-->
-<!--                                    <div class="fw-bold" th:text="${review.review_text}">후기 들어갈 부분</div>-->
+<!--                                    <div class="fw-bold" th:text="${review.reviewScore}">별점 들어갈 부분</div>-->
+<!--                                    <div class="fw-bold" th:text="${review.reviewText}">후기 들어갈 부분</div>-->
 <!--                                </div>-->
 <!--&lt;!&ndash;                                <span class="badge bg-primary rounded-pill">닉네임 들어갈 부분</span>&ndash;&gt;-->
 <!--                            </li>-->

@@ -14,7 +14,7 @@ function localChk(local) {
             var locList = data;
             var str = '<tr>';
             $.each(locList , function(i) {
-                str += '<td>' + locList[i].board_addr + '</td><td>' + locList[i].festival_title + '</td><td>' + locList[i].festival_upload_date + '</td></tr>';
+                str += '<td>' + locList[i].boardAddr + '</td><td>' + locList[i].festivalTitle + '</td><td>' + locList[i].festivalUploadDate + '</td></tr>';
             });
             $("#boardList").append(str);
             console.log(data);

@@ -26,7 +26,7 @@ public class NoticeService {
     public Long join(Notice notice) {
 
         noticeRepository.save(notice);
-        return notice.getPost_num();
+        return notice.getPostNum();
     }
 
     public List<Notice> findNotice() {
@@ -40,12 +40,12 @@ public class NoticeService {
 
 
     @Transactional
-    public int deleteByNotice_num(Long post_num) {
-        return noticeRepository.deleteByNotice_num(post_num);
+    public int deleteByNotice_num(Long postNum) {
+        return noticeRepository.deleteByNotice_num(postNum);
     }
 
-    public List<Notice> findOne(Long post_num) {
-        return noticeRepository.findByPost_num(post_num);
+    public List<Notice> findOne(Long postNum) {
+        return noticeRepository.findBypostNum(postNum);
     }
 
     //검색

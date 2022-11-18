@@ -14,20 +14,23 @@ public class Review {
 
     @Id
     @GeneratedValue
-    private Long review_index;
+    @Column(name="review_index")
+    private Long reviewIndex;
 
     @Column(name="post_num")
-    private Long post_num;
+    private Long postNum;
 
-    private String member_index; //작성자 닉네임
+    @Column(name="member_index")
+    private String memberIndex; //작성자 닉네임
 
-    private String review_text;
+    @Column(name="review_text")
+    private String reviewText;
 
-    private Long review_score;
 
-//    @OneToOne
-////    @JoinColumn(name="member_index")
-//    private Member member;
+    @Column(name="review_score")
+    private Long reviewScore;
+
+
 
 
 
