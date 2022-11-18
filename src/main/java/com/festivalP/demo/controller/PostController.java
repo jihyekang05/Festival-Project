@@ -10,12 +10,14 @@ import com.festivalP.demo.service.FestivalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
 import java.util.HashMap;
 import java.util.List;
 @Log4j2
@@ -30,12 +32,28 @@ public class PostController {
 
     //전체 축제리스트 불러오는 부분
     @GetMapping("/allfestival")
-    public String list(Model model) {
-        List<Posts> festivals = festivalService.findFestivals();
+    public String list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable, String  searchKeyword) {
+//        List<Posts> festivals = festivalService.findFestivals();
+        Page<Posts> festivals = festivalService.paging(pageable);
         model.addAttribute("posts",festivals);
-        log.info("DEBUG");
+//        System.out.println();
         return "every_festival_board";
     }
+
+    //페이지 ajax
+    @PostMapping("/allfestival/scroll")
+    @ResponseBody
+    public  Page<Posts> list(Model model,  @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
+        System.out.println("=========================");
+//        System.out.println(page);
+        System.out.println(pageable.getPageNumber());
+        Page<Posts> festivals = festivalService.paging(pageable);
+//        model.addAttribute("posts", festivals);
+        System.out.println(festivals.getTotalPages()); //2
+        return festivals;
+    }
+
+
 
     //각 축제별 정보와 리뷰리스트 불러오는 부분
     @GetMapping("/festival/{post_num}")
@@ -46,6 +64,7 @@ public class PostController {
         model.addAttribute("reviews",reviews);
         return "Each_Festival_board";
     }
+
 
     //후기 제출했을 때 데이터 저장되는 부분
     @PostMapping("/festival/review")

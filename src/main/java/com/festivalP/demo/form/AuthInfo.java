@@ -12,7 +12,5 @@ public class AuthInfo {
 
     private String id;
     private int state;
-    private String email;
-    private String nickname;
 
 }

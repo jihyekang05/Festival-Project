@@ -20,13 +20,17 @@
 <!--        수정부분===========================================-->
         <link href="/css/styles.css" rel="stylesheet" />
     </head>
-    <body id="page-top">
+    <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
                 <!-- ============================================================================= -->
                 <!-- 페이지 로고 이미지 바꿀부분입니다!!!!!!!!!!! -->
-                <a class="navbar-brand" href="#page-top"><img src="assets/img/logo.png" alt="..." /></a>
+
+                <a class="navbar-brand" href="/"><img src="/assets/img/logo.png" alt="..." /></a>
+
+<!--                <a class="navbar-brand" href="/"><img src="/assets/img/navbar-logo.svg" alt="..." /></a>-->
+
                 <!-- ============================================================================================= -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
@@ -36,10 +40,10 @@
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li th:if="${session.authInfo == null}" class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#login-Modal">로그인</a></li>
                         <li th:if="${session.authInfo != null}" class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#login-Modal">내 정보</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/allfestival">전체목록</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/allfestival">전체축제</a></li>
                         <li class="nav-item"><a class="nav-link" href="/favorites">내 즐겨찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/localFestival">지역별 축제</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+<!--                        <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>-->
                         <li class="nav-item"><a class="nav-link" href="/notice">공지사항</a></li>
                         <li th:if="${session.authInfo != null} and ${session.authInfo.state==2}" class="nav-item"><a class="nav-link" href="/admin">관리자 페이지</a></li>
 
@@ -125,8 +129,13 @@
                 공지입니다아ㅏ아ㅏ
                 </div>
                 <div class="modal-footer">
+
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 <button type="button" class="btn btn-primary" onclick="location.href='/notice'">공지사항 더 보러가기</button>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary">공지사항 더 보러가기</button>
+
                 </div>
             </div>
             </div>
@@ -144,15 +153,24 @@
                 <div class="modal-body">
                   <form>
                     <div class="mb-3 text-center">
-                      <span th:text="${session.authInfo.nickname}" class="text-center align-self-center">[[${session.authInfo.nickname}]]</span>
-                      <span class="text-center"> 님 환영합니다!</span>
+                        <div th:if="${session.authInfo.state==0}">
+                            <span class="text-center">일반회원</span>
+                        </div>
+                        <div th:if="${session.authInfo.state==2}">
+                            <span class="text-center">관리자</span>
+                        </div>
+
+                        <span th:if="${session.authInfo.state==0}" class="text-center align-self-center">[[${session.member.member_nickname}]]</span>
+                        <span th:if="${session.authInfo.state==2}" class="text-center align-self-center">관리자</span>
+                        <span class="text-center"> 님 환영합니다!</span>
                       
                     </div>
                   </form>
                 </div>
                 <div class="modal-footer">
                   <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button> -->
-                  <button type="button" class="btn btn-primary" id="my_page_btn" onclick="window.location.href='/member/mypage'">마이페이지</button>
+
+                  <button th:if="${session.authInfo.state==0}" type="button" class="btn btn-primary" id="my_page_btn" onclick="window.location.href='/member/mypage'">마이페이지</button>
                   <button type="button" class="btn btn-dark" id="logout_btn" onclick="logoutClick()">로그아웃</button>
                 </div>
               </div>
@@ -178,18 +196,21 @@
                       <label for="message-text" class="col-form-label">비밀번호</label>
                       <input class="form-control" id="login_password" type="password"></textarea>
                     </div>
-                    <p><a href="#" class="tooltip-test" title="Tooltip" onclick="window.open('/member/signup')">회원가입</a></p> 
+                    <p><a href="#" id="signup-click" class="tooltip-test" title="Tooltip">회원가입</a></p> 
+                    <!-- <p><a href="#" class="tooltip-test" title="Tooltip"  data-bs-toggle="modal" data-bs-target="#signup-Modal">회원가입</a></p> -->
                     <p><a href="#" class="tooltip-test" title="Tooltip">아이디/비밀번호 찾기</a></p>
                   </form>
                 </div>
                 <div class="modal-footer">
+                    
+                    <input type="checkbox" id="admin_login_check">
+                    <label for="admin_login_check">관리자 로그인</label>
                   <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button> -->
                   <button type="button" class="btn btn-primary" id="login_btn" onclick="loginClick()">로그인</button>
                 </div>
               </div>
             </div>
           </div>
-          
 
         <!-- ============================= -->
         <!-- Footer-->
@@ -431,6 +452,9 @@
         
         <!-- 로그인 -->
         <script src="/js/login.js"></script>
+
+        <!-- 홈 전체 -->
+        <script src="/js/home.js"></script>
 
         <!-- Jquery cdn -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>

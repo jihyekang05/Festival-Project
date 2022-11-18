@@ -5,19 +5,33 @@ import com.festivalP.demo.domain.Notice;
 import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.form.AuthInfo;
 import com.festivalP.demo.form.FestivalForm;
+import com.festivalP.demo.repository.FestivalRepository;
+import com.festivalP.demo.repository.PageRepository;
 import com.festivalP.demo.service.FestivalService;
 import com.festivalP.demo.service.MemberService;
 import com.festivalP.demo.service.NoticeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.security.core.parameters.P;
+import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+
+
+
 import javax.servlet.http.HttpSession;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -27,6 +41,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/admin")
 public class AdminController {
 
 
@@ -38,7 +53,27 @@ public class AdminController {
 //
     private final NoticeService noticeService;
 
-    @RequestMapping("/admin")
+    private final FestivalRepository festivalRepository;
+
+
+
+
+    @RequestMapping("/festivalManagement")
+    public String festivalManagement(Model model, @PageableDefault(size =5,page=0, direction = Sort.Direction.DESC) Pageable pageable, String  searchKeyword) {
+
+        System.out.println(pageable.getPageNumber());
+
+        System.out.println(123123);
+        Page<Posts> festivals = festivalService.paging(pageable);
+        model.addAttribute("posts", festivals);
+        model.addAttribute("maxPage", 5);
+        return "festivalManagement";}
+
+
+
+
+
+
     public String festivalManagement(Model model, HttpSession session) {
     // 관리자 메인 페이지 (페스티벌 글 목록)
         List<Posts> festivals = festivalService.findFestivals();
@@ -52,6 +87,7 @@ public class AdminController {
         else{
             return "redirect:/";
         }
+
     }
 
     @RequestMapping("/festivalWrite")
@@ -60,8 +96,8 @@ public class AdminController {
         return "festivalWrite";
     }
 
-    @PostMapping("/festivalWrite")
-    public String fes_create( MultipartHttpServletRequest multi) throws ParseException {
+        @PostMapping("/festivalWrite")
+        public String fes_create( MultipartHttpServletRequest multi) throws ParseException {
 //        if (result.hasErrors()) {
 //            return "members/festivalWrite";
 //        }
@@ -69,10 +105,11 @@ public class AdminController {
 
         Posts posts = new Posts();
 
+
         posts.setAdmin_index(Long.parseLong(multi.getParameter("admin_index")));
         posts.setContent_text(multi.getParameter("content_text"));
         posts.setFestival_title(multi.getParameter("festival_title"));
-        posts.setFestival_category(multi.getParameter("festival_title"));
+        posts.setFestival_category(multi.getParameter("festival_category"));
         posts.setBoard_addr(multi.getParameter("address"));
         posts.setBoard_loc_addr(Long.parseLong(multi.getParameter("admin_index")));
 
@@ -84,12 +121,9 @@ public class AdminController {
         if(!uploadFolder.exists()){
             uploadFolder.mkdir();
         }
-
         String fullPath = uploadDir + filename;
         try {
             file.transferTo(new File(fullPath));
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -113,9 +147,15 @@ public class AdminController {
 
 
     @RequestMapping("/noticeManagement")
-    public String noticeManagement(Model model) {
-        List<Notice> notice = noticeService.findNotice();
+    public String noticeManagement(Model model, @PageableDefault(size =5,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
+
+
+
+        Page<Notice> notice = noticeService.paging(pageable);
+
+        model.addAttribute("maxPage", 5);
         model.addAttribute("notice",notice);
+
     // 공지관리
         return "noticeManagement";
     }
@@ -127,13 +167,19 @@ public class AdminController {
     }
 
     @RequestMapping("/memberManagement")
-    public String memberManagement(Model model) {
+    public String memberManagement(Model model, @PageableDefault(size =5,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
     // 회원관리
-//        List<Member> members = memberService.findMembers();
-//        model.addAttribute("members",members);
+
+        Page<Member> members = memberService.paging(pageable);
+        model.addAttribute("maxPage", 5);
+        model.addAttribute("members",members);
 
         return "memberManagement";
     }
+
+//        List<Member> members = memberService.findMembers();
+//        model.addAttribute("members",members);
+
 //
 //    @RequestMapping("/memberManagement")
 //    public String memberManagement(Model model) {
@@ -143,6 +189,7 @@ public class AdminController {
 //
 //        return "memberManagement";
 //    }
+
 
 
     @RequestMapping("/noticeWrite")
@@ -169,13 +216,14 @@ public class AdminController {
     }
 
 
-//    @PostMapping("/festivalManagement")
-//    public Long del_post_num(Long post_num) {
-//
-//        festivalService.deleteByPost_num(post_num);
-//
-//        return "redirect:/admin";
-//    }
+    @GetMapping("/noticeManagement/delete_notice/{post_num}")
+    public String del_notice_num(@PathVariable("post_num") Long post_num) {
+        System.out.println(post_num);
+        int result = noticeService.deleteByNotice_num(post_num);
+        System.out.println("result : "+result);
+
+        return "redirect:/noticeManagement";
+    }
 
     @GetMapping("/admin/delete/{post_num}")
     public String del_post_num(@PathVariable("post_num") Long post_num) {
@@ -196,8 +244,10 @@ public class AdminController {
         return "festivalModify";
     }
 
+
+
     @PostMapping("/admin/modify/{post_num}")
-    public String fes_Modify(@PathVariable("post_num") Long post_num,  MultipartHttpServletRequest multi) throws ParseException {
+    public String fes_Modify(@PathVariable("post_num") Long post_num,   MultipartHttpServletRequest multi) throws ParseException {
 
         Posts posts = new Posts();
         posts.setPost_num(post_num);
@@ -205,7 +255,7 @@ public class AdminController {
         posts.setAdmin_index(Long.parseLong(multi.getParameter("admin_index")));
         posts.setContent_text(multi.getParameter("content_text"));
         posts.setFestival_title(multi.getParameter("festival_title"));
-        posts.setFestival_category(multi.getParameter("festival_title"));
+        posts.setFestival_category(multi.getParameter("festival_category"));
         posts.setBoard_addr(multi.getParameter("address"));
         posts.setBoard_loc_addr(Long.parseLong(multi.getParameter("admin_index")));
 
@@ -234,9 +284,12 @@ public class AdminController {
         posts.setReview_score_avg(0L);
 
         System.out.println("posts ================"+posts);
-        festivalService.modifyByPost_num(posts);
+        festivalService.updatePosts(post_num, posts);
+
+
 
         return "redirect:/admin";
+
     }
 
 

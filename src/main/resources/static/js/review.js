@@ -9,7 +9,6 @@ submitBtn.addEventListener('click' , (e) => {
     var review_num = $("#review_post_num").val();
     var member_index = $("#member_index").val();
 
-
     if(review_score>5 || review_score<0 || !review_score) {
         alert('0부터5사이의 숫자를 입력하시오');
     } else {

@@ -1,12 +1,17 @@
 package com.festivalP.demo.service;
 
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.festivalP.demo.domain.Member;
+import com.festivalP.demo.domain.Notice;
 import com.festivalP.demo.form.AuthInfo;
 import com.festivalP.demo.form.MemberForm;
 import com.festivalP.demo.repository.MemberRepository;
+import com.festivalP.demo.repository.PageMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,6 +29,14 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PageMemberRepository pageMemberRepository;
+
+
+    public Page<Member> paging(Pageable pageable) {
+        // Page<Posts> Pages= pageRepository.findAll(pageable);
+        return pageMemberRepository.findAll(pageable);
+    }
+
 
     public List<Member> findMembers() {
         return memberRepository.findAll();
@@ -113,10 +126,10 @@ public class MemberService {
     public AuthInfo getMemberAuthInfo(String member_id){
         List<Member> findMem =memberRepository.findById(member_id);
         Member mem = findMem.get(0);
+
+//        Member mem = memberRepository.findById(member_id);
         AuthInfo authInfo = new AuthInfo();
         authInfo.setId(member_id);
-        authInfo.setEmail(mem.getMember_email());
-        authInfo.setNickname(mem.getMember_nickname());
         authInfo.setState(mem.getMember_state());
 
         return authInfo;
@@ -129,6 +142,19 @@ public class MemberService {
         return mem;
     }
 
+    @Transactional
+    public Member updateInfo(Member member){
+        Member resMember =  memberRepository.memberInfoUpdate(member);
+
+        return resMember;
+    }
+
+    @Transactional
+    public Member deleteMember(Member member){
+        memberRepository.memberDelete(member);
+
+        return member;
+    }
 
 //    @Override
 //    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

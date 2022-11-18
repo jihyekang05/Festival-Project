@@ -25,10 +25,19 @@ public class NoticeRepository {
         return em.createQuery("select p from Notice p", Notice.class).getResultList();
     }
 
+
+    public int deleteByNotice_num(Long post_num){
+
+        int result = em.createQuery ("delete from Notice p where p.post_num = :post_num")
+                .setParameter("post_num",post_num).executeUpdate();
+        return result;
+    }
+
     //각 공지 들어갈 때
     public List<Notice> findByPost_num(Long post_num) {
         return em.createQuery("select n from Notice n where n.post_num = :post_num", Notice.class).setParameter("post_num", post_num).getResultList();
     }
+
 
 
     public List<Notice> findByNotice_Title(String keyword) {
