@@ -21,38 +21,46 @@ public class Member {
 
     @Id // 해당 테이블의 PK 항목
     @GeneratedValue // PK 생성 규칙
-    @Column // 테이블의 칼럼,
-    private Long member_index;
+    @Column(name="member_index")// 테이블의 칼럼,
+    private Long memberIndex;
 
-    private String member_id;
+    @Column(name="member_id")
+    private String memberId;
 
-    private String member_pw;
+    @Column(name="member_pw")
+    private String memberPw;
 
-    private Date member_birth;
+    @Column(name="member_birth")
+    private Date memberBirth;
 
-    private String member_addr;
+    @Column(name="member_addr")
+    private String memberAddr;
 
-    private String member_email;
+    @Column(name="member_email")
+    private String memberEmail;
 
-    private String member_nickname;
+    @Column(name="member_nickname")
+    private String memberNickname;
 
-    private String member_category;
+    @Column(name="member_category")
+    private String memberCategory;
 
-    private int member_state=1;
-
-
-
-
+    @Column(name="member_state")
+    private int memberState=1;
 
 
-//    private String member_id;
-//    private Long member_pw;
-//    private String member_birth;
-//    private String member_addr;
-//    private String member_email;
-//    private String member_nickname;
-//    private String member_state;
-//    private String member_category;
+
+
+
+
+//    private String memberId;
+//    private Long memberPw;
+//    private String memberBirth;
+//    private String memberAddr;
+//    private String memberEmail;
+//    private String memberNickname;
+//    private String memberState;
+//    private String memberCategory;
 
 
 

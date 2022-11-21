@@ -55,8 +55,8 @@ public class MemberController {
         }
 
         Admin admin = new Admin();
-        admin.setAdmin_id(adminForm.getId());
-        admin.setAdmin_pw(adminForm.getPw());
+        admin.setAdminId(adminForm.getId());
+        admin.setAdminPw(adminForm.getPw());
 
         adminService.join(admin);
         System.out.println("관리자 회원가입성공");
@@ -68,9 +68,9 @@ public class MemberController {
     // admin 아이디 중복체크
     @ResponseBody
     @PostMapping("/admin/iddupcheck")
-    public String adminiddupcheck(String admin_id){
+    public String adminiddupcheck(String adminId){
 
-        if(adminService.validateDuplicateAdminId(admin_id)){
+        if(adminService.validateDuplicateAdminId(adminId)){
             return "S";
         }
         else{
@@ -97,14 +97,14 @@ public class MemberController {
         }
 
         Member member = new Member();
-        member.setMember_id(form.getId());
-        member.setMember_pw(form.getPw());
-        member.setMember_birth(form.getBirth());
-        member.setMember_addr(form.getAddr());
-        member.setMember_email(form.getEmail());
-        member.setMember_nickname(form.getNickname());
-        member.setMember_category(form.getCategory());
-        member.setMember_state(form.getState());
+        member.setMemberId(form.getId());
+        member.setMemberPw(form.getPw());
+        member.setMemberBirth(form.getBirth());
+        member.setMemberAddr(form.getAddr());
+        member.setMemberEmail(form.getEmail());
+        member.setMemberNickname(form.getNickname());
+        member.setMemberCategory(form.getCategory());
+        member.setMemberState(form.getState());
 
         memberService.join(member);
         System.out.println("회원가입성공");
@@ -145,26 +145,34 @@ public class MemberController {
 
         Member member = (Member) session.getAttribute("member");
 
-        System.out.println(member.getMember_nickname());
-        System.out.println(member.getMember_addr());
-        System.out.println(member.getMember_birth());
-        System.out.println(member.getMember_category());
-        System.out.println(member.getMember_email());
+        System.out.println(member.getMemberNickname());
+        System.out.println(member.getMemberAddr());
+        System.out.println(member.getMemberBirth());
+        System.out.println(member.getMemberCategory());
+        System.out.println(member.getMemberEmail());
 
 
+<<<<<<< HEAD
 
         member.setMember_nickname(nickname);
         member.setMember_addr(addr);
         member.setMember_birth(birth);
         member.setMember_email(email);
         member.setMember_category(category);
+=======
+        member.setMemberNickname(nickname);
+        member.setMemberAddr(addr);
+        member.setMemberBirth(birth);
+        member.setMemberEmail(email);
+        member.setMemberCategory(category);
+>>>>>>> 4b0f9bd873f845fec41335c64b4f7cddc258b3f6
 
         session.setAttribute("member", memberService.updateInfo(member));
-        System.out.println(member.getMember_nickname());
-        System.out.println(member.getMember_addr());
-        System.out.println(member.getMember_birth());
-        System.out.println(member.getMember_category());
-        System.out.println(member.getMember_email());
+        System.out.println(member.getMemberNickname());
+        System.out.println(member.getMemberAddr());
+        System.out.println(member.getMemberBirth());
+        System.out.println(member.getMemberCategory());
+        System.out.println(member.getMemberEmail());
 
         System.out.println("$$$ wowwowow modifyyyy");
         return "modify success";
@@ -197,17 +205,17 @@ public class MemberController {
 
         Member member = (Member)session.getAttribute("member");
 
-        System.out.println(member.getMember_id());
-        System.out.println(member.getMember_pw());
+        System.out.println(member.getMemberId());
+        System.out.println(member.getMemberPw());
         return "member/memberModifyPage";
     }
 
     // 아이디 중복체크
     @ResponseBody
     @PostMapping("/member/iddupcheck")
-    public String iddupcheck(String member_id){
+    public String iddupcheck(String memberId){
 
-        if(memberService.validateDuplicateMemberId(member_id)){
+        if(memberService.validateDuplicateMemberId(memberId)){
             return "S";
         }
         else{
@@ -218,9 +226,9 @@ public class MemberController {
     // 닉네임 중복체크
     @ResponseBody
     @PostMapping("/member/nicknamedupcheck")
-    public String nicknamedupcheck(String member_nickname){
+    public String nicknamedupcheck(String memberNickname){
 
-        if(memberService.validateDuplicateMemberNickname(member_nickname)){
+        if(memberService.validateDuplicateMemberNickname(memberNickname)){
             return "S";
         }
         else{

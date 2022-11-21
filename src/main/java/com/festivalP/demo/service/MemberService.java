@@ -3,11 +3,15 @@ package com.festivalP.demo.service;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.festivalP.demo.domain.Member;
+import com.festivalP.demo.domain.Notice;
 import com.festivalP.demo.form.AuthInfo;
 import com.festivalP.demo.form.MemberForm;
 import com.festivalP.demo.repository.MemberRepository;
+import com.festivalP.demo.repository.PageMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,6 +29,14 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PageMemberRepository pageMemberRepository;
+
+
+    public Page<Member> paging(Pageable pageable) {
+        // Page<Posts> Pages= pageRepository.findAll(pageable);
+        return pageMemberRepository.findAll(pageable);
+    }
+
 
     public List<Member> findMembers() {
         return memberRepository.findAll();
@@ -34,9 +46,9 @@ public class MemberService {
     private Member encryptFunc(Member member){
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String pw = member.getMember_pw();
+        String pw = member.getMemberPw();
         String securePw = encoder.encode(pw);
-        member.setMember_pw(securePw);
+        member.setMemberPw(securePw);
         return member;
     }
 
@@ -46,29 +58,29 @@ public class MemberService {
 //        System.out.println("MemberService.join");
 //
 //        memberRepository.save(member);
-//        return member.getMember_id();
+//        return member.getmemberId();
 //    }
 
     // 암호화 함수 사용 전
 //    @Transactional
 //    public String join(Member member){
 //        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        member.setMember_pw(encoder.encode(member.getMember_pw()));
+//        member.setmemberPw(encoder.encode(member.getmemberPw()));
 //        System.out.println("MemberService.join");
 //        memberRepository.save(member);
-//        return member.getMember_id();
+//        return member.getmemberId();
 //    }
 
     @Transactional
     public String join(Member member){
         System.out.println("MemberService.join");
         memberRepository.save(encryptFunc(member));
-        return member.getMember_id();
+        return member.getMemberId();
     }
 
     @Transactional
-    public boolean validateDuplicateMemberId(String member_id){
-        List<Member> findMem = memberRepository.findById(member_id);
+    public boolean validateDuplicateMemberId(String memberId){
+        List<Member> findMem = memberRepository.findById(memberId);
         if(!findMem.isEmpty()) {
             // 중복된 ID 있을 경우
             System.out.println("@@@@@@@ duplicate! @@@@");
@@ -82,8 +94,8 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean validateDuplicateMemberNickname(String member_nickname){
-        List<Member> findMem = memberRepository.findByNickname(member_nickname);
+    public boolean validateDuplicateMemberNickname(String memberNickname){
+        List<Member> findMem = memberRepository.findByNickname(memberNickname);
         if(!findMem.isEmpty()) {
             // 중복된 ID 있을 경우
             System.out.println("@@@@@@@ duplicate! @@@@");
@@ -97,35 +109,35 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean memberExistCheck(String member_id, String member_pw){
+    public boolean memberExistCheck(String memberId, String memberPw){
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        List<Member> findMem =memberRepository.findById(member_id);
+        List<Member> findMem =memberRepository.findById(memberId);
         if(findMem.isEmpty()){
             return false;
         }
         else{
-            return encoder.matches(member_pw,findMem.get(0).getMember_pw());
+            return encoder.matches(memberPw,findMem.get(0).getMemberPw());
         }
     }
 
 
     @Transactional
-    public AuthInfo getMemberAuthInfo(String member_id){
-        List<Member> findMem =memberRepository.findById(member_id);
+    public AuthInfo getMemberAuthInfo(String memberId){
+        List<Member> findMem =memberRepository.findById(memberId);
         Member mem = findMem.get(0);
 
-//        Member mem = memberRepository.findById(member_id);
+//        Member mem = memberRepository.findById(memberId);
         AuthInfo authInfo = new AuthInfo();
-        authInfo.setId(member_id);
-        authInfo.setState(mem.getMember_state());
+        authInfo.setId(memberId);
+        authInfo.setState(mem.getMemberState());
 
         return authInfo;
     }
 
     @Transactional
-    public Member getMemberAllInfo(String member_id){
-        List<Member> findMem =memberRepository.findById(member_id);
+    public Member getMemberAllInfo(String memberId){
+        List<Member> findMem =memberRepository.findById(memberId);
         Member mem = findMem.get(0);
         return mem;
     }

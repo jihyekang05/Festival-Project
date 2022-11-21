@@ -76,7 +76,7 @@
                             </div>
 
                             <span th:if="${session.authInfo.state==0}"
-                                class="text-center align-self-center">[[${session.member.member_nickname}]]</span>
+                                class="text-center align-self-center">[[${session.member.memberNickname}]]</span>
                             <span th:if="${session.authInfo.state==2}" class="text-center align-self-center">관리자</span>
                             <span class="text-center"> 님 환영합니다!</span>
 
@@ -134,15 +134,15 @@
 
                     아이디
                     <div class="row">
-                        <input type="text" class="form-control shadow-none" th:value="${session.member.member_id}"
-                            id="member_id" readonly>
+                        <input type="text" class="form-control shadow-none" th:value="${session.member.memberId}"
+                            id="memberId" readonly>
                     </div>
                     <br>
 
                     닉네임
                     <div class="row">
-                        <input type="text" class="form-control shadow-none" th:value="${session.member.member_nickname}"
-                            id="member_nickname" readonly>
+                        <input type="text" class="form-control shadow-none" th:value="${session.member.memberNickname}"
+                            id="memberNickname" readonly>
 
                     </div>
                     <br>
@@ -150,30 +150,31 @@
 
                     주소
                     <div class="row">
-                        <input type="text" class="form-control shadow-none" th:value="${session.member.member_addr}"
-                            id="member_addr" readonly>
+                        <input type="text" class="form-control shadow-none" th:value="${session.member.memberAddr}"
+                            id="memberAddr" readonly>
                     </div>
                     <br>
 
 
                     생년월일
                     <div class="row">
-                        <input type="date" class="form-control shadow-none" th:value="${session.member.member_birth}"
-                            id="member_birth" readonly>
+                        <input type="date" class="form-control shadow-none" th:value="${session.member.memberBirth}"
+                            id="memberBirth" readonly>
                     </div>
                     <br>
 
 
                     이메일
                     <div class="row">
-                        <input type="text" class="form-control shadow-none" th:value="${session.member.member_email}"
-                            id="member_email" readonly>
+                        <input type="text" class="form-control shadow-none" th:value="${session.member.memberEmail}"
+                            id="memberEmail" readonly>
                     </div>
                     <br>
 
 
                     관심카테고리
                     <div class="row">
+<<<<<<< HEAD
                         <input type="text" class="form-control shadow-none" th:value="${session.member.member_category}"
                             id="member_category" readonly>
 
@@ -197,6 +198,10 @@
                                     <input class="form-check-input category_view" type="checkbox" value="12" disabled>Category12<br>
                                 </div>
                             </div>
+=======
+                        <input type="text" class="form-control shadow-none" th:value="${session.member.memberCategory}"
+                            id="memberCategory" readonly>
+>>>>>>> 4b0f9bd873f845fec41335c64b4f7cddc258b3f6
                     </div>
                     <br><br>
 
@@ -261,7 +266,7 @@
 
 
     document.getElementById("go_to_modify").addEventListener('click', () => {
-        var login_id = $("#member_id").val();
+        var login_id = $("#memberId").val();
         var login_password = $("#login_password").val();
         $.ajax({
             type: "POST",

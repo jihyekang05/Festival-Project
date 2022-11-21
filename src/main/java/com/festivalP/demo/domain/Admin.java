@@ -19,9 +19,12 @@ public class Admin {
 
     @Id // 해당 테이블의 PK 항목
     @GeneratedValue // PK 생성 규칙
-    @Column // 테이블의 칼럼,
-    private Long admin_index;
+    @Column (name="admin_index")// 테이블의 칼럼,
+    private Long adminIndex;
+    
+    @Column (name="admin_id")
+    private String adminId;
 
-    private String admin_id;
-    private String admin_pw;
+    @Column (name="admin_pw")
+    private String adminPw;
 }

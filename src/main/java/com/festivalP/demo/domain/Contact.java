@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity(name="Contact")
 @Table
@@ -17,13 +14,16 @@ public class Contact {
 
     @Id
     @GeneratedValue
-    private Long contact_index;
+    @Column(name="contact_index")
+    private Long contactIndex;
 
-    private String contact_name;
+    @Column(name="contact_name")
+    private String contactName;
 
-    private String contact_email;
+    @Column(name="contact_email")
+    private String contactEmail;
 
 //    private String contact_number;
-
-    private String contact_text;
+    @Column(name="contact_text")
+    private String contactText;
 }

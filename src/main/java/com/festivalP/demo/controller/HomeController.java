@@ -1,7 +1,9 @@
 package com.festivalP.demo.controller;
 
+import com.festivalP.demo.domain.Notice;
 import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.service.FestivalService;
+import com.festivalP.demo.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,27 +18,29 @@ import java.util.List;
 public class HomeController {
 
     private final FestivalService festivalService;
+    private final NoticeService noticeService;
 
 
-
-    //가장 많이 찾는 축제
+    //가장 많이 찾는 축제, 최근공지 모달
     @GetMapping("/")
     public String home(Model model) {
         List<Posts> topThree = festivalService.sort3ViewFestivals();
         List<Posts> topDate =  festivalService.sort3NewFestivals();
+
+        List<Notice> notices = noticeService.NewNotice();
+        model.addAttribute("notice",notices);
+
         System.out.println("here!!!!!!!!!!!!!!!!!!!!!");
 //        System.out.println(topThree.size());
 //        for (Posts p:topThree) {
-//            System.out.println(p.getContent_views());
+//            System.out.println(p.getcontentViews());
 //
 //        }
+
         model.addAttribute("topview",topThree);
         model.addAttribute("topdate",topDate);
         return "home";
     }
-
-
-
 
 
 

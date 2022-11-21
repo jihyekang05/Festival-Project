@@ -1,20 +1,27 @@
 package com.festivalP.demo.repository;
 
 import com.festivalP.demo.domain.Posts;
-import com.festivalP.demo.domain.festival;
 import lombok.RequiredArgsConstructor;
 
+<<<<<<< HEAD
 import org.springframework.data.domain.Sort;
+=======
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+>>>>>>> 4b0f9bd873f845fec41335c64b4f7cddc258b3f6
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.Date;
+
 import java.util.List;
 
 @Repository
@@ -23,84 +30,89 @@ import java.util.List;
 public class FestivalRepository {
     private final EntityManager em;
 
+
+    @Autowired
+    PageRepository pageRepository;
+
+
+
+
     public List<Posts> findAll() {
        return em.createQuery("select p from Posts p", Posts.class).getResultList();
+
     }
+    public Page<Posts> findAll2(Pageable pageable) {
+        return pageRepository.findAll(pageable);
+
+    }
+
+
+
+
 
     public void save(Posts posts) {em.persist(posts);}
 
-
-
-    public List<Posts> findByPost_num(Long post_num) {
-        return em.createQuery("select p from Posts p where p.post_num = :post_num", Posts.class).setParameter("post_num",post_num).getResultList();
+    public List<Posts> findBypostNum(Long postNum) {
+        return em.createQuery("select p from Posts p where p.postNum = :postNum", Posts.class).setParameter("postNum",postNum).getResultList();
     }
 
-    public int deleteByPost_num(Long post_num){
+    public int deleteBypostNum(Long postNum){
 
-        int result = em.createQuery ("delete from Posts p where p.post_num = :post_num")
-                .setParameter("post_num",post_num).executeUpdate();
+        int result = em.createQuery ("delete from Posts p where p.postNum = :postNum")
+                .setParameter("postNum",postNum).executeUpdate();
         return result;
     }
 
 
 //    제목 검색할 때 필요
-    public List<Posts> findByFestival_Title(String keyword) {
+    public List<Posts> findByfestivalTitle(String keyword) {
 
-        return em.createQuery("select p from Posts p where p.festival_title LIKE concat('%',:keyword,'%')",Posts.class).setParameter("keyword",keyword).getResultList();
+        return em.createQuery("select p from Posts p where p.festivalTitle LIKE concat('%',:keyword,'%')",Posts.class).setParameter("keyword",keyword).getResultList();
     }
 
 
 
     //오래된 순 정렬
-    public List<Posts> findAllOrderByFestival_Upload_Date_Old() {
-        return em.createQuery("select p from Posts p order by p.festival_upload_date", Posts.class).getResultList();
+    public List<Posts> findAllOrderByfestivalUploadDate_Old() {
+        return em.createQuery("select p from Posts p order by p.festivalUploadDate", Posts.class).getResultList();
     }
 
     //최신 순 정렬
-    public List<Posts> findAllOrderByFestival_Upload_Date_New() {
-        return em.createQuery("select p from Posts p order by p.festival_upload_date desc", Posts.class).getResultList();
+    public List<Posts> findAllOrderByfestivalUploadDate_New() {
+        return em.createQuery("select p from Posts p order by p.festivalUploadDate desc", Posts.class).getResultList();
     }
 
     //조회수 정렬
-    public List<Posts> findAllOrderByFestival_Content_Views() {
-        return em.createQuery("select p from Posts p order by p.content_views desc", Posts.class).getResultList();
+    public List<Posts> findAllOrderByFestival_contentViews() {
+        return em.createQuery("select p from Posts p order by p.contentViews desc", Posts.class).getResultList();
+    }
+
+
+    public Posts findOne(Long postNum) {
+        return em.find(Posts.class, postNum);
     }
 
     //지역별로 데이터찾기
-    public List<Posts> findByBoard_loc_addr(Long board_loc_addr) {
-        return em.createQuery("select p from Posts p where p.board_loc_addr LIKE :board_loc_addr", Posts.class).setParameter("board_loc_addr",board_loc_addr).getResultList();
+    public List<Posts> findByboardLocAddr(Long local) {
+        return em.createQuery("select p from Posts p where p.boardLocAddr LIKE :boardLocAddr", Posts.class).setParameter("boardLocAddr",local).getResultList();
     }
 
+
+
     //많이 찾는 축제찾기
-    public List<Posts> findOneOrderByFestival_Content_Views() {
-       return em.createQuery("select p from Posts p order by p.content_views desc", Posts.class).setFirstResult(0).setMaxResults(3).getResultList();
+    public List<Posts> findOneOrderByFestival_contentViews() {
+       return em.createQuery("select p from Posts p order by p.contentViews desc", Posts.class).setFirstResult(0).setMaxResults(3).getResultList();
     }
 
     //새로운 축제찾기
     public List<Posts> findOndOrderByUpload_Date() {
-        return em.createQuery("select p from Posts p order by p.festival_upload_date desc", Posts.class).setFirstResult(0).setMaxResults(3).getResultList();
+        return em.createQuery("select p from Posts p order by p.festivalUploadDate desc", Posts.class).setFirstResult(0).setMaxResults(3).getResultList();
     }
 
 
-    public void modifyByPost(Posts posts){
-          em.createQuery ("Update Posts p set p.admin_index= :admin_index," +
-                          " p.content_text= :content_text," +
-                          " p.board_loc_addr= :board_loc_addr," +
-                          " p.board_addr= :board_addr," +
-                          " p.content_image= :content_image," +
-                          " p.festival_title= :festival_title," +
-                          " p.festival_upload_date= :festival_upload_date " +
-                          " where p.post_num = :post_num")
-                  .setParameter("post_num", posts.getPost_num())
-                  .setParameter("admin_index",posts.getAdmin_index())
-                  .setParameter("content_text",posts.getContent_text())
-                  .setParameter("board_loc_addr",posts.getBoard_loc_addr())
-                  .setParameter("board_addr",posts.getBoard_addr())
-                  .setParameter("content_image",posts.getContent_image())
-                  .executeUpdate();
 
-        //return result;
-    }
+
+
 
 
 }

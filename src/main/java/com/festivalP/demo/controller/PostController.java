@@ -9,18 +9,24 @@ import com.festivalP.demo.form.PostForm;
 import com.festivalP.demo.service.FavoriteService;
 import com.festivalP.demo.service.FestivalService;
 //import com.festivalP.demo.service.MailService;
-import com.festivalP.demo.service.MailService;
+//import com.festivalP.demo.service.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+<<<<<<< HEAD
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.awt.print.Pageable;
+=======
+>>>>>>> 4b0f9bd873f845fec41335c64b4f7cddc258b3f6
 import java.util.HashMap;
 import java.util.List;
 @Log4j2
@@ -35,14 +41,31 @@ public class PostController {
 
     //전체 축제리스트 불러오는 부분
     @GetMapping("/allfestival")
-    public String list(Model model) {
-        List<Posts> festivals = festivalService.findFestivals();
+    public String list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
+//        List<Posts> festivals = festivalService.findFestivals();
+        Page<Posts> festivals = festivalService.paging2( pageable);
         model.addAttribute("posts",festivals);
-        log.info("DEBUG");
+//        System.out.println();
         return "every_festival_board";
     }
 
+    //페이지 ajax
+    @PostMapping("/allfestival/scroll")
+    @ResponseBody
+    public Page<Posts> list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable, String  keyword) {
+        System.out.println("=========================");
+//        System.out.println(page);
+        System.out.println(pageable.getPageNumber());
+        Page<Posts> festivals = festivalService.paging(keyword, pageable);
+//        model.addAttribute("posts", festivals);
+        System.out.println(festivals.getTotalPages()); //2
+        return festivals;
+    }
+
+
+
     //각 축제별 정보와 리뷰리스트 불러오는 부분
+<<<<<<< HEAD
     @GetMapping("/festival/{post_num}")
     public String list(Model model, @PathVariable("post_num") Long post_num, HttpServletRequest request) {
         List<Posts> post = festivalService.findOne(post_num);
@@ -52,6 +75,13 @@ public class PostController {
 
         List<Review> reviews = festivalService.findReviews(post_num);
 
+=======
+    @GetMapping("/festival/{postNum}")
+    public String list(Model model, @PathVariable("postNum") Long postNum) {
+        List<Posts> post = festivalService.findOne(postNum);
+        model.addAttribute("post", post);
+        List<Review> reviews = festivalService.findReviews(postNum);
+>>>>>>> 4b0f9bd873f845fec41335c64b4f7cddc258b3f6
         model.addAttribute("reviews",reviews);
 
         PostForm postForm = new PostForm();
@@ -117,6 +147,8 @@ public class PostController {
     @ResponseBody
     public List local_Addr(Long local) {
         List<Posts> addr = festivalService.findOne2(local);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(addr.size());
         return addr;
     }
 
@@ -134,14 +166,14 @@ public class PostController {
 
 
 //=============================================================================
-//    @GetMapping("/festival/{post_num}")
+//    @GetMapping("/festival/{postNum}")
 //    public String createReview(Model model){
 //        model.addAttribute("review", new review());
 //        return "Each_Festival_board";
 //    }
 
 
-//    @PostMapping("/festival/{post_num}/stars")
+//    @PostMapping("/festival/{postNum}/stars")
 //    public void funct(@RequestParam int starCnt) {
 //
 ////        service.star(starCnt); // -> service에서는 repository.

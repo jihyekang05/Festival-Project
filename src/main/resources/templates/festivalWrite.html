@@ -37,13 +37,13 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/admin">게시글 관리</a>
+                <a class="nav-link active" aria-current="page" href="/admin/festivalManagement">게시글 관리</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/memberManagement">회원 관리</a>
+                <a class="nav-link active" aria-current="page" href="/admin/memberManagement">회원 관리</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/noticeManagement">공지 관리</a>
+                <a class="nav-link active" aria-current="page" href="/admin/noticeManagement">공지 관리</a>
               </li> 
             </ul>
           </div>
@@ -56,18 +56,18 @@
     <form action="festivalWrite" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label>제목</label>
-        <input type="text" class="form-control" name="festival_title" placeholder="Title Input">
+        <input type="text" class="form-control" name="festivalTitle" placeholder="Title Input">
       </div>
       <div class="mb-3">
           <label for="formFile" class="form-label">축제 배경이미지</label>
-          <input class="form-control" type="file" id="formFile" name="content_image">
+          <input class="form-control" type="file" id="formFile" name="contentImage">
        </div>
 
 
       
       <div class="form-group">
         <label >Contents</label>
-        <textarea class="form-control" name="content_text" rows="5" placeholder="Contents Input"></textarea>
+        <textarea class="form-control" name="contentText" rows="5" placeholder="Contents Input"></textarea>
 
       </div>
 
@@ -75,7 +75,7 @@
 
         <div>
             <label >축제 시작 일자</label>
-            <input type="date" name="festival_upload_date">
+            <input type="date" name="festivalUploadDate">
         </div>&nbsp;
 
 
@@ -104,8 +104,8 @@
         <button type="submit" class="btn btn-outline-secondary" id="btnWrite">글등록</button>
         <button type="button" class="btn btn-outline-danger" onclick="history.back(-1);">취소</button>
     </div>
-        <input type="text" name="content_views">
-        <input type="text" name="admin_index">
+        <input type="text" name="contentViews">
+        <input type="text" name="adminIndex">
     </form>
       <script src="/js/modify.js" th:inline="javascript"></script>
 </div>
