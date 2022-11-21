@@ -31,6 +31,46 @@
                 </div>
             </div>
         </nav>
+
+
+        <!-- 로그인 중일 때 모달창 -->
+        <div th:if="${session.authInfo != null}" class="modal fade" id="login-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">회원 정보</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="mb-3 text-center">
+                        <div th:if="${session.authInfo.state==0}">
+                            <span class="text-center">일반회원</span>
+                        </div>
+                        <div th:if="${session.authInfo.state==2}">
+                            <span class="text-center">관리자</span>
+                        </div>
+                        <input type="hidden" th:if="${session.member.member_index!=null}" th:value="${session.member.member_index}" id="member_index_value">
+                        
+                        <span th:if="${session.authInfo.state==0}" class="text-center align-self-center">[[${session.member.member_nickname}]]</span>
+                        <span th:if="${session.authInfo.state==2}" class="text-center align-self-center">관리자</span>
+                        <span class="text-center"> 님 환영합니다!</span>
+                      
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button> -->
+
+                  <button th:if="${session.authInfo.state==0}" type="button" class="btn btn-primary" id="my_page_btn" onclick="window.location.href='/member/mypage'">마이페이지</button>
+                  <button type="button" class="btn btn-dark" id="logout_btn" onclick="logoutClick()">로그아웃</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
         <!-- 누르면 각 페이지 내의 각 부분으로 이동 -->
         <a class="btn btn-primary btn-xl text-uppercase" href="#map">근처 편의시설</a>
         <a class="btn btn-primary btn-xl text-uppercase" href="#review">축제후기</a>
@@ -45,6 +85,9 @@
                         <header class="mb-4">
                             <!-- Post title-->
                             <h1 class="fw-bolder mb-1" th:text="${post.festival_title}">2022 사과 축제!</h1>
+                            <input th:if="${session.member!=null && !post.favoriteFlag}" type="button" class="btn-secondary" id="favorite_add_btn" value="즐겨찾기">
+                            <input th:if="${session.member!=null && post.favoriteFlag}" type="button" class="btn-primary" id="favorite_add_btn" value="즐겨찾기">
+                            
                             <!-- Post meta content-->
                             <div class="text-muted fst-italic mb-4" th:text="${post.festival_upload_date}">게시일자 : 게시일자 들어갈 자리
                             </div>
@@ -109,12 +152,12 @@
 <!--                            </tr>-->
                             <tr>
                                 <td>
-                                    <input id ="member_index" name="member_index" type="text" aria-label="Last name" class="form-control" placeholder="닉네임" value="" >
+                                    <input id ="member_index"  type="text" aria-label="Last name" class="form-control" placeholder="닉네임" value="" >
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input id = "review_post_num" th:value="${post.post_num}" name="member_index" type="text" aria-label="Last name" class="form-control" placeholder="게시글번호" value="">
+                                    <input id = "review_post_num" th:value="${post.post_num}" type="text" aria-label="Last name" class="form-control" placeholder="게시글번호" value="">
                                 </td>
                             </tr>
                         </div>
@@ -174,6 +217,7 @@
         <script src="/js/scripts.js"></script>
         <script src="/js/api.js"></script>
         <script src="/js/review.js"></script>
-
+        
     </body>
+    <script src="/js/board.js"></script>
 </html>

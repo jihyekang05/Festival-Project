@@ -2,8 +2,11 @@ package com.festivalP.demo.controller;
 
 //import com.festivalP.demo.domain.Contact;
 import com.festivalP.demo.domain.Contact;
+import com.festivalP.demo.domain.Member;
 import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.domain.Review;
+import com.festivalP.demo.form.PostForm;
+import com.festivalP.demo.service.FavoriteService;
 import com.festivalP.demo.service.FestivalService;
 //import com.festivalP.demo.service.MailService;
 import com.festivalP.demo.service.MailService;
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.awt.print.Pageable;
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +28,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
 
-
     private final FestivalService festivalService;
+    private final FavoriteService favoriteService;
 
 //    private final MailService mailService;
 
@@ -39,14 +44,49 @@ public class PostController {
 
     //각 축제별 정보와 리뷰리스트 불러오는 부분
     @GetMapping("/festival/{post_num}")
-    public String list(Model model, @PathVariable("post_num") Long post_num) {
+    public String list(Model model, @PathVariable("post_num") Long post_num, HttpServletRequest request) {
         List<Posts> post = festivalService.findOne(post_num);
-        model.addAttribute("post", post);
+
+
+//        model.addAttribute("post", post);
+
         List<Review> reviews = festivalService.findReviews(post_num);
+
         model.addAttribute("reviews",reviews);
+
+        PostForm postForm = new PostForm();
+
+        System.out.println("post.get(0): "+post.get(0));
+        System.out.println("post.get(0): "+post.get(0).getContent_text());
+        System.out.println("post.get(0): "+post.get(0).getContent_image());
+
+        System.out.println("@@@@@@@@@@@@@@ " +post.get(0).getPost_num());
+
+        postForm.setPost_num(post.get(0).getPost_num());
+        postForm.setAdmin_index(post.get(0).getAdmin_index());
+        postForm.setContent_text(post.get(0).getContent_text());
+        postForm.setContent_views(post.get(0).getContent_views());
+        postForm.setFestival_title(post.get(0).getFestival_title());
+        postForm.setReview_score_avg(post.get(0).getReview_score_avg());
+        postForm.setBoard_addr(post.get(0).getBoard_addr());
+        postForm.setBoard_loc_addr(post.get(0).getBoard_loc_addr());
+        postForm.setContent_image(post.get(0).getContent_image());
+        postForm.setFestival_upload_date(post.get(0).getFestival_upload_date());
+        postForm.setProgress_state(post.get(0).getProgress_state());
+        postForm.setFestival_category(post.get(0).getFestival_category());
+
+        HttpSession session = request.getSession();
+
+        Member member = (Member) session.getAttribute("member");
+        if(member!=null){
+            postForm.setFavoriteFlag(favoriteService.favoriteExist(member.getMember_index(), post_num));
+        }else{
+            postForm.setFavoriteFlag(false);
+        }
+        model.addAttribute("post", postForm);
+
         return "Each_Festival_board";
     }
-
 
     //후기 제출했을 때 데이터 저장되는 부분
     @PostMapping("/festival/review")
@@ -56,6 +96,7 @@ public class PostController {
         System.out.println(festivalService.saveReview(data));
         return null;
     }
+
 
     //검색
     @GetMapping("/allfestival/search")

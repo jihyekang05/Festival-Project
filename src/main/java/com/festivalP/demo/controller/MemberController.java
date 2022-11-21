@@ -63,7 +63,6 @@ public class MemberController {
         // 회원가입 완료 시 리턴 페이지
         return "redirect:/";
     }
-
     
     ////////////////////////////////
     // admin 아이디 중복체크
@@ -123,7 +122,6 @@ public class MemberController {
     }
 
 
-
     // 마이페이지
     @GetMapping("/member/mypage")
     public String mypage(HttpSession session, Model model){
@@ -154,6 +152,7 @@ public class MemberController {
         System.out.println(member.getMember_email());
 
 
+
         member.setMember_nickname(nickname);
         member.setMember_addr(addr);
         member.setMember_birth(birth);
@@ -174,6 +173,9 @@ public class MemberController {
     @ResponseBody
     @PostMapping("/member/mypage/modify")
     public String modify(@RequestParam("login_id")String login_id, @RequestParam("login_password")String login_password){
+
+
+
 
         if (memberService.memberExistCheck(login_id, login_password)) {
 

@@ -1,26 +1,20 @@
-package com.festivalP.demo.domain;
-
+package com.festivalP.demo.form;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
-@Entity(name="Posts")
-@Table
-//@Table(name = "POSTS")
+
 
 @Getter
 @Setter
-@NoArgsConstructor
-public class Posts {
+public class PostForm {
 
-    @Id
-    @GeneratedValue
-    @Column(name="post_num")
     private Long post_num;
 
     private Long admin_index;
@@ -29,7 +23,6 @@ public class Posts {
 
     private Long content_views;
 
-    @Column(name = "festival_title")
     private String festival_title;
 
     private Long review_score_avg;
@@ -42,10 +35,12 @@ public class Posts {
 
     private String progress_state; //진행상태
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date festival_upload_date;
 
     private String festival_category;
+
+    private boolean favoriteFlag;
+
+
 
 }

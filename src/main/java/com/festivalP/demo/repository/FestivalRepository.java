@@ -4,6 +4,7 @@ import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.domain.festival;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Modifying;

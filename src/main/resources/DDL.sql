@@ -49,6 +49,23 @@ CREATE TABLE Favorite (
     CONSTRAINT member_favorite_index FOREIGN KEY(member_index) REFERENCES member(member_index),
     CONSTRAINT post_favorite_index FOREIGN KEY(post_num) REFERENCES POSTS(post_num)
 );
+
+
+ALTER TABLE "Favorite" ADD CONSTRAINT "PK_FAVORITE" PRIMARY KEY (
+	"member_index",
+	"post_num"
+);
+
+ALTER TABLE "Favorite" ADD CONSTRAINT "FK_MEMBER_TO_Favorite_1" FOREIGN KEY (
+	"member_index"
+);
+
+ALTER TABLE "Favorite" ADD CONSTRAINT "FK_POSTS_TO_Favorite_1" FOREIGN KEY (
+	"post_num"
+);
+
+
+
 drop table FESTIVAL_REVIEW;
 CREATE TABLE FESTIVAL_REVIEW (
     review_index number(10) primary key,

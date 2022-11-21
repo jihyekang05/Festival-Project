@@ -37,16 +37,16 @@
                         <li th:if="${session.authInfo == null}" class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#login-Modal">로그인</a></li>
                         <li th:if="${session.authInfo != null}" class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#login-Modal">내 정보</a></li>
                         <li class="nav-item"><a class="nav-link" href="/allfestival">전체목록</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/favorites">내 즐겨찾기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/favoritefestival">내 즐겨찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/localFestival">지역별 축제</a></li>
                         <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                         <li class="nav-item"><a class="nav-link" href="/notice">공지사항</a></li>
                         <li th:if="${session.authInfo != null} and ${session.authInfo.state==2}" class="nav-item"><a class="nav-link" href="/admin">관리자 페이지</a></li>
-
                     </ul>
                 </div>
             </div>
         </nav>
+        
         <!-- Masthead-->
         <header class="masthead">
             <div class="container">
@@ -60,58 +60,8 @@
                 <!--  -->
             </div>
         </header>
-<!--        &lt;!&ndash; 실시간 핫한 축제&ndash;&gt;-->
-<!--        <section class="page-section" id="about">-->
-<!--            <div class="container" >-->
-<!--                <div class="text-center">-->
-<!--                    <h2 class="section-heading text-uppercase">실시간 핫한 축제</h2>-->
-<!--                    <h3 class="section-subheading text-muted">실시간으로 핫한 축제를 즐겨보실까용</h3>-->
-<!--                </div>-->
-<!--                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false" >-->
-<!--                    <div >-->
-<!--                    <div class="carousel-indicators">-->
-<!--                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>-->
-<!--                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>-->
-<!--                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>-->
-<!--                    </div>-->
-<!--                    <div class="carousel-inner" >-->
-<!--                      <div class="carousel-item active" >-->
-<!--                        <img th:src="${topview.content_image}" class="d-block w-100" alt="...">-->
-<!--                        <div class="carousel-caption d-none d-md-block">-->
-<!--                          <h5 th:text="${topview.festival_title}">First slide label</h5>-->
-<!--                            <p>조회수</p>-->
-<!--                          <p th:text="${post.content_views}"></p>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--&lt;!&ndash;                      <div class="carousel-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <img src="./assets/img/festival_example.jpg" class="d-block w-100" alt="...">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="carousel-caption d-none d-md-block">&ndash;&gt;-->
-<!--&lt;!&ndash;                          <h5>Second slide label</h5>&ndash;&gt;-->
-<!--&lt;!&ndash;                          <p>Some representative placeholder content for the second slide.</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                      </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                      <div class="carousel-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <img src="./assets/img/festival_example.jpg" class="d-block w-100" alt="...">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="carousel-caption d-none d-md-block">&ndash;&gt;-->
-<!--&lt;!&ndash;                          <h5>Third slide label</h5>&ndash;&gt;-->
-<!--&lt;!&ndash;                          <p>Some representative placeholder content for the third slide.</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                      </div>&ndash;&gt;-->
-<!--                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">-->
-<!--                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-<!--                            <span class="visually-hidden">Previous</span>-->
-<!--                        </button>-->
-<!--                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">-->
-<!--                            <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--                            <span class="visually-hidden">Next</span>-->
-<!--                        </button>-->
-<!--                    </div>-->
 
-<!--                   </div>-->
-<!--                  </div>-->
-<!--            </div>-->
-<!--                -->
-<!--        </section>-->
+
         <!-- 많이 찾는 축제-->
         <section class="page-section" id="services">
             <div class="container">
