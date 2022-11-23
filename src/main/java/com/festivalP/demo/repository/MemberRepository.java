@@ -28,12 +28,12 @@ public class MemberRepository {
 
     public List<Member> findById(String id) {
 
-        return em.createQuery("select m from Member m where m.memberId = : id", Member.class).setParameter("id", id).getResultList();
+        return em.createQuery("select m from Member m where m.memberId = :id", Member.class).setParameter("id", id).getResultList();
     }
 
 
     public List<Member> findByNickname(String nickname){
-        return em.createQuery("select m from Member m where m.memberNickname = : nickname", Member.class).setParameter("nickname", nickname).getResultList();
+        return em.createQuery("select m from Member m where m.memberNickname = :memberNickname", Member.class).setParameter("memberNickname", nickname).getResultList();
     }
 
     public List<Member> findByIdAndPw(String id, String pw){
@@ -46,7 +46,6 @@ public class MemberRepository {
 
         Member resMember = em.find(Member.class, member.getMemberIndex());
 
-
         resMember.setMemberNickname(member.getMemberNickname());
         resMember.setMemberBirth(member.getMemberBirth());
         resMember.setMemberEmail(member.getMemberEmail());
@@ -56,6 +55,7 @@ public class MemberRepository {
         System.out.println("#$#### memberInfoUpdate complete!!");
         return resMember;
     }
+
 
     public Member memberDelete(Member member){
 

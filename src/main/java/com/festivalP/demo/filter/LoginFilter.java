@@ -13,8 +13,8 @@ import java.io.IOException;
 @Component
 public class LoginFilter implements Filter {
 
-    private static final String[] unAuthList = {"/","/member/signup", "/allfestival"};
-
+//    private static final String[] unAuthList = {"/","/member/signup", "/board/allfestival","/**"};
+    private static final String[] unAuthList = {"/**"};
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -29,6 +29,7 @@ public class LoginFilter implements Filter {
 
             if(!PatternMatchUtils.simpleMatch(unAuthList, requestURI)){
                 // unAuthList에 있는 URI와 requestURI가 매치되지 않는다면 (인증이 필요한 )
+
                 System.out.println(session.getAttribute("authInfo"));
                 if(session.getAttribute("authInfo")==null){
                     System.out.println("#### session is null!!!");
@@ -39,8 +40,8 @@ public class LoginFilter implements Filter {
                 }
             }
 
-            System.out.println("########## FILTER! ");
-
+            System.out.println("########### Login FILTER out ");
+            System.out.println("########################### ");
         } catch(Exception e){
 
         }

@@ -50,9 +50,6 @@ public class Member {
 
 
 
-
-
-
 //    private String memberId;
 //    private Long memberPw;
 //    private String memberBirth;

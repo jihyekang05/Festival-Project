@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
+<head th:fragment="mainHeader" >
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
@@ -174,8 +174,7 @@
 
                     관심카테고리
                     <div class="row">
-<<<<<<< HEAD
-                        <input type="text" class="form-control shadow-none" th:value="${session.member.member_category}"
+                        <input type="text" class="form-control shadow-none" th:value="${session.member.memberCategory}"
                             id="member_category" readonly>
 
                             <div class="row">
@@ -198,10 +197,8 @@
                                     <input class="form-check-input category_view" type="checkbox" value="12" disabled>Category12<br>
                                 </div>
                             </div>
-=======
                         <input type="text" class="form-control shadow-none" th:value="${session.member.memberCategory}"
                             id="memberCategory" readonly>
->>>>>>> 4b0f9bd873f845fec41335c64b4f7cddc258b3f6
                     </div>
                     <br><br>
 
@@ -218,12 +215,6 @@
             </section>
         </div>
     </section>
-
-
-
-
-
-
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -260,48 +251,4 @@
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
-<script>
-
-    console.log("script ON");
-
-
-    document.getElementById("go_to_modify").addEventListener('click', () => {
-        var login_id = $("#memberId").val();
-        var login_password = $("#login_password").val();
-        $.ajax({
-            type: "POST",
-            async: true,
-            url: "/member/mypage/modify",
-            data: {
-                login_id: login_id,
-                login_password: login_password
-            }
-        })
-            .done(function (text) {
-                console.log(text);
-                if (text == "S") {
-                    Swal.fire({
-                        title: '로그인 성공',
-                        confirmButtonText: '확인',
-                    }).then(() => {
-                        location.href = '/member/modifypage';
-                    });
-                }
-                else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '로그인 실패',
-                        text: '아이디 혹은 비밀번호를 확인하세요.',
-                        confirmButtonText: '확인',
-                    });
-                }
-
-            })
-            .fail(function () {
-                alert("Ajax 실패");
-
-            });
-    });
-</script>
-
 </html>

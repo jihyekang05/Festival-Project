@@ -2,8 +2,11 @@ package com.festivalP.demo.controller;
 
 //import com.festivalP.demo.domain.Contact;
 import com.festivalP.demo.domain.Contact;
+import com.festivalP.demo.domain.Member;
 import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.domain.Review;
+import com.festivalP.demo.form.PostForm;
+import com.festivalP.demo.service.FavoriteService;
 import com.festivalP.demo.service.FestivalService;
 //import com.festivalP.demo.service.MailService;
 //import com.festivalP.demo.service.MailService;
@@ -18,6 +21,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 @Log4j2
@@ -27,6 +32,8 @@ public class PostController {
 
 
     private final FestivalService festivalService;
+
+    private final FavoriteService favoriteService;
 
 //    private final MailService mailService;
 
@@ -76,7 +83,6 @@ public class PostController {
         Page<Posts> festivals = null;
         if(keyword == null) {
             if(direction.equals("DESC") && sort.equals("contentViews")) {
-                System.out.println("DESC다@@@@");
                 festivals =festivalService.sortView(pageable);
             } else if (direction.equals("DESC") && sort.equals("festivalUploadDate")) {
                 festivals = festivalService.sortNew(pageable);
@@ -125,13 +131,39 @@ public class PostController {
 
     //각 축제별 정보와 리뷰리스트 불러오는 부분
     @GetMapping("/festival/{postNum}")
-    public String list(Model model, @PathVariable("postNum") Long postNum) {
+    public String list(Model model, @PathVariable("postNum") Long postNum, HttpServletRequest request) {
         List<Posts> post = festivalService.findOne(postNum);
         model.addAttribute("post", post);
         List<Review> reviews = festivalService.findReviews(postNum);
         model.addAttribute("reviews",reviews);
-        System.out.println("dddddddddddddd");
-        System.out.println(festivalService.updateView(postNum));
+
+        PostForm postForm = new PostForm();
+
+        System.out.println("@@@@@@@@@@@@@@ " +post.get(0).getPostNum());
+
+        postForm.setPostNum(post.get(0).getPostNum());
+        postForm.setAdminIndex(post.get(0).getAdminIndex());
+        postForm.setContentText(post.get(0).getContentText());
+        postForm.setContentViews(post.get(0).getContentViews());
+        postForm.setFestivalTitle(post.get(0).getFestivalTitle());
+        postForm.setReviewScoreAvg(post.get(0).getReviewScoreAvg());
+        postForm.setBoardAddr(post.get(0).getBoardAddr());
+        postForm.setBoardLocAddr(post.get(0).getBoardLocAddr());
+        postForm.setContentImage(post.get(0).getContentImage());
+        postForm.setFestivalUploadDate(post.get(0).getFestivalUploadDate());
+        postForm.setProgressState(post.get(0).getProgressState());
+        postForm.setFestivalCategory(post.get(0).getFestivalCategory());
+
+        HttpSession session = request.getSession();
+
+        Member member = (Member) session.getAttribute("member");
+        if(member!=null){
+            postForm.setFavoriteFlag(favoriteService.favoriteExist(member.getMemberIndex(), postNum));
+        }else{
+            postForm.setFavoriteFlag(false);
+        }
+        model.addAttribute("post", postForm);
+
         return "Each_Festival_board";
     }
 

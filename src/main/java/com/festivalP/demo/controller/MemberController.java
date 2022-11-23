@@ -45,7 +45,7 @@ public class MemberController {
     public String createAdminForm(Model model){
         model.addAttribute("adminForm", new AdminForm());
         // resource 의 HTML 경로
-            return "member/adminSignUpForm";
+        return "member/adminSignUpForm";
     }
 
     @PostMapping("/member/adminsignup")
@@ -64,7 +64,6 @@ public class MemberController {
         return "redirect:/";
     }
 
-    
     ////////////////////////////////
     // admin 아이디 중복체크
     @ResponseBody
@@ -78,9 +77,9 @@ public class MemberController {
             return "F";
         }
     }
-    
-    
-    
+
+
+
 
     /////////////////////////
     // 멤버 회원가입
@@ -121,7 +120,6 @@ public class MemberController {
         session.invalidate();
         return "redirect:/";
     }
-
 
 
     // 마이페이지
@@ -174,6 +172,7 @@ public class MemberController {
     @ResponseBody
     @PostMapping("/member/mypage/modify")
     public String modify(@RequestParam("login_id")String login_id, @RequestParam("login_password")String login_password){
+
 
         if (memberService.memberExistCheck(login_id, login_password)) {
 
@@ -229,7 +228,7 @@ public class MemberController {
     @Autowired
     JavaMailSender mailSender;
 
-    
+
     // 인증메일 발송
     @ResponseBody
     @PostMapping("/member/emailAuth")

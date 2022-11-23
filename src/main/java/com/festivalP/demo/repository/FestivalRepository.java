@@ -3,6 +3,7 @@ package com.festivalP.demo.repository;
 import com.festivalP.demo.domain.Posts;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Sort;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,9 +35,11 @@ public class FestivalRepository {
 
 
     public List<Posts> findAll() {
-       return em.createQuery("select p from Posts p", Posts.class).getResultList();
 
+       return em.createQuery("select p from Posts p", Posts.class).getResultList();
     }
+
+
     public Page<Posts> findAll2(Pageable pageable) {
         return pageRepository.findAll(pageable);
 
