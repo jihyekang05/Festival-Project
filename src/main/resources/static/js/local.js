@@ -17,7 +17,7 @@ function localChk(local) {
                 str += '<td>' + locList[i].boardAddr + '</td><td>' + locList[i].festivalTitle + '</td><td>' + locList[i].festivalUploadDate + '</td></tr>';
             });
             $("#boardList").append(str);
-            console.log("data : "+data);
+//            console.log("data : "+data);
 
 //            alert('성공');
 

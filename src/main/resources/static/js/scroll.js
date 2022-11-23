@@ -6,15 +6,26 @@ window.onload = function() {
     },100);
 }
 
+
+
 $(window).scroll(function() {
 	if($(window).scrollTop() + $(window).height() == $(document).height()) {
-
+    let keyword_val = $("#keyword_val").val();
+    console.log(keyword_val)
+    let sort_val = $('#sort_val').val();
+    console.log(sort_val);
+    let direction_val = $('#direction_val').val();
+    console.log(direction_val);
+//    console.log(sort_val);
 	//bottom에 왔을 때 ajax로 다음 데이터 받아오기
 		$.ajax({
             type: 'POST',
             url: "/allfestival/scroll",
             data: {
             page: pageNum, // current Page
+            keyword: keyword_val,
+            sort: sort_val,
+            direction: direction_val
 //            size: 6, // max page size(수정해야함)
             },
           dataType: 'text'
@@ -31,8 +42,8 @@ $(window).scroll(function() {
                                            <img src='"+ json.content[i].contentImage + "' class='card-img-top' alt='...'>\
                                            <div class='card-body'>\
                                              <h5 class='festivalTitle'>"+json.content[i].festivalTitle+"</h5>\
-                                             <p>조회수</p>\
-                                             <p class='festival-text'>"+ json.content[i].contentViews +"</p>\
+                                             <p>조회수: <span class='festival-text'>"+ json.content[i].contentViews +"</span></p>\
+                                             <p>게시일자: <span class='festival-text'>"+ json.content[i].festivalUploadDate +"</span></p>\
                                              <a href='/festival/"+ json.content[i].postNum +"' class='btn btn-primary'>자세히보기</a>\
                                            </div>\
                                          </div>\

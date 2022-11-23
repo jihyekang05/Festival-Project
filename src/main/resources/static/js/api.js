@@ -68,7 +68,7 @@ function addressChk(categoryCode) {
       if (status === kakao.maps.services.Status.OK) {
         for (var i = 0; i < data.length; i++) {
           displayMarker(data[i]);
-          console.log(data[i]);
+//          console.log(data[i]);
         }
       }
     }

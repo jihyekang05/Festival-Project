@@ -32,10 +32,30 @@ public class PostController {
 
     //전체 축제리스트 불러오는 부분
     @GetMapping("/allfestival")
-    public String list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String list(Model model, @PageableDefault(size =6,page=0, sort="contentViews", direction = Sort.Direction.DESC) Pageable pageable,String keyword) {
 //        List<Posts> festivals = festivalService.findFestivals();
-        Page<Posts> festivals = festivalService.paging2( pageable);
+        System.out.println("allfestival keyword");
+
+        System.out.println(pageable.getPageNumber());
+        System.out.println(pageable.getSort());
+        String[] sortDirection  = String.valueOf(pageable.getSort()).split(":");
+        String sort = sortDirection[0].trim();
+        String direction = sortDirection[1].trim();
+        System.out.println("sort : "+ sort);
+        System.out.println("direction : "+ direction);
+
+        Page<Posts> festivals = null;
+        if(keyword == null) {
+            festivals = festivalService.paging2(pageable);
+        } else {
+            festivals = festivalService.paging(keyword,pageable);
+        }
         model.addAttribute("posts",festivals);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("pageable", pageable);
+        model.addAttribute("sort",sort);
+        model.addAttribute("direction",direction);
+//        model.addAttribute("sortword", sortword);
 //        System.out.println();
         return "every_festival_board";
     }
@@ -43,15 +63,63 @@ public class PostController {
     //페이지 ajax
     @PostMapping("/allfestival/scroll")
     @ResponseBody
-    public Page<Posts> list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable, String  keyword) {
+    public Page<Posts> list(Model model, String keyword, @PageableDefault(size =6,page=0,sort="contentViews",direction = Sort.Direction.DESC) Pageable pageable ,@RequestParam String direction,String sort) {
+
+        Sort sort1 = Sort.by("postNum").descending();
         System.out.println("=========================");
 //        System.out.println(page);
+        System.out.println("direction:" + direction);
+        System.out.println("sort:" + sort);
+        System.out.println("scroll page keyword :" + keyword);
         System.out.println(pageable.getPageNumber());
-        Page<Posts> festivals = festivalService.paging(keyword, pageable);
-//        model.addAttribute("posts", festivals);
+        System.out.println(pageable.getSort());
+        Page<Posts> festivals = null;
+        if(keyword == null) {
+            if(direction.equals("DESC") && sort.equals("contentViews")) {
+                System.out.println("DESC다@@@@");
+                festivals =festivalService.sortView(pageable);
+            } else if (direction.equals("DESC") && sort.equals("festivalUploadDate")) {
+                festivals = festivalService.sortNew(pageable);
+            } else {
+                festivals = festivalService.sortOld(pageable);
+            }
+        }else {
+            festivals = festivalService.paging(keyword, pageable);
+        }
         System.out.println(festivals.getTotalPages()); //2
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("posts", festivals);
+        model.addAttribute("direction",direction);
+        model.addAttribute("sort",sort);
         return festivals;
     }
+//    @PostMapping("/allfestival/scroll")
+//    @ResponseBody
+//    public Page<Posts> list(Model model, String keyword, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable,Long sortword) {
+//        System.out.println("=========================");
+////        System.out.println(page);
+//        System.out.println("scroll page keyword :" + keyword);
+//        System.out.println("scroll page sortword:" + sortword);
+//        Page<Posts> festivals = null;
+//        if(keyword == null && sortword == 0) {
+//            festivals = festivalService.paging2(pageable);
+//        } else {
+//            //키워드 있고 정렬 아무것도 없을 때
+//            if(sortword == 0) {
+//                festivals = festivalService.paging(keyword, pageable);
+//            } else if(sortword == 1){
+//                festivals = festivalService.sortView(keyword,pageable);
+//            } else if(sortword == 2) {
+//                System.out.println("sor");
+//            } else if(sortword == 3) {
+//                System.out.println("aaa");
+//            }
+//
+//        }
+////        model.addAttribute("posts", festivals);
+//        System.out.println(festivals.getTotalPages()); //2
+//        return festivals;
+//    }
 
 
 
@@ -62,6 +130,8 @@ public class PostController {
         model.addAttribute("post", post);
         List<Review> reviews = festivalService.findReviews(postNum);
         model.addAttribute("reviews",reviews);
+        System.out.println("dddddddddddddd");
+        System.out.println(festivalService.updateView(postNum));
         return "Each_Festival_board";
     }
 
@@ -76,12 +146,21 @@ public class PostController {
     }
 
     //검색
-    @GetMapping("/allfestival/search")
-    public String search(String keyword, Model model){
-        List<Posts> postsList = festivalService.searchPosts(keyword);
-        model.addAttribute("posts", postsList);
-        return "every_festival_board";
-    }
+//    @GetMapping("/allfestival/search")
+//    public String search(String keyword, Model model){
+//        List<Posts> postsList = festivalService.searchPosts(keyword);
+//        model.addAttribute("posts", postsList);
+//        return "every_festival_board";
+//    }
+//    @GetMapping("/allfestival/search")
+//    public String search(String keyword, Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable){
+////        List<Posts> postsList = festivalService.searchPosts(keyword);
+//        Page<Posts> festivals = festivalService.paging(keyword, pageable);
+//        System.out.println("keyword");
+//        System.out.println(keyword);
+//        model.addAttribute("posts", festivals);
+//        return "every_festival_board";
+//    }
 
     //지역별 축제
     @GetMapping("/localFestival")
@@ -94,84 +173,8 @@ public class PostController {
     @ResponseBody
     public List local_Addr(Long local) {
         List<Posts> addr = festivalService.findOne2(local);
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(addr.size());
         return addr;
     }
 
-    //contact
-    @GetMapping("/contact")
-    public String contact() {
-        return "contact";
-    }
 
-
-
-
-
-
-
-
-//=============================================================================
-//    @GetMapping("/festival/{postNum}")
-//    public String createReview(Model model){
-//        model.addAttribute("review", new review());
-//        return "Each_Festival_board";
-//    }
-
-
-//    @PostMapping("/festival/{postNum}/stars")
-//    public void funct(@RequestParam int starCnt) {
-//
-////        service.star(starCnt); // -> service에서는 repository.
-//
-//    }
-
-
-
-
-
-//    @GetMapping("/favorites")
-//    public String Favorites(Model model) {
-//        List<Posts>
-//    }
-
-
-
-
-    //    @RequestMapping("/contact")
-//    public String contact() {
-//
-//        return "contact";
-//    }
-
-//    @RequestMapping("/postDetail")
-//    public String postDetail() {
-//
-//        return "postDetail";
-//    }
-//
-//    @RequestMapping("/notice")
-//    public String notice() {
-//
-//        return "notice";
-//    }
-//
-//    @RequestMapping("/noticeDetail")
-//    public String noticeDetail() {
-//
-//        return "noticeDetail";
-//    }
-//
-//    @RequestMapping("/favoriteFestival")
-//    public String favoriteFestival() {
-//
-//        return "favoriteFestival";
-//    }
-//
-//    @RequestMapping("/localFestival")
-//    public String localFestival() {
-//
-//        return "localFestival";
-//    }
 }
