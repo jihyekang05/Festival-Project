@@ -248,8 +248,8 @@ public class AdminController {
 
     @GetMapping("/admin/modify/{postNum}")
     public String modify_postNum(Model model, @PathVariable("postNum") Long postNum) {
-        List<Posts> festivals = festivalService.findOne(postNum);
-        model.addAttribute("posts", festivals);
+//        List<Posts> festivals = festivalService.findOne(postNum);
+        model.addAttribute("posts", festivalService.findOne(postNum));
 
         return "festivalModify";
     }

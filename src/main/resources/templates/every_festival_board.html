@@ -60,16 +60,17 @@
 <header class="masthead">
 
 </header>
+<div style="padding:10px"></div>
 <!-- 검색창 -->
 <!--<nav class="navbar bg-light">-->
 <!--    <div class="container-fluid" id="searchbox">-->
-        <form class="d-flex" action="/allfestival" method="GET">
+        <form class="d-flex" action="/allfestival" method="GET" style="padding:5px">
 
             <input class="form-control me-2" id="keyword" type="text" placeholder="제목검색하시오" aria-label="Search"
                        name="keyword">
             <!-- ==================== -->
-            <section id="theme">
-                <select class="select" name="sort" id="sort,direction">
+<!--            <section id="theme">-->
+                <select class="select" name="sort" id="sort,direction" >
                     <!--                    <div name="Direction" id="Direction">-->
                     <!--                        <div class="text" >선택-->
                     <!--                    <ul class="option-list" id="keyValue" name="keyValue">-->
@@ -81,9 +82,10 @@
                     <!--                        </div>-->
                     <!--                    </div>-->
                 </select>
-            </section>
-                <button type="submit">검색</button>
+<!--            </section>-->
+                <button type="submit" class="btn btn-dark">검색</button>
         </form>
+<div style="padding:10px"></div>
 
 
         <input type="hidden" id="sort_val" th:value="${sort}">
