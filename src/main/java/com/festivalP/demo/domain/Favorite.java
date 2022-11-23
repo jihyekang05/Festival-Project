@@ -18,12 +18,24 @@ import java.util.Date;
 public class Favorite {
 
     @Id
-    @Column(name="post_num")
-    private Long post_num;
+//    @Column(name="member_index", insertable = false, updatable = false)
+    @Column(name="member_index")
+    private Long memberIndex;
 
     @Id
-    @Column(name="member_index")
-    private Long member_index;
+    @Column(name="post_num")
+//    @Column(name="post_num")
+    private Long postNum;
+
+
+
+//    @ManyToOne(fetch= FetchType.LAZY)
+//    @JoinColumn(name = "post_num")
+//    private Posts posts;
+
+//    @ManyToOne
+//    @JoinColumn(name="member_index")
+//    private Member member;
 }
 
 

@@ -1,31 +1,36 @@
 
 
 
+
+
 const favorite_add_btn = document.getElementById("favorite_add_btn");
 
 
 
-
-
-function favoriteCheck() {
-
-
-}
-
-
 favorite_add_btn.addEventListener('click', () => {
 
+
+    alert("board.js button click");
+
+    
     var post_num = document.getElementById("review_post_num");
     var member_index = document.getElementById("member_index_value");
 
-    if (member_index == null)
+    alert(post_num+", "+member_index);
+
+    if (member_index == null){
+        alert("member_index is null");
         return;
+    }
+        
     console.log(post_num);
     console.log(member_index);
     console.log(post_num.value);
     console.log(member_index.value);
+
+
     $.ajax({
-        url: "/favoriteModify",
+        url: "/favoritemodify",
         method: "POST",
         async: true,
         data: {

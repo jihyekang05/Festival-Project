@@ -7,7 +7,9 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name="Posts")
 @Table
@@ -58,13 +60,8 @@ public class Posts {
     @Column(name="festival_category")
     private String festivalCategory;
 
-<<<<<<< HEAD
-=======
 
-    //db없음
-    //private int fav;
-
-
-
->>>>>>> 4b0f9bd873f845fec41335c64b4f7cddc258b3f6
+    @OneToMany(fetch= FetchType.LAZY)
+    @JoinColumn(name = "post_num")
+    private List<Favorite> favorite;
 }

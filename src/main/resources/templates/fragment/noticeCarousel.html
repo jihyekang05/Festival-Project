@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+
+<div>
+    <div th:fragment="noticeCarousel"  class="floating-menu">
+        <div class="carousel-item active" >
+
+            <div th:each="notice : ${notice}">
+                <a class="nav-link d-block w-100" id="exampleModalLabel2" th:text="${notice.contentTitle}">공지제목</a>
+            </div>
+
+
+            <!-- <img src="..." class="d-block w-100" alt="..."> -->
+        </div>
+        <div class="carousel-item" >
+
+
+            <div th:each="notice : ${notice}">
+                <a class="nav-link d-block w-100" id="exampleModalLabel2" th:text="${notice.contentTitle}">공지제목</a>
+            </div>
+
+
+
+            <!-- <img src="..." class="d-block w-100" alt="..."> -->
+        </div>
+        <div class="carousel-item" >
+
+            <div th:each="notice : ${notice}">
+                <a class="nav-link d-block w-100" id="exampleModalLabel2" th:text="${notice.contentTitle}">공지제목</a>
+            </div>
+
+            <!-- <img src="..." class="d-block w-100" alt="..."> -->
+        </div>
+    </div>
+    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button> -->
+</div>

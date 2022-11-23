@@ -21,14 +21,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-<<<<<<< HEAD
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.awt.print.Pageable;
-=======
->>>>>>> 4b0f9bd873f845fec41335c64b4f7cddc258b3f6
 import java.util.HashMap;
 import java.util.List;
+
 @Log4j2
 @Controller
 @RequiredArgsConstructor
@@ -41,22 +38,38 @@ public class PostController {
 
     //전체 축제리스트 불러오는 부분
     @GetMapping("/allfestival")
-    public String list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable,String keyword) {
 //        List<Posts> festivals = festivalService.findFestivals();
-        Page<Posts> festivals = festivalService.paging2( pageable);
+        System.out.println("allfestival keyword");
+        System.out.println(keyword);
+        System.out.println(pageable.getPageNumber());
+        Page<Posts> festivals = null;
+        if(keyword == null) {
+            festivals = festivalService.paging2(pageable);
+        } else {
+            festivals = festivalService.paging( keyword, pageable);
+        }
         model.addAttribute("posts",festivals);
+        model.addAttribute("keyword", keyword);
 //        System.out.println();
         return "every_festival_board";
     }
 
+
+
     //페이지 ajax
     @PostMapping("/allfestival/scroll")
     @ResponseBody
-    public Page<Posts> list(Model model, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable, String  keyword) {
+    public Page<Posts> list(Model model, String keyword, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable) {
         System.out.println("=========================");
 //        System.out.println(page);
-        System.out.println(pageable.getPageNumber());
-        Page<Posts> festivals = festivalService.paging(keyword, pageable);
+        System.out.println("scroll page keyword :" + keyword);
+        Page<Posts> festivals = null;
+        if(keyword == null) {
+            festivals = festivalService.paging2(pageable);
+        } else {
+            festivals = festivalService.paging( keyword, pageable);
+        }
 //        model.addAttribute("posts", festivals);
         System.out.println(festivals.getTotalPages()); //2
         return festivals;
@@ -65,51 +78,44 @@ public class PostController {
 
 
     //각 축제별 정보와 리뷰리스트 불러오는 부분
-<<<<<<< HEAD
-    @GetMapping("/festival/{post_num}")
-    public String list(Model model, @PathVariable("post_num") Long post_num, HttpServletRequest request) {
-        List<Posts> post = festivalService.findOne(post_num);
-
-
-//        model.addAttribute("post", post);
-
-        List<Review> reviews = festivalService.findReviews(post_num);
-
-=======
+//    @GetMapping("/festival/{post_num}")
+//    public String list(Model model, @PathVariable("post_num") Long post_num, HttpServletRequest request) {
+//        List<Posts> post = festivalService.findOne(post_num);
+//
+////        model.addAttribute("post", post);
+//        List<Review> reviews = festivalService.findReviews(post_num);
+//
+//        return "every_festival_board";
+//    }
     @GetMapping("/festival/{postNum}")
-    public String list(Model model, @PathVariable("postNum") Long postNum) {
+    public String list(Model model, @PathVariable("postNum") Long postNum, HttpServletRequest request) {
         List<Posts> post = festivalService.findOne(postNum);
         model.addAttribute("post", post);
         List<Review> reviews = festivalService.findReviews(postNum);
->>>>>>> 4b0f9bd873f845fec41335c64b4f7cddc258b3f6
         model.addAttribute("reviews",reviews);
 
         PostForm postForm = new PostForm();
 
-        System.out.println("post.get(0): "+post.get(0));
-        System.out.println("post.get(0): "+post.get(0).getContent_text());
-        System.out.println("post.get(0): "+post.get(0).getContent_image());
+        System.out.println("@@@@@@@@@@@@@@ " +post.get(0).getPostNum());
 
-        System.out.println("@@@@@@@@@@@@@@ " +post.get(0).getPost_num());
-
-        postForm.setPost_num(post.get(0).getPost_num());
-        postForm.setAdmin_index(post.get(0).getAdmin_index());
-        postForm.setContent_text(post.get(0).getContent_text());
-        postForm.setContent_views(post.get(0).getContent_views());
-        postForm.setFestival_title(post.get(0).getFestival_title());
-        postForm.setReview_score_avg(post.get(0).getReview_score_avg());
-        postForm.setBoard_addr(post.get(0).getBoard_addr());
-        postForm.setBoard_loc_addr(post.get(0).getBoard_loc_addr());
-        postForm.setContent_image(post.get(0).getContent_image());
-        postForm.setFestival_upload_date(post.get(0).getFestival_upload_date());
-        postForm.setProgress_state(post.get(0).getProgress_state());
-        postForm.setFestival_category(post.get(0).getFestival_category());
+        postForm.setPostNum(post.get(0).getPostNum());
+        postForm.setAdminIndex(post.get(0).getAdminIndex());
+        postForm.setContentText(post.get(0).getContentText());
+        postForm.setContentViews(post.get(0).getContentViews());
+        postForm.setFestivalTitle(post.get(0).getFestivalTitle());
+        postForm.setReviewScoreAvg(post.get(0).getReviewScoreAvg());
+        postForm.setBoardAddr(post.get(0).getBoardAddr());
+        postForm.setBoardLocAddr(post.get(0).getBoardLocAddr());
+        postForm.setContentImage(post.get(0).getContentImage());
+        postForm.setFestivalUploadDate(post.get(0).getFestivalUploadDate());
+        postForm.setProgressState(post.get(0).getProgressState());
+        postForm.setFestivalCategory(post.get(0).getFestivalCategory());
 
         HttpSession session = request.getSession();
 
         Member member = (Member) session.getAttribute("member");
         if(member!=null){
-            postForm.setFavoriteFlag(favoriteService.favoriteExist(member.getMember_index(), post_num));
+            postForm.setFavoriteFlag(favoriteService.favoriteExist(member.getMemberIndex(), postNum));
         }else{
             postForm.setFavoriteFlag(false);
         }
@@ -127,14 +133,13 @@ public class PostController {
         return null;
     }
 
-
     //검색
-    @GetMapping("/allfestival/search")
-    public String search(String keyword, Model model){
-        List<Posts> postsList = festivalService.searchPosts(keyword);
-        model.addAttribute("posts", postsList);
-        return "every_festival_board";
-    }
+//    @GetMapping("/allfestival/search")
+//    public String search(String keyword, Model model){
+//        List<Posts> postsList = festivalService.searchPosts(keyword);
+//        model.addAttribute("posts", postsList);
+//        return "every_festival_board";
+//    }
 
     //지역별 축제
     @GetMapping("/localFestival")

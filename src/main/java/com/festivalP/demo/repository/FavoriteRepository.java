@@ -5,11 +5,14 @@ import com.festivalP.demo.domain.Favorite;
 import com.festivalP.demo.domain.FavoritePK;
 import com.festivalP.demo.domain.Posts;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -18,10 +21,8 @@ public class FavoriteRepository {
 
     private final EntityManager em;
 
+
     public void save(Favorite favorite) {
-        System.out.println("FavoriteRepository.save");
-        System.out.println("post_num : "+favorite.getPost_num());
-        System.out.println("member_index: "+favorite.getMember_index());
 
         em.persist(favorite);
     }
@@ -30,22 +31,18 @@ public class FavoriteRepository {
 
 //        EntityTransaction transaction = em.getTransaction();
         FavoritePK favoritePK = new FavoritePK();
-        favoritePK.setMember_index(favorite.getMember_index());
-        favoritePK.setPost_num(favorite.getPost_num());
+        favoritePK.setMemberIndex(favorite.getMemberIndex());
+        favoritePK.setPostNum(favorite.getPostNum());
 
-
-//        transaction.begin();
         Favorite resFavorite = em.find(Favorite.class, favoritePK);
         em.remove(resFavorite);
-//        transaction.commit();
     }
 
     public Favorite existCheck(Long member_index, Long post_num){
 
         FavoritePK favoritePK = new FavoritePK();
-        favoritePK.setMember_index(member_index);
-        favoritePK.setPost_num(post_num);
-
+        favoritePK.setMemberIndex(member_index);
+        favoritePK.setPostNum(post_num);
         try{
             Favorite favorite =em.find(Favorite.class,favoritePK);
             return favorite;
@@ -53,5 +50,25 @@ public class FavoriteRepository {
         catch(Exception e){
             return null;
         }
+    }
+
+//    public List<Posts> findFavoritePosts(Long memberIndex, Long postNum) {
+//        return em.createQuery("select p" +
+//                "                     from Favorite f, Posts p" +
+//                "                     where f.postNum = :postNum" +
+//                "                     and f.memberIndex = :memberIndex" +
+//                "                     and p.postNum = :postNum", Posts.class).setParameter("postNum", postNum).setParameter("memberIndex", memberIndex)
+//                .getResultList();
+//    }
+
+//    public List<Posts> findFavoritePosts(Long memberIndex) {
+//        return em.createQuery("select p from Posts p, (select postNum from Favorite f where f.memberIndex = :memberIndex) a where p.postNum = a.postNum", Posts.class).setParameter("memberIndex", memberIndex)
+//                .getResultList();
+//    }
+
+
+    public List<Posts> findFavoritePosts(Long memberIndex) {
+        return em.createQuery("select p from Posts p JOIN Favorite f on p.postNum = f.postNum and f.memberIndex = :memberIndex", Posts.class).setParameter("memberIndex", memberIndex)
+                .getResultList();
     }
 }

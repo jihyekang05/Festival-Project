@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Data
 public class FavoritePK implements Serializable {
-    private Long post_num;
-    private Long member_index;
+    private Long postNum;
+    private Long memberIndex;
 
 }

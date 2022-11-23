@@ -1,78 +1,66 @@
 
 
 
-// const listEnd = document.querySelector("#endList");
-// const option = {
-//     root: null,
-//     rootMargin: "0px 0px 0px 0px",
-//     thredhold: 0,
-// }
-
-// const onIntersect = (entries, observer) => { 
-//     // entries는 IntersectionObserverEntry 객체의 리스트로 배열 형식을 반환합니다.
-//     entries.forEach(entry => {
-//         if(entry.isIntersecting){
-//             const listWrap = document.querySelector("ul");
-//             listWrap.insertAdjacentHTML("beforeend", `
-//                 <li></li>
-//                 <li></li>
-//                 <li></li>
-//                 <li></li>
-//             `)
-//         }
-//     });
-// };
-
-// const observer = new IntersectionObserver(onIntersect, option);
-// observer.observe(listEnd);
 
 
-var pageNum = 1;
-//새로고침 했을 때 페이지 맨 위로
-window.onload = function() {
-    setTimeout (function() {
-    scrollTo(0,0);
-    },100);
-}
+const favorite_add_btn = document.getElementById("favorite_add_btn");
 
-$(window).scroll(function() {
-	if($(window).scrollTop() + $(window).height() == $(document).height()) {
 
-	//bottom에 왔을 때 ajax로 다음 데이터 받아오기
-		$.ajax({
-            type: 'POST',
-            url: "/favoritefestival/scroll",
-            data: {
-            page: pageNum, // current Page
-//            size: 6, // max page size(수정해야함)
-            },
-          dataType: 'text'
-        }).done(function (result) {
-            pageNum++;
-            let json =  JSON.parse(result);
-//            console.log(json.content);
-//            console.log(json.content[0]);
-            if(json.content.length > 0 ){
-            var str = '';
-            $.each(json.content , function(i) {
-                            str += "<div class='col-md-4'>\
-                                        <div class='card' style='width: 100%;' >\
-                                           <img src='"+ json.content[i].contentImage + "' class='card-img-top' alt='...'>\
-                                           <div class='card-body'>\
-                                             <h5 class='festivalTitle'>"+json.content[i].festivalTitle+"</h5>\
-                                             <p>조회수</p>\
-                                             <p class='festival-text'>"+ json.content[i].contentViews +"</p>\
-                                             <a href='/festival/"+ json.content[i].postNum +"' class='btn btn-primary'>자세히보기</a>\
-                                           </div>\
-                                         </div>\
-                                       </div>"
-                        });
-                        $("#post_list").append(str);
+
+favorite_add_btn.addEventListener('click', () => {
+
+
+
+    
+    var post_num = document.getElementById("review_post_num");
+    var member_index = document.getElementById("member_index_value");
+
+    alert(post_num+", "+member_index);
+
+    if (member_index == null)
+        return;
+    
+        
+    console.log(post_num);
+    console.log(member_index);
+    console.log(post_num.value);
+    console.log(member_index.value);
+
+
+    $.ajax({
+        url: "/favoritemodify",
+        method: "POST",
+        async: true,
+        data: {
+            post_num: post_num.value,
+            member_index: member_index.value
+        }
+    })
+        .done(function (text) { 
+            favorite_add_btn.tagName
+
+            if(text=='S'){
+                alert("insert SUCCESS");
+                favorite_add_btn.classList.add("btn-primary");
+                favorite_add_btn.classList.remove("btn-secondary");
+
             }
 
+            else if(text=='E'){
+                alert("remove SUCCESS");
 
-        }).fail(function(data, textStatus, errorThrown){
-                     console.log(data);
-          });
-    }
+
+                favorite_add_btn.classList.add("btn-secondary");
+                favorite_add_btn.classList.remove("btn-primary");
+            }
+            else{
+                alert("EXCEPTION ERROR");
+            }
+            
+        })
+        .fail(function (xhr, status, errorThrown) {
+            alert("AJAX FAIL");
+        });
 });
+
+

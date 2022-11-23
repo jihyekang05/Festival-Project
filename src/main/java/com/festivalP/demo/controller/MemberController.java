@@ -152,20 +152,11 @@ public class MemberController {
         System.out.println(member.getMemberEmail());
 
 
-<<<<<<< HEAD
-
-        member.setMember_nickname(nickname);
-        member.setMember_addr(addr);
-        member.setMember_birth(birth);
-        member.setMember_email(email);
-        member.setMember_category(category);
-=======
         member.setMemberNickname(nickname);
         member.setMemberAddr(addr);
         member.setMemberBirth(birth);
         member.setMemberEmail(email);
         member.setMemberCategory(category);
->>>>>>> 4b0f9bd873f845fec41335c64b4f7cddc258b3f6
 
         session.setAttribute("member", memberService.updateInfo(member));
         System.out.println(member.getMemberNickname());
@@ -181,8 +172,6 @@ public class MemberController {
     @ResponseBody
     @PostMapping("/member/mypage/modify")
     public String modify(@RequestParam("login_id")String login_id, @RequestParam("login_password")String login_password){
-
-
 
 
         if (memberService.memberExistCheck(login_id, login_password)) {

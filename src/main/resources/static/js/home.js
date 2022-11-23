@@ -14,7 +14,4 @@ document.getElementById("signup-click").addEventListener('click', ()=>{
         // 아니면
         window.location.href='/member/signup';
     }
-    
-    
-    // window.open('/member/signup');
 });

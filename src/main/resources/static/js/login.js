@@ -1,21 +1,21 @@
 
 
 
-const id_text = document.getElementById("login_id");
-const pw_text = document.getElementById("login_password");
+var id_text = document.getElementById("login_id");
+var pw_text = document.getElementById("login_password");
 
-const login_btn = document.getElementById("login_btn");
+var login_btn = document.getElementById("login_btn");
 
-const logout_btn = document.getElementById("logout_btn");
+var logout_btn = document.getElementById("logout_btn");
 
-const my_page_btn = document.getElementById("my_page_btn");
+var my_page_btn = document.getElementById("my_page_btn");
 
-
-const admin_login_check = document.getElementById("admin_login_check");
+var admin_login_check = document.getElementById("admin_login_check");
 
 
 
 function loginClick(){
+
     var login_id = $("#login_id").val();
     var login_password = $("#login_password").val();
 
@@ -86,10 +86,11 @@ function loginClick(){
     
             });
     }
-    
 };
 
+
 function logoutClick(){
+
     Swal.fire({
         title: '로그아웃 하시겠습니까?',
         text: '진짜루..?',
@@ -112,10 +113,25 @@ function logoutClick(){
                     confirmButtonText: '확인',
                 })
                 .then(() => {
-                    location.reload();
+                    location.href='/';
                 });
             });
         }
     });
+
 };
 
+
+function signupClick(){
+
+    var check = document.getElementById("admin_login_check").checked;
+    console.log(check);
+    if(check){
+        // 관리자에 check 되있으면
+        window.location.href='/member/adminsignup';
+    }
+    else{
+        // 아니면
+        window.location.href='/member/signup';
+    }
+};
