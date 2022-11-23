@@ -18,6 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 </head>
+
 <body id="page-top" class="post-body">
 <!-- Responsive navbar-->
 <!-- Navigation-->
@@ -94,7 +95,7 @@
                     후기를 남겨보세요!
                 </div>
 
-                <input type="hidden" id="post_num" th:value="${post.postNum}" size="70">
+                <input type="hidden" id="postNum" th:value="${post.postNum}" size="70">
                 <form name="enter_review" action="/festival/${post.postNum}" method="post">
                     <!--                        <button type="submit" class="btn btn-primary btn-l text-uppercase" id="review_submit" >제출</button>-->
                     <a class="btn btn-primary" id="review_submit" type="submit">제출</a>
@@ -105,14 +106,14 @@
                         <!--                            별점-->
                         <tr>
                             <td>
-                                <input name="review_score" id="review_score" type="text" aria-label="First name"
+                                <input name="review_score" id="reviewScore" type="text" aria-label="First name"
                                        class="form-control" placeholder="1~5중 별점매기기" value="">
                             </td>
                         </tr>
                         <!--                            리뷰 내용-->
                         <tr>
                             <td>
-                                <input name="review_text" id="review_text" type="text" aria-label="Last
+                                <input name="review_text" id="reviewText" type="text" aria-label="Last
                              name" class="form-control" placeholder="리뷰를 작성하시오" value="">
                             </td>
                         </tr>
@@ -124,7 +125,7 @@
                         <!--                            </tr>-->
                         <tr>
                             <td>
-                                <input id="member_index" name="member_index" type="text" aria-label="Last name"
+                                <input id="memberIndex" name="member_index" type="text" aria-label="Last name"
                                        class="form-control" placeholder="닉네임" value="">
                             </td>
                         </tr>
@@ -147,15 +148,14 @@
                         <th>닉네임</th>
                     </tr>
                     </thead>
-                    <tbody id="reviewList" th:each="review : ${reviews}">
-                    <tr>
-                        <td th:text="${review.reviewScore}"></td>
+                    <tbody id="reviewList">
+                    <tr th:each="review : ${reviews}">
+                        <td><i class="fa-solid fa-star"  th:each="num : ${#numbers.sequence(0,review.reviewScore-1)}"></i></td>
                         <td th:text="${review.reviewText}"></td>
                         <td th:text="${review.memberIndex}"></td>
                     </tr>
                     </tbody>
                 </table>
-
             </section>
         </div>
     </div>

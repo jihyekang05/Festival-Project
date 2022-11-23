@@ -16,6 +16,51 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet"/>
 </head>
+<style>
+.select {
+        position: relative;
+        width:100px;
+      }
+
+      .select .option-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        max-height: 0;
+      }
+
+      .select.active .option-list {
+        max-height: none;
+      }
+
+      /* 테마 적용하기 */
+      #theme {}
+      #theme .select {
+        box-shadow: 0 0 2px rgba(0,0,0,0.3);
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+      }
+      #theme .select:hover {
+        color: #333;
+        transition: all .3s;
+      }
+      #theme .select .text {}
+      #theme .select .option-list {
+        list-style: none;
+        padding: 0;
+        border-radius: 5px;
+        box-shadow: 0 0 2px rgba(0,0,0,0.3);
+      }
+      #theme .select .option-list .option {
+        padding: 10px 15px;
+      }
+      #theme .select .option-list .option:hover {
+        background-color: #f2f2f2;
+      }
+</style>
 <body id="page-top">
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -44,54 +89,97 @@
 </nav>
 <!-- Masthead-->
 <header class="masthead">
-    <!-- <div class="container"> -->
-    <!-- <div class="masthead-subheading">Welcome To Our Studio!</div>
-    <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
-    <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a> -->
-    <!-- </div> -->
+
 </header>
 <!-- 검색창 -->
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-        <form class="d-flex" action="/allfestival/search" method="GET">
+        <form class="d-flex" action="/allfestival" method="GET">
             <div>
-                <input class="form-control me-2" type="text" placeholder="제목검색하시오" aria-label="Search"
-                       id="search_festival" name="keyword">
+                <input class="form-control me-2" id="keyword" type="text" placeholder="제목검색하시오" aria-label="Search" name="keyword">
             </div>
             <button type="submit">검색</button>
+            <!--==========================================  -->
+            <section id="theme">
+                <select class="select" name="sort" id="sort,direction" >
+<!--                    <div name="Direction" id="Direction">-->
+                    <div class="text" >선택
+<!--                    <ul class="option-list" id="keyValue" name="keyValue">-->
+                        <option class="option" value="">선택</option>
+                        <option class="option" value="contentViews,DESC">조회수</option>
+                        <option class="option" value="festivalUploadDate,DESC">최신순</option>
+                        <option class="option" value="festivalUploadDate">오래된순</option>
+<!--                    </ul>-->
+                    </div>
+<!--                    </div>-->
+                </select>
+
+            </section>
+            <input type="hidden" id="sort_val" th:value="${sort}">
+            <input type="hidden" id="direction_val" th:value="${direction}">
+            <!-- ==================== -->
         </form>
-    </div>
+
+
+<!--        &lt;!&ndash;==========================================  &ndash;&gt;-->
+<!--        <form action="/allfestival/scroll" method="POST">-->
+<!--        <section id="themes">-->
+<!--            <select class="select" name="sort" id="direction" >-->
+<!--                &lt;!&ndash;                    <div name="Direction" id="Direction">&ndash;&gt;-->
+<!--                <div class="text" >선택-->
+<!--                    &lt;!&ndash;                    <ul class="option-list" id="keyValue" name="keyValue">&ndash;&gt;-->
+<!--                    <option class="option" value="">선택</option>-->
+<!--                    <option class="option" value="DESC">조회수</option>-->
+<!--                    <option class="option" value="DESC">최신순</option>-->
+<!--                    <option class="option" value="festivalUploadDate">오래된순</option>-->
+<!--                    &lt;!&ndash;                    </ul>&ndash;&gt;-->
+<!--                </div>-->
+<!--                &lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--            </select>-->
+<!--        </form>-->
+        <!-- 정렬방식 -->
+<!--        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">-->
+            <!-- <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="float:right"> -->
+
+<!--            <div class="btn-group" role="group">-->
+<!--                <button id="sort" type="button" class="btn btn-primary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                    정렬-->
+<!--                </button>-->
+<!--                <ul class="dropdown-menu">-->
+<!--                    <form action="/allfestival/view" method="GET">-->
+<!--                        <li>-->
+<!--                            <button class="dropdown-item" id="sortVal" type="submit" value="1" onclick="showSort(this.innerText)">조회수</button>-->
+<!--                        </li>-->
+<!--                    </form>-->
+<!--                    <form action="/allfestival/new" method="GET">-->
+<!--                        <li>-->
+<!--                            <button class="dropdown-item" id="new_Btn">최신순</button>-->
+<!--                        </li>-->
+<!--                    </form>-->
+<!--                    <form action="/allfestival/old" method="GET">-->
+<!--                        <li>-->
+<!--                            <button class="dropdown-item" id="old_Btn" type="submit">오래된순</button>-->
+<!--                        </li>-->
+<!--                    </form>-->
+<!--                </ul>-->
+<!--            </div>-->
+
+        </div>
+<!--===========================================================================================================-->
+
+<!--    </div>-->
+
+<!--    <form action="/allfestival/scroll" method="POST">-->
+<!--        <input type="hidden" id="keyword_val" th:value="${keyword}" >-->
+
+<!--&lt;!&ndash;        <input type="hidden" id="sort_val" th:value="${Sort}">&ndash;&gt;-->
+<!--    </form>-->
+
+
+
 </nav>
-<!--==========================================  -->
-<!-- 정렬방식 -->
-<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-    <!-- <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="float:right"> -->
 
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-primary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
-            정렬
-        </button>
-        <ul class="dropdown-menu">
-            <form action="/allfestival/view" method="GET">
-                <li>
-                    <button class="dropdown-item" id="view_Btn" type="submit">조회수</button>
-                </li>
-            </form>
-            <form action="/allfestival/new" method="GET">
-                <li>
-                    <button class="dropdown-item" id="new_Btn">최신순</button>
-                </li>
-            </form>
-            <form action="/allfestival/old" method="GET">
-                <li>
-                    <button class="dropdown-item" id="old_Btn" type="submit">오래된순</button>
-                </li>
-            </form>
-        </ul>
-    </div>
 
-</div>
-<!-- ==================== -->
 <!-- 무한스크롤 축제리스트-->
 <div class="container">
     <div class="row" id="post_list">
@@ -99,9 +187,10 @@
             <div class="card" style="width: 100%;">
                 <img th:src="${post.contentImage}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="festival-title" th:text="${post.festivalTitle}">축제2</h5>
-                    <p>조회수</p>
-                    <p class="festival-text" th:text="${post.contentViews}"></p>
+                    <h5 class="festival-title" th:text="${post.festivalTitle}">축제이름</h5>
+                    <p>조회수 : <span class="festival-text" th:text="${post.contentViews}"></span></p>
+                    <p>게시일자 : <span class="festival-text" th:text="${post.festivalUploadDate}"></span></p>
+
                     <a th:href="@{|/festival/${post.postNum}|}" class="btn btn-primary">자세히보기</a>
                 </div>
             </div>
@@ -188,6 +277,7 @@
 <!-- Core theme JS-->
 <script src="/js/scripts.js"></script>
 <script src="/js/scroll.js"></script>
+<script src="/js/sort.js"></script>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <!-- * *                               SB Forms JS                               * *-->
 <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->

@@ -40,6 +40,7 @@
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li th:if="${session.authInfo == null}" class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#login-Modal">로그인</a></li>
                         <li th:if="${session.authInfo != null}" class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#login-Modal">내 정보</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="/allfestival">전체축제</a></li>
                         <li class="nav-item"><a class="nav-link" href="/favorites">내 즐겨찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/localFestival">지역별 축제</a></li>
