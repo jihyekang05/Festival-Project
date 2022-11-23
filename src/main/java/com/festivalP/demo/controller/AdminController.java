@@ -1,5 +1,6 @@
 package com.festivalP.demo.controller;
 
+import com.festivalP.demo.domain.Admin;
 import com.festivalP.demo.domain.Member;
 import com.festivalP.demo.domain.Notice;
 import com.festivalP.demo.domain.Posts;
@@ -48,17 +49,17 @@ public class AdminController {
     //
     private final NoticeService noticeService;
 
-    private final FestivalRepository festivalRepository;
 
 
     @GetMapping("/festivalManagement")
-    public String festivalManagement(Model model, @PageableDefault(size = 5, page = 0, direction = Sort.Direction.DESC) Pageable pageable, String keyword) {
+    public String festivalManagement(Model model, @PageableDefault(size = 5, page = 0, direction = Sort.Direction.DESC, sort="postNum") Pageable pageable, String keyword) {
 
+        System.out.println(pageable.getPageNumber());
 
+        System.out.println(123123);
         Page<Posts> festivals = festivalService.paging(keyword, pageable);
 
-
-
+        model.addAttribute("keyword", keyword);
         model.addAttribute("posts", festivals);
         model.addAttribute("maxPage", 5);
         return "festivalManagement";
@@ -94,13 +95,22 @@ public class AdminController {
 
         Posts posts = new Posts();
 
+        // multi.getParameter("sess")
+        HttpSession session= multi.getSession();
+        Admin admin = (Admin) session.getAttribute("admin");
 
-        posts.setAdminIndex(Long.parseLong(multi.getParameter("adminIndex")));
+        System.out.println("adminindex=========="+admin.getAdminIndex());
+
+        posts.setAdminIndex(admin.getAdminIndex());
+
+        //posts.setAdminIndex(Long.parseLong(multi.getParameter("adminIndex")));
         posts.setContentText(multi.getParameter("contentText"));
         posts.setFestivalTitle(multi.getParameter("festivalTitle"));
         posts.setFestivalCategory(multi.getParameter("festivalCategory"));
         posts.setBoardAddr(multi.getParameter("address"));
-        posts.setBoardLocAddr(Long.parseLong(multi.getParameter("adminIndex")));
+        posts.setBoardLocAddr(Long.parseLong(multi.getParameter("BoardLocAddr")));
+
+
 
         MultipartFile file = multi.getFile("contentImage");
         String filename = file.getOriginalFilename();
@@ -110,6 +120,7 @@ public class AdminController {
         if (!uploadFolder.exists()) {
             uploadFolder.mkdir();
         }
+
         String fullPath = uploadDir + filename;
         try {
             file.transferTo(new File(fullPath));
@@ -136,10 +147,10 @@ public class AdminController {
 
 
     @RequestMapping("/noticeManagement")
-    public String noticeManagement(Model model, @PageableDefault(size = 5, page = 0, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String noticeManagement(Model model, @PageableDefault(size = 5, page = 0, direction = Sort.Direction.DESC) Pageable pageable, String keyword) {
 
 
-        Page<Notice> notice = noticeService.paging(pageable);
+        Page<Notice> notice = noticeService.paging(keyword, pageable);
 
         model.addAttribute("maxPage", 5);
         model.addAttribute("notice", notice);
@@ -155,23 +166,26 @@ public class AdminController {
     }
 
     @RequestMapping("/memberManagement")
-    public String memberManagement(Model model, @PageableDefault(size = 5, page = 0, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String memberManagement(Model model, @PageableDefault(size = 10, page = 0, direction = Sort.Direction.DESC) Pageable pageable, String keyword) {
         // 회원관리
 
-        Page<Member> members = memberService.paging(pageable);
+        Page<Member> members = memberService.paging(keyword, pageable);
         model.addAttribute("maxPage", 5);
         model.addAttribute("members", members);
-
+        model.addAttribute("keyword", keyword);
         return "memberManagement";
+    }
+
+    @ResponseBody
+    @PostMapping("/memberStateModify")
+    public Member memberStateModify(@RequestParam("memberIndex")Long memberIndex){
+        Member member= memberService.updateMemberState(memberIndex);
+        return member;
     }
 
 
     @RequestMapping("/noticeWrite")
     public String noticeWrite() {
-        // notice 작성 창, 수정 창 같이 사용해도 될까요?
-        // 공지 작성/수정 페이지
-
-
         return "noticeWrite";
     }
 
@@ -199,6 +213,30 @@ public class AdminController {
         return "redirect:/admin/noticeManagement";
     }
 
+    @GetMapping("/noticeManagement/modify_notice/{postNum}")
+    public String modify_notice(Model model, @PathVariable("postNum") Long postNum) {
+        Notice notice = noticeService.findOneNotice(postNum);
+        model.addAttribute("notice", notice);
+        //System.out.println("festivaltitle============="+notice.);
+
+        return "noticeModify";
+    }
+
+    @PostMapping("/noticeManagement/modify_notice/{postNum}")
+    public String not_modify(Notice notice,HttpSession session,  @PathVariable("postNum") Long postNum){
+        //Notice notice = new Notice();
+
+        Admin admin = (Admin) session.getAttribute("admin");
+
+        notice.setPostNum(notice.getPostNum());
+        notice.setAdminIndex(admin.getAdminIndex());
+        notice.setContentTitle(notice.getContentTitle());
+        notice.setContentText(notice.getContentText());
+
+        noticeService.updatePosts(postNum, notice);
+        return "redirect:/admin/noticeManagement";
+    }
+
     @GetMapping("/admin/delete/{postNum}")
     public String del_postNum(@PathVariable("postNum") Long postNum) {
         System.out.println(postNum);
@@ -207,7 +245,6 @@ public class AdminController {
 
         return "redirect:/admin/festivalManagement";
     }
-
 
     @GetMapping("/admin/modify/{postNum}")
     public String modify_postNum(Model model, @PathVariable("postNum") Long postNum) {
@@ -224,12 +261,15 @@ public class AdminController {
         Posts posts = new Posts();
         posts.setPostNum(postNum);
 
-        posts.setAdminIndex(Long.parseLong(multi.getParameter("adminIndex")));
+        HttpSession session= multi.getSession();
+        Admin admin = (Admin) session.getAttribute("admin");
+
+        //posts.setAdminIndex(Long.parseLong(multi.getParameter("adminIndex")));
         posts.setContentText(multi.getParameter("contentText"));
         posts.setFestivalTitle(multi.getParameter("festivalTitle"));
         posts.setFestivalCategory(multi.getParameter("festivalCategory"));
         posts.setBoardAddr(multi.getParameter("address"));
-        posts.setBoardLocAddr(Long.parseLong(multi.getParameter("adminIndex")));
+        posts.setBoardLocAddr(Long.parseLong(multi.getParameter("boardLocAddr")));
 
         MultipartFile file = multi.getFile("contentImage");
         String filename = file.getOriginalFilename();

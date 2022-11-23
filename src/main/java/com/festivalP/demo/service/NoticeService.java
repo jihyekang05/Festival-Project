@@ -22,6 +22,8 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
     private final PageNoticeRepository pageNoticeRepository;
 
+    public Notice findOneNotice(Long postNum){return noticeRepository.findByPostNum2(postNum);};
+
     @Transactional
     public Long join(Notice notice) {
 
@@ -33,9 +35,9 @@ public class NoticeService {
         return noticeRepository.findAll();
     }
 
-    public Page<Notice> paging(Pageable pageable) {
+    public Page<Notice> paging(String keyword, Pageable pageable) {
         // Page<Posts> Pages= pageRepository.findAll(pageable);
-        return pageNoticeRepository.findAll(pageable);
+        return pageNoticeRepository.findByContentTitleContaining(keyword, pageable);
     }
 
 
@@ -63,6 +65,16 @@ public class NoticeService {
     public List<Notice> NewNotice() {
         List<Notice> notice = noticeRepository.findByNotice_Date();
         return notice;
+    }
+
+
+    @Transactional
+    public void updatePosts(Long postNum, Notice notice){
+        Notice notices =noticeRepository.findOne(postNum);
+
+        notices.setAdminIndex(notice.getAdminIndex());
+        notices.setContentTitle(notice.getContentTitle());
+        notices.setContentText(notice.getContentText());
     }
 
 

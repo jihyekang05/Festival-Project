@@ -10,8 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PageMemberRepository extends PagingAndSortingRepository<Member, Long> {
 
-    @Override
-    Page<Member> findAll( Pageable pageable);
+    Page<Member> findByMemberIdContaining(String keyword, Pageable pageable);
 
 
 }
