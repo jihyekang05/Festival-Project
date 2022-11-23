@@ -53,6 +53,10 @@ public class FestivalRepository {
         return em.createQuery("select p from Posts p where p.postNum = :postNum", Posts.class).setParameter("postNum",postNum).getResultList();
     }
 
+    public Posts findBypostNum3(Long postNum) {
+        return em.createQuery("select p from Posts p where p.postNum = :postNum", Posts.class).setParameter("postNum",postNum).getSingleResult();
+    }
+
     public int deleteBypostNum(Long postNum){
 
         int result = em.createQuery ("delete from Posts p where p.postNum = :postNum")

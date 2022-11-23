@@ -35,6 +35,10 @@ public class FestivalService{
         return posts.getPostNum();
     }
 
+    public Posts findOne3(Long postNum) {
+        return festivalRepository.findBypostNum3(postNum);
+    }
+
 
     public List<Posts> findFestivals() {
         return festivalRepository.findAll();
