@@ -11,8 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface PageNoticeRepository extends PagingAndSortingRepository<Notice, Long> {
 
 
-    @Override
-    Page<Notice> findAll( Pageable pageable);
+    Page<Notice> findByContentTitleContaining(String keyword, Pageable pageable);
 
 
 

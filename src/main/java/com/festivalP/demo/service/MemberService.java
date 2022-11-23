@@ -31,12 +31,20 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PageMemberRepository pageMemberRepository;
 
+    @Transactional
+    public Member updateMemberState(Long memberIndex) {
 
-    public Page<Member> paging(Pageable pageable) {
-        // Page<Posts> Pages= pageRepository.findAll(pageable);
-        return pageMemberRepository.findAll(pageable);
+        Member member = memberRepository.findOne(memberIndex);
+        member.setMemberState(1);
+
+        return member;
     }
 
+
+    public Page<Member> paging(String keyword, Pageable pageable) {
+        // Page<Posts> Pages= pageRepository.findAll(pageable);
+        return pageMemberRepository.findByMemberIdContaining(keyword, pageable);
+    }
 
     public List<Member> findMembers() {
         return memberRepository.findAll();
