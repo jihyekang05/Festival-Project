@@ -66,7 +66,7 @@ public class PostController {
     //페이지 ajax
     @PostMapping("/allfestival/scroll")
     @ResponseBody
-    public Page<Posts> list(Model model, String keyword, @PageableDefault(size =6,page=0,sort="contentViews",direction = Sort.Direction.DESC) Pageable pageable ,@RequestParam String direction,String sort) {
+    public Page<Posts> list(Model model, String keyword, @PageableDefault(size =6,page=0,direction = Sort.Direction.DESC) Pageable pageable ,@RequestParam String direction,String sort) {
 
         Sort sort1 = Sort.by("postNum").descending();
         System.out.println("=========================");
@@ -88,10 +88,10 @@ public class PostController {
             festivals = festivalService.paging(keyword, pageable);
         }
         System.out.println(festivals.getTotalPages()); //2
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("posts", festivals);
-        model.addAttribute("direction",direction);
-        model.addAttribute("sort",sort);
+//        model.addAttribute("keyword", keyword);
+//        model.addAttribute("posts", festivals);
+//        model.addAttribute("direction",direction);
+//        model.addAttribute("sort",sort);
         return festivals;
     }
 

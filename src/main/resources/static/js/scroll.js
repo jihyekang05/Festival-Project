@@ -32,14 +32,14 @@ $(window).scroll(function() {
         }).done(function (result) {
             pageNum++;
             let json =  JSON.parse(result);
-//            console.log(json.content);
+            console.log(json.content);
 //            console.log(json.content[0]);
             if(json.content.length > 0 ){
             var str = '';
             $.each(json.content , function(i) {
                             str += "<div class='col-md-4'>\
                                         <div class='card' style='width: 100%;' >\
-                                           <img src='"+ json.content[i].contentImage + "' class='card-img-top' alt='...'>\
+                                           <img width='180' height='300' src='"+ json.content[i].contentImage + "' class='card-img-top' alt='...'>\
                                            <div class='card-body'>\
                                              <h5 class='festivalTitle'>"+json.content[i].festivalTitle+"</h5>\
                                              <p>조회수: <span class='festival-text'>"+ json.content[i].contentViews +"</span></p>\

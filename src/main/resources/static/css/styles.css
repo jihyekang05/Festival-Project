@@ -655,7 +655,6 @@ progress {
 
 .img-fluid {
   max-width: 100%;
-  width:80%;
   height: auto;
 }
 
@@ -2285,7 +2284,7 @@ progress {
 
 .form-control {
   display: block;
-  width: 50%;
+  width: 100%;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -7685,8 +7684,7 @@ fieldset:disabled .btn {
 }
 
 .d-flex {
-  display: flex;
-  height: 50px;
+  display: flex !important;
 }
 
 .d-inline-flex {
@@ -12897,68 +12895,23 @@ a {
   min-height: 1000px;
 }
 
-div,
-ul,
-li {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0
+
+/* 캐러셀 속도 */
+.carousel-inner > .item {
+    position: relative;
+    display: none;
+    -webkit-transition: 1s ease-in-out left;
+    -moz-transition: 1s e qase-in-out left;
+    -o-transition: 1s ease-in-out left;
+    transition: 1s ease-in-out left;
+
 }
 
-a {
-  text-decoration: none;
-}
 
-.quickmenu {
-  position: absolute;
-  width: 200px;
-  top: 50%;
-  margin-top: -50px;
-  right: 10px;
-  background: #fff;
-  z-index: 2;
-}
 
-.quickmenu ul {
-  position: relative;
-  float: left;
-  width: 100%;
-  display: inline-block;
-  *display: inline;
-  border: 1px solid #ddd;
-}
+/* 박스 쉐도우 */
 
-.quickmenu ul li {
-  float: left;
-  width: 100%;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
-  display: inline-block;
-  *display: inline;
-}
+.box-shadow{
 
-.quickmenu ul li a {
-  position: relative;
-  float: left;
-  width: 100%;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  color: #999;
-  font-size: 9.5pt;
-}
-
-.quickmenu ul li a:hover {
-  color: #000;
-}
-
-.quickmenu ul li:last-child {
-  border-bottom: 0;
-}
-
-.content {
-  position: relative;
-  min-height: 1000px;
+  box-shadow: 5px, 5px, 5px;
 }
