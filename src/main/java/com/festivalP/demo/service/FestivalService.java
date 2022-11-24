@@ -62,6 +62,13 @@ public class FestivalService{
         return Pages;
     }
 
+    //페이징과 키워드 동시에
+    public Page<Posts> pagingView(String keyword,Pageable pageable) {
+        Page<Posts> Pages = pageRepository.findByFestivalTitleContaining(keyword,pageable);
+        Pages = sortView(pageable);
+        return Pages;
+    }
+
 
 
     //오래된 순
