@@ -139,6 +139,7 @@ public class FestivalService{
         post.setContentImage(posts.getContentImage());
         post.setFestivalUploadDate(posts.getFestivalUploadDate());
         post.setBoardAddr(posts.getBoardAddr());
+        post.setBoardLocAddr(posts.getBoardLocAddr());
 
     }
 

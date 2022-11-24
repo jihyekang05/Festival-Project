@@ -56,8 +56,18 @@ public class NoticeRepository {
 
 
     //최근공지
+//    public List<Notice> findByNotice_Date() {
+//
+//
+//
+//        return em.createQuery("select n from Notice n order by n.noticeDate desc", Notice.class).setFirstResult(0).setMaxResults(1).getResultList();
+//    }
+
     public List<Notice> findByNotice_Date() {
-        return em.createQuery("select n from Notice n order by n.noticeDate desc", Notice.class).setFirstResult(0).setMaxResults(1).getResultList();
+
+
+
+        return em.createQuery("select n from Notice n order by n.modifiedDate desc", Notice.class).setFirstResult(0).setMaxResults(3).getResultList();
     }
 
     public Notice findOne(Long postNum) {

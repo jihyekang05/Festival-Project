@@ -56,8 +56,9 @@ public class AdminController {
 
         System.out.println(pageable.getPageNumber());
 
-        System.out.println(123123);
+
         Page<Posts> festivals = festivalService.paging(keyword, pageable);
+
 
         model.addAttribute("keyword", keyword);
         model.addAttribute("posts", festivals);
@@ -269,7 +270,8 @@ public class AdminController {
         posts.setFestivalTitle(multi.getParameter("festivalTitle"));
         posts.setFestivalCategory(multi.getParameter("festivalCategory"));
         posts.setBoardAddr(multi.getParameter("address"));
-        posts.setBoardLocAddr(Long.parseLong(multi.getParameter("boardLocAddr")));
+
+        posts.setBoardLocAddr(Long.parseLong(multi.getParameter("BoardLocAddr")));
 
         MultipartFile file = multi.getFile("contentImage");
         String filename = file.getOriginalFilename();
@@ -295,7 +297,7 @@ public class AdminController {
         posts.setContentViews(0L);
         posts.setReviewScoreAvg(0L);
 
-        System.out.println("posts ================" + posts);
+
         festivalService.updatePosts(postNum, posts);
 
 
@@ -305,3 +307,5 @@ public class AdminController {
 
 
 }
+
+

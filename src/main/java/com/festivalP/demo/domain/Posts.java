@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Posts {
+public class Posts extends BaseTimeEntity{
 
     @Id
     @GeneratedValue
