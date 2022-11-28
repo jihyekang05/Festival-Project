@@ -25,7 +25,30 @@ public interface PageRepository extends PagingAndSortingRepository<Posts, Long>{
     @Override
     Page<Posts> findAll( Pageable pageable);
 
+
+
+
+
     Page<Posts> findByFestivalTitleContaining(String keyword, Pageable pageable);
+
+
+
+    //오래된 순
+    Page<Posts> findAllByOrderByFestivalUploadDate(Pageable pageable);
+
+    //최신 순
+    Page<Posts> findAllByOrderByFestivalUploadDateDesc(Pageable pageable);
+
+    //조회수 순
+    Page<Posts> findAllByOrderByContentViewsDesc(Pageable pageable);
+
+    @Modifying
+    @Query("update Posts p set p.contentViews = p.contentViews + 1 where p.postNum =postNum")
+    int updateView(Long postNum);
+
+
+
+//    Page<Posts> findByFestivalTitleContaining(String keyword, Pageable pageable);
 
     Page<Posts> findByBoardLocAddrContaining(Long local, Pageable pageable);
 
@@ -36,5 +59,6 @@ public interface PageRepository extends PagingAndSortingRepository<Posts, Long>{
 //    @Modifying
 //    @Query(value = "select p from Posts p JOIN FETCH p.favorite f on p.postNum = f.postNum and f.memberIndex = memberIndex and p.festivalTitle like %title%")
 //    Page<Posts> findByFestivalTitleContaining(Long memberIndex, String title, Pageable pageable);
+
 }
 

@@ -22,6 +22,8 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
     private final PageNoticeRepository pageNoticeRepository;
 
+    public Notice findOneNotice(Long postNum){return noticeRepository.findByPostNum2(postNum);};
+
     @Transactional
     public Long join(Notice notice) {
 
@@ -33,9 +35,9 @@ public class NoticeService {
         return noticeRepository.findAll();
     }
 
-    public Page<Notice> paging(Pageable pageable) {
+    public Page<Notice> paging(String keyword, Pageable pageable) {
         // Page<Posts> Pages= pageRepository.findAll(pageable);
-        return pageNoticeRepository.findAll(pageable);
+        return pageNoticeRepository.findByContentTitleContaining(keyword, pageable);
     }
 
 
@@ -49,15 +51,15 @@ public class NoticeService {
     }
 
     //검색
-    @Transactional
-    public List<Notice> searchNotice(String keyword) {
-        List<Notice> notices = noticeRepository.findByNotice_Title(keyword);
-        if(keyword.isEmpty()) return findNotice();
-        else {
-            return notices;
-        }
-
-    }
+//    @Transactional
+//    public List<Notice> searchNotice(String keyword) {
+//        List<Notice> notices = pageNoticeRepository.findByContentTitleContaining(keyword);
+//        if(keyword.isEmpty()) return findNotice();
+//        else {
+//            return notices;
+//        }
+//
+//    }
 
     //최근공지
     public List<Notice> NewNotice() {
@@ -65,6 +67,16 @@ public class NoticeService {
 
         List<Notice> notice = noticeRepository.findByNotice_Date();
         return notice;
+    }
+
+
+    @Transactional
+    public void updatePosts(Long postNum, Notice notice){
+        Notice notices =noticeRepository.findOne(postNum);
+
+        notices.setAdminIndex(notice.getAdminIndex());
+        notices.setContentTitle(notice.getContentTitle());
+        notices.setContentText(notice.getContentText());
     }
 
 

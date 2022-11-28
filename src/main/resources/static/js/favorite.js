@@ -1,21 +1,19 @@
 
 
-
-
-
 const favorite_add_btn = document.getElementById("favorite_add_btn");
+
 
 
 
 favorite_add_btn.addEventListener('click', () => {
 
-
-
-    
     var post_num = document.getElementById("review_post_num");
     var member_index = document.getElementById("member_index_value");
 
 
+//    alert(post_num+", "+member_index);
+    console.log(document.getElementById("review_post_num").value);
+    console.log(document.getElementById("member_index_value").value);
     if (member_index == null)
         return;
     

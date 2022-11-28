@@ -11,6 +11,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 //나중에 db연결할 때 exclude = DataSourceAutoConfiguration.class 부분 지워야한다.
 //@SpringBootApplication
+@EnableJpaAuditing
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class Group2ProjectApplication {
 

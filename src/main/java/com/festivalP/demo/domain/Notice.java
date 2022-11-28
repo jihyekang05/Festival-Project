@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity(name="Notice")
@@ -14,7 +15,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Notice {
+public class Notice extends BaseTimeEntity{
 
     @Id
     @GeneratedValue
@@ -31,8 +32,4 @@ public class Notice {
     @Column(name="content_text")
     private String contentText;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name="notice_date")
-    private Date noticeDate;
 }

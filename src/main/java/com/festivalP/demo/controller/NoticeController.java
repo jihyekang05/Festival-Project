@@ -6,6 +6,10 @@ import com.festivalP.demo.domain.Review;
 import com.festivalP.demo.service.FestivalService;
 import com.festivalP.demo.service.NoticeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +27,11 @@ public class NoticeController {
 
     //공지사항 리스트 불러오기
     @GetMapping("/notice")
-    public String list(Model model) {
-        List<Notice> notice = noticeService.findNotice();
+    public String list(Model model, @PageableDefault(size = 5, page = 0, direction = Sort.Direction.DESC) Pageable pageable, String keyword) {
+        System.out.println("notice keyword:"+keyword);
+        Page<Notice> notice = noticeService.paging(keyword, pageable);
         model.addAttribute("notice",notice);
+        model.addAttribute("maxPage", 5);
         return "notice";
     }
 
@@ -38,6 +44,7 @@ public class NoticeController {
     }
 
     //검색
+<<<<<<< HEAD
     @GetMapping("/notice/search")
     public String search(String keyword2, Model model){
         List<Notice> notice = noticeService.searchNotice(keyword2);
@@ -46,4 +53,18 @@ public class NoticeController {
         model.addAttribute("notice", notice);
         return "notice";
     }
+=======
+//    @GetMapping("/notice/search")
+//    public String search(String keyword2, Model model){
+//        List<Notice> notice = noticeService.searchNotice(keyword2);
+//        System.out.println("here!!!!!!!");
+//        System.out.println(notice.size());
+//        model.addAttribute("notice", notice);
+//        return "notice";
+//    }
+//
+
+
+
+>>>>>>> 81d2a0e3cd2ac494f812d4707884e45fb1a923b6
 }

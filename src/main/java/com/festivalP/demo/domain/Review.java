@@ -31,8 +31,4 @@ public class Review {
     private Long reviewScore;
 
 
-
-
-
-
 }

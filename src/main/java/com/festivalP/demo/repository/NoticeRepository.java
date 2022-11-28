@@ -16,6 +16,9 @@ public class NoticeRepository {
 
     private final EntityManager em;
 
+    public Notice findByPostNum2(Long postNum) {
+        return em.createQuery("select n from Notice n where n.postNum = :postNum",Notice.class).setParameter("postNum",postNum).getSingleResult();}
+
 
     public void save(Notice notice) {
         em.persist(notice);
@@ -53,16 +56,32 @@ public class NoticeRepository {
 
 
     //최근공지
+//    public List<Notice> findByNotice_Date2() {
+//
+//
+//
+//        return em.createQuery("select n from Notice n order by n.noticeDate desc", Notice.class).setFirstResult(0).setMaxResults(1).getResultList();
+//    }
+
     public List<Notice> findByNotice_Date() {
+<<<<<<< HEAD
         return em.createQuery("select n from Notice n order by n.noticeDate desc", Notice.class).setFirstResult(0).setMaxResults(3).getResultList();
+=======
+
+
+
+        return em.createQuery("select n from Notice n order by n.modifiedDate desc", Notice.class).setFirstResult(0).setMaxResults(1).getResultList();
+    }
+
+    public Notice findOne(Long postNum) {
+        return em.find(Notice.class, postNum);
+>>>>>>> 81d2a0e3cd2ac494f812d4707884e45fb1a923b6
     }
 
 //    public List<Notice> findByNoticeRecent3(){
 //        return em.createQuery("select n from Notice n order by n.noticeDate desc", Notice.class).setMaxResults(1).getResultList();
 //    }
 
-
-//        return em.createQuery("select n from Notice n where n.contentTitle LIKE concat('%',:keyword,'%')",Notice.class).setParameter("keyword",keyword).getResultList();}
 
 }
 

@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Posts {
+public class Posts extends BaseTimeEntity{
 
     @Id
     @GeneratedValue
@@ -31,7 +31,7 @@ public class Posts {
     @Column(name="content_text")
     private String contentText;
 
-    @Column(name="content_views")
+    @Column(name="content_views",columnDefinition = "integer default 0", nullable = false)
     private Long contentViews;
 
     @Column(name = "festival_title")

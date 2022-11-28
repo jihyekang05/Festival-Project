@@ -9,6 +9,7 @@ import com.festivalP.demo.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,12 +35,21 @@ public class FestivalService{
         return posts.getPostNum();
     }
 
+    public Posts findOne3(Long postNum) {
+        return festivalRepository.findBypostNum3(postNum);
+    }
+
 
     public List<Posts> findFestivals() {
         return festivalRepository.findAll();
     }
 
 
+    //조회수 증가
+    @Transactional
+    public int updateView(Long postNum) {
+        return pageRepository.updateView(postNum);
+    }
 
     //@Transactional(readOnly = true)
     public  Page<Posts> paging(String keyword, Pageable pageable) {
@@ -47,20 +57,38 @@ public class FestivalService{
         return Pages;
     }
 
-    public  Page<Posts> paging2( Pageable pageable) {
+    public  Page<Posts> paging2(Pageable pageable) {
         Page<Posts> Pages= pageRepository.findAll(pageable);
         return Pages;
     }
 
+    //페이징과 키워드 동시에
+    public Page<Posts> pagingView(String keyword,Pageable pageable) {
+        Page<Posts> Pages = pageRepository.findByFestivalTitleContaining(keyword,pageable);
+        Pages = sortView(pageable);
+        return Pages;
+    }
 
-    //오래된 순 정렬
-    public List<Posts> sortOldFestivals() { return festivalRepository.findAllOrderByfestivalUploadDate_Old();}
 
-    //최신 순 정렬
-    public List<Posts> sortNewFestivals() {return festivalRepository.findAllOrderByfestivalUploadDate_New();}
 
-    //조회수 정렬
-    public List<Posts> sortViewFestivals() {return festivalRepository.findAllOrderByFestival_contentViews();}
+    //오래된 순
+    public Page<Posts> sortOld(Pageable pageable) {
+        Page<Posts> Pages = pageRepository.findAllByOrderByFestivalUploadDate(pageable);
+        return Pages;
+    }
+    //최신 순
+    public Page<Posts> sortNew(Pageable pageable) {
+        Page<Posts> Pages = pageRepository.findAllByOrderByFestivalUploadDateDesc(pageable);
+        return Pages;
+    }
+
+    //조회수 순
+    public Page<Posts> sortView(Pageable pageable) {
+        Page<Posts> Pages = pageRepository.findAllByOrderByContentViewsDesc(pageable);
+
+        return Pages;
+    }
+
 
     public List<Posts> findOne(Long postNum) {
         return festivalRepository.findBypostNum(postNum);
@@ -118,6 +146,7 @@ public class FestivalService{
         post.setContentImage(posts.getContentImage());
         post.setFestivalUploadDate(posts.getFestivalUploadDate());
         post.setBoardAddr(posts.getBoardAddr());
+        post.setBoardLocAddr(posts.getBoardLocAddr());
 
     }
 

@@ -47,12 +47,14 @@ public class FestivalRepository {
 
 
 
-
-
     public void save(Posts posts) {em.persist(posts);}
 
     public List<Posts> findBypostNum(Long postNum) {
         return em.createQuery("select p from Posts p where p.postNum = :postNum", Posts.class).setParameter("postNum",postNum).getResultList();
+    }
+
+    public Posts findBypostNum3(Long postNum) {
+        return em.createQuery("select p from Posts p where p.postNum = :postNum", Posts.class).setParameter("postNum",postNum).getSingleResult();
     }
 
     public int deleteBypostNum(Long postNum){
@@ -71,22 +73,6 @@ public class FestivalRepository {
 
 
 
-    //오래된 순 정렬
-    public List<Posts> findAllOrderByfestivalUploadDate_Old() {
-        return em.createQuery("select p from Posts p order by p.festivalUploadDate", Posts.class).getResultList();
-    }
-
-    //최신 순 정렬
-    public List<Posts> findAllOrderByfestivalUploadDate_New() {
-        return em.createQuery("select p from Posts p order by p.festivalUploadDate desc", Posts.class).getResultList();
-    }
-
-    //조회수 정렬
-    public List<Posts> findAllOrderByFestival_contentViews() {
-        return em.createQuery("select p from Posts p order by p.contentViews desc", Posts.class).getResultList();
-    }
-
-
     public Posts findOne(Long postNum) {
         return em.find(Posts.class, postNum);
     }
@@ -102,6 +88,7 @@ public class FestivalRepository {
     public List<Posts> findOneOrderByFestival_contentViews() {
        return em.createQuery("select p from Posts p order by p.contentViews desc", Posts.class).setFirstResult(0).setMaxResults(3).getResultList();
     }
+
 
     //새로운 축제찾기
     public List<Posts> findOndOrderByUpload_Date() {
