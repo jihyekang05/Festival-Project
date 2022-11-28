@@ -1,55 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>마이페이지</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <!--        <link href="/startbootstrap-agency-gh-pages/css/styles.css" rel="stylesheet" />-->
-    <!--        수정부분===========================================-->
-    <link href="/css/styles.css" rel="stylesheet" />
-</head>
+    <head th:insert="/fragment/mainHead.html :: mainHead">
+        <title>홈페이지</title>
+    </head>
 
 <body>
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <!-- ============================================================================= -->
-            <!-- 페이지 로고 이미지 바꿀부분입니다!!!!!!!!!!! -->
-            <a class="navbar-brand" href="/"><img src="/assets/img/navbar-logo.svg" alt="..." /></a>
-            <!-- ============================================================================================= -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars ms-1"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li th:if="${session.authInfo == null}" class="nav-item"><a class="nav-link" href="#"
-                            data-bs-toggle="modal" data-bs-target="#login-Modal">로그인</a></li>
-                    <li th:if="${session.authInfo != null}" class="nav-item"><a class="nav-link" href="#"
-                            data-bs-toggle="modal" data-bs-target="#login-Modal">내 정보</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/allfestival">전체목록</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/favorites">내 즐겨찾기</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/localFestival">지역별 축제</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/notice">공지사항</a></li>
-                    <li th:if="${session.authInfo != null} and ${session.authInfo.state==2}" class="nav-item"><a
-                            class="nav-link" href="/admin">관리자 페이지</a></li>
-
-                </ul>
-            </div>
-        </div>
+    <nav th:include="/fragment/mainBodyNav.html :: mainBodyNav" class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     </nav>
 
     <header class="masthead">
@@ -398,12 +356,24 @@
         </div>
     </section>
 
-    <section>
+
+    <!-- 로그인 중일 때 모달창 -->
+    <div th:include="/fragment/modal.html :: loginModal-in" th:if="${session.authInfo != null}" class="modal fade"
+        id="login-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    </div>
 
 
-    </section>
+    <!-- 로그인 중이 아닐때 모달 -->
+    <div th:include="/fragment/modal.html :: loginModal-out" th:if="${session.authInfo == null}" class="modal fade"
+        id="login-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    </div>
 
 
+
+    <footer th:include="/fragment/mainFooter.html :: mainFooter" class="footer py-4">
+    </footer>
 
 
 
@@ -416,11 +386,6 @@
 
     <!-- 모달 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-    <!-- 홈 전체 -->
-    <script src="/js/home.js"></script>
-
 
 
     <!-- 다음 주소 API -->

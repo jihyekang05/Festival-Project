@@ -37,6 +37,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -95,16 +96,10 @@ public class AdminController {
 //        }
 
         Posts posts = new Posts();
-
-        // multi.getParameter("sess")
         HttpSession session= multi.getSession();
         Admin admin = (Admin) session.getAttribute("admin");
 
-        System.out.println("adminindex=========="+admin.getAdminIndex());
-
         posts.setAdminIndex(admin.getAdminIndex());
-
-        //posts.setAdminIndex(Long.parseLong(multi.getParameter("adminIndex")));
         posts.setContentText(multi.getParameter("contentText"));
         posts.setFestivalTitle(multi.getParameter("festivalTitle"));
         posts.setFestivalCategory(multi.getParameter("festivalCategory"));
@@ -113,8 +108,9 @@ public class AdminController {
 
 
 
-        MultipartFile file = multi.getFile("contentImage");
-        String filename = file.getOriginalFilename();
+        MultipartFile pic = multi.getFile("contentImage");
+        UUID uuid=UUID.randomUUID();
+        String filename =uuid+"_"+pic.getOriginalFilename();
 
         String uploadDir = "D:\\upload" + File.separator;
         File uploadFolder = new File(uploadDir);
@@ -124,10 +120,12 @@ public class AdminController {
 
         String fullPath = uploadDir + filename;
         try {
-            file.transferTo(new File(fullPath));
+            pic.transferTo(new File(fullPath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        posts.setContentImage(filename);
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 

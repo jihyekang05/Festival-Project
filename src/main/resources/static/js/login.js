@@ -23,7 +23,7 @@ function loginClick(){
         $.ajax({
             type: "POST",
             async: true,
-            url: "/member/adminlogin",
+            url: "/adminlogin",
             data: {
                 login_id: login_id,
                 login_password: login_password
@@ -56,7 +56,7 @@ function loginClick(){
         $.ajax({
             type: "POST",
             async: true,
-            url: "/member/login",
+            url: "/login",
             data: {
                 login_id: login_id,
                 login_password: login_password

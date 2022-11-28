@@ -32,16 +32,16 @@ public class LoginFilter implements Filter {
 
                 System.out.println(session.getAttribute("authInfo"));
                 if(session.getAttribute("authInfo")==null){
-                    System.out.println("#### session is null!!!");
-                    System.out.println("### rerquestURI: "+requestURI);
+//                    System.out.println("#### session is null!!!");
+//                    System.out.println("### rerquestURI: "+requestURI);
 
                     httpServletResponse.sendRedirect("/");
                     return;
                 }
             }
 
-            System.out.println("########### Login FILTER out ");
-            System.out.println("########################### ");
+//            System.out.println("########### Login FILTER out ");
+//            System.out.println("########################### ");
         } catch(Exception e){
 
         }

@@ -17,9 +17,11 @@
         location.href = "noticeManagement/delete_notice/"+$postNum; // admin/delete/7
     }
 
-    function notice_modify($postNum){
-                 console.log("post num : "+$postNum)
-                 location.href = "noticeManagement/modify_notice/"+$postNum; // admin/delete/7
-           }
+
+   function notice_modify($postNum){
+             console.log("post num : "+$postNum)
+             location.href = "noticeManagement/modify_notice/"+$postNum; // admin/delete/7
+       }
+
 
 

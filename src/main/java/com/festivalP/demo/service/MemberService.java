@@ -35,7 +35,11 @@ public class MemberService {
     public Member updateMemberState(Long memberIndex) {
 
         Member member = memberRepository.findOne(memberIndex);
-        member.setMemberState(1);
+        if (member.getMemberState()==0){
+        member.setMemberState(1);}
+        else {
+         member.setMemberState(0);
+        }
 
         return member;
     }

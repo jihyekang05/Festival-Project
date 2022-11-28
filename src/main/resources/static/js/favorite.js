@@ -37,15 +37,12 @@ favorite_add_btn.addEventListener('click', () => {
             favorite_add_btn.tagName
 
             if(text=='S'){
-                alert("insert SUCCESS");
                 favorite_add_btn.classList.add("btn-primary");
                 favorite_add_btn.classList.remove("btn-secondary");
 
             }
 
             else if(text=='E'){
-                alert("remove SUCCESS");
-
 
                 favorite_add_btn.classList.add("btn-secondary");
                 favorite_add_btn.classList.remove("btn-primary");
