@@ -82,7 +82,6 @@ CREATE TABLE NOTICE (
 	adminIndex	number(1)		NOT NULL,
 	contentTitle	varchar2(200)		NOT NULL,
 	contentText	varchar2(4000)		NOT NULL,
-    noticeDate DATE NOT NULL, //추가
     CONSTRAINT admin_notice_index FOREIGN KEY(adminIndex) REFERENCES admin(adminIndex)
 );
 drop table message;

@@ -51,15 +51,15 @@ public class NoticeService {
     }
 
     //검색
-    @Transactional
-    public List<Notice> searchNotice(String keyword) {
-        List<Notice> notices = noticeRepository.findByNotice_Title(keyword);
-        if(keyword.isEmpty()) return findNotice();
-        else {
-            return notices;
-        }
-
-    }
+//    @Transactional
+//    public List<Notice> searchNotice(String keyword) {
+//        List<Notice> notices = pageNoticeRepository.findByContentTitleContaining(keyword);
+//        if(keyword.isEmpty()) return findNotice();
+//        else {
+//            return notices;
+//        }
+//
+//    }
 
     //최근공지
     public List<Notice> NewNotice() {

@@ -32,6 +32,4 @@ public class Notice extends BaseTimeEntity{
     @Column(name="content_text")
     private String contentText;
 
-    @Column(name="modified_date")
-    private LocalDateTime modifiedDate;
 }

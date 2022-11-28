@@ -18,9 +18,9 @@
         <div class="masthead-heading text-uppercase">Welcome!</div>
         <a class="btn btn-primary btn-xl text-uppercase" href="#new_festival">새로운 축제 알아보기</a>
         <!-- 새로운 버튼 -->
-        <button type="button" class="btn btn-primary btn-xl" data-bs-toggle="modal" data-bs-target="#notice-Modal">
-            최근 공지
-        </button>
+<!--        <button type="button" class="btn btn-primary btn-xl" data-bs-toggle="modal" data-bs-target="#notice-Modal">-->
+<!--            최근 공지-->
+<!--        </button>-->
         <!--  -->
     </div>
 </header>
@@ -42,7 +42,7 @@
                             <h5 th:text="${topview.festivalTitle}" class="card-title">축제1</h5>
                             <p>조회수</p>
                             <p th:text="${topview.contentViews}"></p>
-                            <a th:href="@{|/festival/${topview.postNum}|}" class="btn btn-primary">자세히보기</a>
+                            <a th:if="${session.member!=null}" th:href="@{|/festival/${topview.postNum}|}" class="btn btn-primary">자세히보기</a>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                         <div class="card-body">
                             <h5 th:text="${topdate.festivalTitle}" class="card-title">축제명</h5>
                             <p th:text="${topdate.festivalUploadDate}" class="card-text">게시일자</p>
-                            <a th:href="@{|/festival/${topdate.postNum}|}" class="btn btn-primary">자세히보기</a>
+                            <a th:if="${session.member!=null}" th:href="@{|/festival/${topdate.postNum}|}" class="btn btn-primary">자세히보기</a>
                         </div>
                     </div>
                 </div>
@@ -82,10 +82,6 @@
 
 </div>
 
-<!-- 최근 공지 모달 -->
-<div th:include="/fragment/modal.html :: noticeModal" class="modal fade" id="notice-Modal" tabindex="-1"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-</div>
 
 
 <!-- 로그인 중일 때 모달창 -->

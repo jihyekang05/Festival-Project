@@ -8,9 +8,12 @@ window.onload = function() {
 
 
 
+
 $(window).scroll(function() {
 	if($(window).scrollTop() + $(window).height() == $(document).height()) {
     let keyword_val = $("#keyword_val").val();
+    var session_exist_check = $("#session_exist_check").val();
+    console.log(session_exist_check);
     console.log(keyword_val)
     let sort_val = $('#sort_val').val();
     console.log(sort_val);
@@ -43,11 +46,18 @@ $(window).scroll(function() {
                                            <div class='card-body'>\
                                              <h5 class='festivalTitle'>"+json.content[i].festivalTitle+"</h5>\
                                              <p>조회수: <span class='festival-text'>"+ json.content[i].contentViews +"</span></p>\
-                                             <p>게시일자: <span class='festival-text'>"+ json.content[i].festivalUploadDate +"</span></p>\
-                                             <a href='/festival/"+ json.content[i].postNum +"' class='btn btn-primary'>자세히보기</a>\
-                                           </div>\
-                                         </div>\
-                                       </div>"
+                                             <p>게시일자: <span class='festival-text'>"+ json.content[i].festivalUploadDate +"</span></p>"
+                                        if(session_exist_check == 0) {
+                                            str += "<a href='/festival/"+ json.content[i].postNum +"' class='btn btn-primary'>자세히보기</a>\
+                                                     </div>\
+                                                     </div>\
+                                                     </div>"
+                                        } else {
+                                            str += "</div>\
+                                                       </div>\
+                                                        </div>"
+                                        }
+
                         });
                         $("#post_list").append(str);
             }
