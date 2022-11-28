@@ -68,7 +68,6 @@ public class PostController {
     @ResponseBody
     public Page<Posts> list(Model model, String keyword, @PageableDefault(size =6,page=0,direction = Sort.Direction.DESC) Pageable pageable ,@RequestParam String direction,String sort) {
 
-        Sort sort1 = Sort.by("postNum").descending();
         System.out.println("=========================");
         System.out.println("direction:" + direction);
         System.out.println("sort:" + sort);

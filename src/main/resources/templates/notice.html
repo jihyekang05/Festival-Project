@@ -29,7 +29,7 @@
 <!-- 공지사항 검색 -->
 <nav class="navbar bg-light">
     <div class="container-fluid">
-        <form class="d-flex" role="search" action="/notice/search" method="GET" style="height:100px;">
+        <form class="d-flex" role="search" action="/notice" method="GET" style="height:100px;">
             <input class="form-control me-2" type="search" placeholder="내용입력" aria-label="Search" name="keyword">
             <button type="submit" class="btn btn-dark">검색</button>
         </form>
@@ -44,6 +44,35 @@
         <p class="mb-1" th:text="${notice.contentTitle}">게시글 제목</p>
     </a>
 </div>
+
+<!--페이징-->
+<nav style="text-align: center;" name="Page-navigation" aria-label="Page navigation example"
+     th:with="start=${(notice.number/maxPage)*maxPage + 1},
+                  end=(${(notice.totalPages == 0) ? 1 : (start + (maxPage - 1) < notice.totalPages ? start + (maxPage - 1) : notice.totalPages)})" >
+    <ul class="pagination">
+        <li th:if="${start > 1}" class="page-item">
+            <a th:href="@{/notice?(keyword=${keyword}, page=0)}" th:text="'처음으로 이동'" class="page-link"></a></li>
+        </li>
+
+        <li th:if="${start > 1}" class="page-item">
+            <a th:href="@{/notice?(keyword=${keyword}, page=${start - maxPage})}" th:text="'이전'" class="page-link"></a>
+        </li>
+
+
+        <li th:each="page: ${#numbers.sequence(start, end)}" class="page-item">
+            <a th:href="@{/notice?(keyword=${keyword}, page=${page-1})}" th:text="${page}" class="page-link"></a></li>
+        </li>
+
+        <li th:if="${end < notice.totalPages}" class="page-item">
+            <a th:href="@{/notice?(keyword=${keyword}, page=${start + maxPage})}" th:text="'다음'" class="page-link"></a>
+        </li>
+
+        <li th:if="${end < notice.totalPages}" class="page-item">
+            <a th:href="@{/notice?(keyword=${keyword}, page=${notice.totalPages-1})}" th:text="'마지막페이지로이동'" class="page-link"></a>
+        </li>
+    </ul>
+
+</nav>
 
 <!-- 사이드바 -->
 <div th:include="/fragment/sideMenu.html :: sideMenu">

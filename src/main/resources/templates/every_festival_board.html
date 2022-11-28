@@ -66,6 +66,10 @@
 <!--    <div class="container-fluid" id="searchbox">-->
         <form class="d-flex" action="/allfestival" method="GET" style="padding:5px">
 
+<!--  Session 값 받아오기 위한 hidden tag-->
+            <input type="hidden" th:if="${session.member!=null}" th:value="0" id="session_exist_check">
+            <input type="hidden" th:if="${session.member==null}" th:value="1" id="session_exist_check">
+
             <input class=" me-2" id="keyword" type="text" placeholder="제목검색하시오" aria-label="Search"
                        name="keyword" style="width:50%">
             <!-- ==================== -->
@@ -86,7 +90,7 @@
                 <button type="submit" class="btn btn-dark">검색</button>
         </form>
 <div style="padding:10px"></div>
-
+<input type="hidden" id="keyword_val" th:value="${keyword}">
 
         <input type="hidden" id="sort_val" th:value="${sort}">
         <input type="hidden" id="direction_val" th:value="${direction}">
@@ -105,7 +109,7 @@
                     <p>조회수 : <span class="festival-text" th:text="${post.contentViews}"></span></p>
                     <p>게시일자 : <span class="festival-text" th:text="${post.festivalUploadDate}"></span></p>
 
-                    <a th:href="@{|/festival/${post.postNum}|}" class="btn btn-primary">자세히보기</a>
+                    <a th:if="${session.member!=null}" th:href="@{|/festival/${post.postNum}|}" class="btn btn-primary">자세히보기</a>
                 </div>
             </div>
         </div>
