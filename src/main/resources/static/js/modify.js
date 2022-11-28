@@ -20,12 +20,9 @@
         location.href = "noticeManagement/delete_notice/"+$postNum; // admin/delete/7
     }
 
-    function changeBtnName($postNum)  {
-        console.log("123")
-      const btnElement
-        = document.getElementById('btn123');
-
-      btnElement.innerText = "공지해제!";
-    }
+   function notice_modify($postNum){
+             console.log("post num : "+$postNum)
+             location.href = "noticeManagement/modify_notice/"+$postNum; // admin/delete/7
+       }
 
 
