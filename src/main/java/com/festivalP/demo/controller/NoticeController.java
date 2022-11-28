@@ -43,17 +43,6 @@ public class NoticeController {
         return "noticePage";
     }
 
-    //검색
-//    @GetMapping("/notice/search")
-//    public String search(String keyword2, Model model){
-//        List<Notice> notice = noticeService.searchNotice(keyword2);
-//        System.out.println("here!!!!!!!");
-//        System.out.println(notice.size());
-//        model.addAttribute("notice", notice);
-//        return "notice";
-//    }
-//
-
 
 
 }
