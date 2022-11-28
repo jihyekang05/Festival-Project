@@ -103,7 +103,7 @@
     <div class="row" id="post_list">
         <div class="col-md-4" th:each="post : ${posts}">
             <div class="card" style="width: 100%;">
-                <img width="180" height="300" th:src="${post.contentImage}" class="card-img-top" alt="...">
+                <img width="180" height="300" th:src="@{/assets/img/image/}+${post.contentImage}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="festival-title" th:text="${post.festivalTitle}">축제이름</h5>
                     <p>조회수 : <span class="festival-text" th:text="${post.contentViews}"></span></p>

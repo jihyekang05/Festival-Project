@@ -19,6 +19,7 @@ $(window).scroll(function() {
     console.log(sort_val);
     let direction_val = $('#direction_val').val();
     console.log(direction_val);
+
 //    console.log(sort_val);
 	//bottom에 왔을 때 ajax로 다음 데이터 받아오기
 		$.ajax({
@@ -42,7 +43,7 @@ $(window).scroll(function() {
             $.each(json.content , function(i) {
                             str += "<div class='col-md-4'>\
                                         <div class='card' style='width: 100%;' >\
-                                           <img width='180' height='300' src='"+ json.content[i].contentImage + "' class='card-img-top' alt='...'>\
+                                           <img width='180' height='300' src='/assets/img/image/"+ json.content[i].contentImage+"' class='card-img-top' alt='...'>\
                                            <div class='card-body'>\
                                              <h5 class='festivalTitle'>"+json.content[i].festivalTitle+"</h5>\
                                              <p>조회수: <span class='festival-text'>"+ json.content[i].contentViews +"</span></p>\
