@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<title>테스팅</title>
+
+<head th:insert="/fragment/mainHead.html :: mainHead">
+</head>
+
+
+<script>
+    var wsocket;
+    function connect(){
+        wsocket=new WebSocket(
+            "ws://localhost:8080/test"
+        );
+        wsocket.onopen = onOpen;
+        wsocket.onmessage = onMessage;
+        wsocket.onclose=onClose;
+
+    }
+
+    function disconnect(){
+        wsocket.close();
+    }
+
+    function onOpen(evt){
+        appendMessage("connected");
+    }
+
+    function onMessage(evt){
+        
+        var date = evt.data;
+        if(data.substring(0,4)=="msg:"){
+            appendMessage(data.substring(4));
+
+        }
+    }
+
+    function onClose(evt){
+        appendMessage("disconnected");
+    }
+
+    function sned(){
+        var nickname = $("#nickname").val();
+        var msg = $("#message").val();
+
+        wsocket.sned("msg: "+nickname+": "+msg);
+        $("#message").val();
+    }
+
+
+    function appendMessage(msg){
+        $("#chatMessageArea").append(msg+"<br>");
+        var chatAreaHeight = $("#chatArea").height;
+        var maxScroll = $("#chatMessageArea").height() - chatAreaHeight;
+        $("#chatArea").scrollTop(maxScroll);
+    }
+
+    $(document).ready(function(){
+        $("#message").keypress(function(event){
+
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keyCode='13'){
+                send();
+            }
+            event.stopPropagation();
+
+        });
+
+        $('#sendBtn').click(function(){send();});
+        $('#enterBtn').click(function(){connect();});
+        $('#exitBtn').click(function(){disconnect();});
+
+    });
+
+
+</script>
+<body>
+    <!-- Navigation-->
+    <nav th:include="/fragment/mainBodyNav.html :: mainBodyNav" class="navbar navbar-expand-lg navbar-dark fixed-top"
+        id="mainNav">
+    </nav>
+
+    <header class="masthead">
+
+    </header>
+
+    <input type="text" id="nickname">
+    <input type="button" id="enterBtn" value="입장">
+    <input type="button" id="exitBtn" value="나가기">
+
+    <h1>대화영역</h1>
+    <div id="chatArea">
+        <div id="chatMessageArea">
+
+        </div>
+    </div>
+
+    <br>
+
+    <input type="text" id="message">
+    <input type="button" id="sendBtn" value="전송">
+
+
+
+
+
+
+
+    <section class="page-section bg-light" id="new_festival">
+
+    </section>
+
+    <!-- 사이드바 -->
+    <div th:include="/fragment/sideMenu.html :: sideMenu"  class="floating-menu">
+
+    </div>
+
+    <!-- 최근 공지 모달 -->
+    <div th:include="/fragment/modal.html :: noticeModal" class="modal fade" id="notice-Modal" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+
+
+    <!-- 로그인 중일 때 모달창 -->
+    <div th:include="/fragment/modal.html :: loginModal-in" th:if="${session.authInfo != null}" class="modal fade"
+        id="login-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    </div>
+
+
+    <!-- 로그인 중이 아닐때 모달 -->
+    <div th:include="/fragment/modal.html :: loginModal-out" th:if="${session.authInfo == null}" class="modal fade"
+        id="login-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    </div>
+
+
+
+    <footer th:include="/fragment/mainFooter.html :: mainFooter" class="footer py-4">
+    </footer>
+
+
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <!--        수정해야할 부분==================================-->
+    <script src="/js/scripts.js"></script>
+
+
+
+
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+
+</html>

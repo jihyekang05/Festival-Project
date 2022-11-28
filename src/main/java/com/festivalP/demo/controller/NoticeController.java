@@ -46,8 +46,4 @@ public class NoticeController {
         model.addAttribute("notice", notice);
         return "notice";
     }
-
-
-
-
 }

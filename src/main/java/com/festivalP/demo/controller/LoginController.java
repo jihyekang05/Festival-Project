@@ -25,7 +25,7 @@ public class LoginController {
 
     // 로그인
     @ResponseBody
-    @PostMapping("/member/login")
+    @PostMapping("/login")
     public String login(String login_id, String login_password, HttpServletRequest request) {
 
         System.out.println("login_id: " + login_id);
@@ -59,7 +59,7 @@ public class LoginController {
     }
 
     @ResponseBody
-    @PostMapping("/member/adminlogin")
+    @PostMapping("/adminlogin")
     public String adminlogin(String login_id, String login_password, HttpServletRequest request) {
 
         System.out.println("login_id: " + login_id);

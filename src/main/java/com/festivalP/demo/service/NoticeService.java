@@ -61,6 +61,8 @@ public class NoticeService {
 
     //최근공지
     public List<Notice> NewNotice() {
+
+
         List<Notice> notice = noticeRepository.findByNotice_Date();
         return notice;
     }

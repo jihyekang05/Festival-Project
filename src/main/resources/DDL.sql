@@ -76,6 +76,7 @@ CREATE TABLE FESTIVAL_REVIEW (
     CONSTRAINT postNum FOREIGN KEY(postNum) REFERENCES POSTS(postNum) on delete cascade
 
 );
+
 drop table NOTICE;
 CREATE TABLE NOTICE (
 	postNum	number(10)		primary key,
@@ -85,21 +86,22 @@ CREATE TABLE NOTICE (
     noticeDate DATE NOT NULL, //추가
     CONSTRAINT admin_notice_index FOREIGN KEY(adminIndex) REFERENCES admin(adminIndex)
 );
-drop table message;
-CREATE TABLE message (
-	id_chattingmessage	number(10)		primary key,
-	memberIndex	number(10)		NOT NULL,
-	chattingroom_id	number(10)		NOT NULL,
-	message	varchar2(50)		NULL,
-	message_created_date	date		NULL,
-	adminIndex	number(1)		NOT NULL
+
+drop table MESSAGE;
+CREATE TABLE MESSAGE (
+    message_index number(38)		primary key,
+    member_index	number(10)		NOT NULL,
+	chatroom_id	number(10)		NOT NULL,
+    message	varchar2(50)		NULL,
+	message_created_date	date		NULL
 );
-drop table chatting_ROOM;
-CREATE TABLE chatting_ROOM (
-	chattingroom_id	number(10)		primary key,
-	postNum	number(10)		NOT NULL,
-	adminIndex	number(1)		NOT NULL
+
+drop table CHAT_ROOM;
+CREATE TABLE CHAT_ROOM (
+	chatroom_id	number(10)		primary key,
+	post_num	number(10)		NOT NULL
 );
+
 drop table ADMIN;
 CREATE TABLE ADMIN (
 	adminIndex	number(10)		primary key,

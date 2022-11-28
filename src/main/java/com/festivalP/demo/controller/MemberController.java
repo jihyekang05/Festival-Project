@@ -38,7 +38,6 @@ public class MemberController {
     public WeakHashMap<String, String> authData = new WeakHashMap<>();
 
 
-
     //////////////////
     // 어드민 회원가입 페이지
     @GetMapping("/member/adminsignup")
@@ -77,9 +76,6 @@ public class MemberController {
             return "F";
         }
     }
-    
-    
-    
 
     /////////////////////////
     // 멤버 회원가입

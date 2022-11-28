@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -27,22 +29,25 @@ public class HomeController {
         List<Posts> topThree = festivalService.sort3ViewFestivals();
         List<Posts> topDate =  festivalService.sort3NewFestivals();
 
-        List<Notice> notices = noticeService.NewNotice();
-        model.addAttribute("notice",notices);
-
-        System.out.println("here!!!!!!!!!!!!!!!!!!!!!");
-//        System.out.println(topThree.size());
-//        for (Posts p:topThree) {
-//            System.out.println(p.getcontentViews());
-//
-//        }
-
+//        List<Notice> notices = noticeService.NewNotice();
+//        model.addAttribute("notice",notices);
         model.addAttribute("topview",topThree);
         model.addAttribute("topdate",topDate);
+
+
+
         return "home";
     }
 
 
+    @ResponseBody
+    @PostMapping ("/noticerefresh")
+    public List<Notice> noticerefresh(HttpSession session){
 
+        System.out.println("sdfasdfsadfasdfsadf@!");
+
+        List<Notice> notice = noticeService.NewNotice();
+        return notice;
+    }
 }
 

@@ -15,7 +15,6 @@ favorite_add_btn.addEventListener('click', () => {
     var post_num = document.getElementById("review_post_num");
     var member_index = document.getElementById("member_index_value");
 
-    alert(post_num+", "+member_index);
 
     if (member_index == null)
         return;
@@ -40,15 +39,12 @@ favorite_add_btn.addEventListener('click', () => {
             favorite_add_btn.tagName
 
             if(text=='S'){
-                alert("insert SUCCESS");
                 favorite_add_btn.classList.add("btn-primary");
                 favorite_add_btn.classList.remove("btn-secondary");
 
             }
 
             else if(text=='E'){
-                alert("remove SUCCESS");
-
 
                 favorite_add_btn.classList.add("btn-secondary");
                 favorite_add_btn.classList.remove("btn-primary");

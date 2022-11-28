@@ -4,42 +4,60 @@
 
 
 <div>
-    <div th:fragment="noticeCarousel"  class="floating-menu">
-        <div class="carousel-item active" >
+    <div th:fragment="noticeCarousel">
+        <script>
+            $.ajax({
+                url: "/noticerefresh",
+                async: true,
+                method: "POST"
+            })
+                .done(function (notice) {
 
-            <div th:each="notice : ${notice}">
-                <a class="nav-link d-block w-100" id="exampleModalLabel2" th:text="${notice.contentTitle}">공지제목</a>
+
+
+                    document.getElementById("carousel-item-1").textContent = notice[0].contentTitle;
+                    document.getElementById("carousel-item-1").setAttribute("href", "/notice/" + notice[0].postNum);
+
+                    document.getElementById("carousel-item-2").textContent = notice[1].contentTitle;
+                    document.getElementById("carousel-item-2").setAttribute("href", "/notice/" + notice[1].postNum);
+
+
+                    document.getElementById("carousel-item-3").textContent = notice[2].contentTitle;
+                    document.getElementById("carousel-item-3").setAttribute("href", "/notice/" + notice[2].postNum);
+
+                })
+
+                .fail(function (xhr, status, errorThrown) {
+                    alert('fail');
+                });
+        </script>
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <div>
+                    <!-- <a class="nav-link d-block w-100" id="exampleModalLabel2" th:text="${notice[0].contentTitle}">공지제목</a> -->
+                    <a type="text" class="nav-link d" id="carousel-item-1" text="" value="" href=""></a>
+                    <!-- <a href="#" id="signup-click" class="tooltip-test" title="Tooltip" onclick="signupClick()">회원가입</a> -->
+                </div>
+
             </div>
+            <div class="carousel-item">
+                <div>
+                    <!-- <a class="nav-link d-block w-100" id="exampleModalLabel2" th:text="${notice[1].contentTitle}">공지제목</a> -->
+                    <a type="text" class="nav-link d-block" id="carousel-item-2" text="" value="" href=""></a>
+
+                </div>
 
 
-            <!-- <img src="..." class="d-block w-100" alt="..."> -->
-        </div>
-        <div class="carousel-item" >
-
-
-            <div th:each="notice : ${notice}">
-                <a class="nav-link d-block w-100" id="exampleModalLabel2" th:text="${notice.contentTitle}">공지제목</a>
             </div>
+            <div class="carousel-item">
+                <div>
+                    <!-- <a class="nav-link d-block w-100" id="exampleModalLabel2" th:text="${notice[2].contentTitle}">공지제목</a> -->
+                    <a type="text" class="nav-link d-block" id="carousel-item-3" text="" value="" href=""></a>
 
-
-
-            <!-- <img src="..." class="d-block w-100" alt="..."> -->
-        </div>
-        <div class="carousel-item" >
-
-            <div th:each="notice : ${notice}">
-                <a class="nav-link d-block w-100" id="exampleModalLabel2" th:text="${notice.contentTitle}">공지제목</a>
+                </div>
             </div>
-
-            <!-- <img src="..." class="d-block w-100" alt="..."> -->
         </div>
     </div>
-    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button> -->
+
 </div>

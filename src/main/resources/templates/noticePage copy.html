@@ -15,64 +15,47 @@
   </header>
 
   <section>
-    <div class="container" th:each="notice : ${notice}">
-        <div class="text-center" >
-            <h2 class="section-heading text-uppercase" th:text="${notice.contentTitle}">notice title</h2>
-            <div class="text-muted fst-italic mb-4" th:text="${notice.noticeDate}">write date</div>
-            <hr style="width:100%;border:1px solid black"/>
-
-            
-        </div>
-        <br><br>
-        <br><br>
-        <div class="d-flex">
-            <div class="col-md-6 offset-md-3 gap-3">
-
-                
-                <div class="row">
-                  <p th:text="${notice.contentText}">notice content</p>
-                </div>
-                <br>
-
-
-
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section>
-  <div class="col-md-6 offset-md-3">
+    <div class="container mt-5" style="padding-left: 200px" th:each="notice : ${notice}">
       <div class="row">
-          <!-- <input type="button" class="btn btn-primary btn-xl" id="modify_btn" value="회원정보 수정"> -->
-          <input type="button" class="btn btn-primary" value="목록" href="#"
-              data-bs-toggle="modal" data-bs-target="#modify-Modal">
-      </div>
-  </div>
-</section>
+        <div class="col-md-12">
+          <!-- Post content-->
+            <!-- Post header-->
+            <h1 class="fw-bolder mb-1" th:text="${notice.contentTitle}">title</h1>
 
-  <!-- 사이드바 -->
-  <div th:include="/fragment/sideMenu.html :: sideMenu" class="floating-menu">
+            <div class="text-muted fst-italic mb-4" th:text="${notice.noticeDate}">write date</div>
+            ------------------------------------------------------------------------
+            <!-- Post content-->
+            <section class="mb-5">
+              <p th:text="${notice.contentText}">notice content</p>
+            </section>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  
+  
+   <!-- 사이드바 -->
+   <div th:include="/fragment/sideMenu.html :: sideMenu"  class="floating-menu">
 
   </div>
 
   <!-- 최근 공지 모달 -->
   <div th:include="/fragment/modal.html :: noticeModal" class="modal fade" id="notice-Modal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
   </div>
 
 
   <!-- 로그인 중일 때 모달창 -->
   <div th:include="/fragment/modal.html :: loginModal-in" th:if="${session.authInfo != null}" class="modal fade"
-    id="login-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      id="login-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
   </div>
 
 
   <!-- 로그인 중이 아닐때 모달 -->
   <div th:include="/fragment/modal.html :: loginModal-out" th:if="${session.authInfo == null}" class="modal fade"
-    id="login-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      id="login-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
   </div>
 
