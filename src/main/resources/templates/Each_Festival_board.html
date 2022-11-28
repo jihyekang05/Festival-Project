@@ -61,7 +61,7 @@
 
                 <!-- Preview image figure-->
                 <figure class="mb-4">
-                    <img class="img-fluid rounded" th:src="${post.contentImage}" alt="..." width="700px">
+                    <img class="img-fluid rounded" th:src="@{/assets/}+${post.contentImage}"  alt="..." width="700px">
                 </figure>
                 <!-- Post content-->
                 <section class="mb-5">

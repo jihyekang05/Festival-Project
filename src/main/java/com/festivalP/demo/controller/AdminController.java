@@ -112,7 +112,7 @@ public class AdminController {
         UUID uuid=UUID.randomUUID();
         String filename =uuid+"_"+pic.getOriginalFilename();
 
-        String uploadDir = "D:\\upload" + File.separator;
+        String uploadDir = "C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets" + File.separator;
         File uploadFolder = new File(uploadDir);
         if (!uploadFolder.exists()) {
             uploadFolder.mkdir();
