@@ -23,14 +23,14 @@ function loginClick(){
         $.ajax({
             type: "POST",
             async: true,
-            url: "/adminlogin",
+            url: "/member/adminlogin",
             data: {
                 login_id: login_id,
                 login_password: login_password
             }
         })
             .done(function (text) {
-    
+
                 if (text == "S") {
                     Swal.fire({
                         title: '로그인 성공',
@@ -56,7 +56,7 @@ function loginClick(){
         $.ajax({
             type: "POST",
             async: true,
-            url: "/login",
+            url: "/member/login",
             data: {
                 login_id: login_id,
                 login_password: login_password

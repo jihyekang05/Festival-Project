@@ -76,12 +76,7 @@ public class MemberController {
             return "F";
         }
     }
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> 81d2a0e3cd2ac494f812d4707884e45fb1a923b6
 
     /////////////////////////
     // 멤버 회원가입
