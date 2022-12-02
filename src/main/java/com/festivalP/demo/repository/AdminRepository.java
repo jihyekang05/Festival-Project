@@ -12,7 +12,9 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 // 롬복 사용하여 생성자 의존성 주입
-public class AdminRepository {
+public class
+
+AdminRepository {
 
     private final EntityManager em;
 

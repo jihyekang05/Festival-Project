@@ -67,17 +67,19 @@
       <th scope="col" >닉네임</th>
       <th scope="col" >회원상태</th>
     </tr>
-    </thead>
+    </thead >
     <tbody th:each="member : ${members}">
-    <tr>
+    <tr th:id="${member.memberIndex}">
       <td>[[${member.memberIndex}]]</td>
       <td >[[${member.memberId}]]</td>
       <td >[[${member.memberBirth}]]</td>
       <td >[[${member.memberAddr}]]</td>
       <td >[[${member.memberEmail}]]</td>
       <td >[[${member.memberNickname}]]</td>
-      <td >[[${member.memberState}]]</td>
-      <td >
+<!--      <td Id="member_state_value" >[[${member.memberState}]]</td>-->
+      <td id="member_state_value" th:if="${member.memberState==0}">일반회원 </td>
+      <td id="member_state_value" th:if="${member.memberState==1}">정지회원 </td>
+      <td th:id="${member.memberIndex}">
 <!--        <button class="btn btn-outline-success" type="button" id="member_state_button" th:data-parameter="${member.memberIndex}"-->
 <!--                th:onclick="memberState_modify(this.getAttribute('data-parameter'))">-->
 <!--            회원정지-->

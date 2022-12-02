@@ -60,8 +60,9 @@
       <input type="text" class="form-control" name="festivalTitle" th:value="${posts.festivalTitle}" >
     </div>
     <div class="mb-3">
-      <label for="formFile" class="form-label">축제 배경이미지</label>
-      <input class="form-control" type="file" id="formFile" name="contentImage">
+      <label for="contentImage" class="form-label">축제 배경이미지</label>
+      <input class="form-control" type="file" id="contentImage" name="contentImage" th:value="${posts.contentImage}">
+      [[${posts.contentImage}]]
     </div>
 
 
@@ -85,7 +86,7 @@
       <table border="1">
         <div >
           <select id="loc" name="BoardLocAddr">
-            <option value="">지역번호</option>
+            <option th:value="${posts.BoardLocAddr}">[[${posts.BoardLocAddr}]]</option>
             <option value="1">제주도</option>
             <option value="2">전라남도</option>
             <option value="3">전라북도</option>

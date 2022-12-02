@@ -1,13 +1,11 @@
 package com.festivalP.demo.controller;
 
-import com.festivalP.demo.domain.Admin;
-import com.festivalP.demo.domain.Member;
-import com.festivalP.demo.domain.Notice;
-import com.festivalP.demo.domain.Posts;
+import com.festivalP.demo.domain.*;
 import com.festivalP.demo.form.AuthInfo;
 import com.festivalP.demo.form.FestivalForm;
 import com.festivalP.demo.repository.FestivalRepository;
 import com.festivalP.demo.repository.PageRepository;
+import com.festivalP.demo.service.CategoryService;
 import com.festivalP.demo.service.FestivalService;
 import com.festivalP.demo.service.MemberService;
 import com.festivalP.demo.service.NoticeService;
@@ -50,6 +48,7 @@ public class AdminController {
     //
     private final NoticeService noticeService;
 
+    private final CategoryService categoryService;
 
 
     @GetMapping("/festivalManagement")
@@ -84,17 +83,20 @@ public class AdminController {
     }
 
     @RequestMapping("/festivalWrite")
-    public String festivalWrite() {
+    public String festivalWrite(Model model) {
         // 축제 작성 페이지
+        List<Category> category=categoryService.findCategory();
+        model.addAttribute("category", category);
         return "festivalWrite";
     }
 
     @PostMapping("/festivalWrite")
     public String fes_create(MultipartHttpServletRequest multi) throws ParseException {
 //        if (result.hasErrors()) {
-//            return "members/festivalWrite";
+//            return "/admin/festivalWrite";
 //        }
-
+        //List<Category> festivalcategories= multi.getParameter("festivalCategory");
+        System.out.println(multi.getParameter("festivalCategory"));
         Posts posts = new Posts();
         HttpSession session= multi.getSession();
         Admin admin = (Admin) session.getAttribute("admin");
@@ -102,10 +104,11 @@ public class AdminController {
         posts.setAdminIndex(admin.getAdminIndex());
         posts.setContentText(multi.getParameter("contentText"));
         posts.setFestivalTitle(multi.getParameter("festivalTitle"));
-        posts.setFestivalCategory(multi.getParameter("festivalCategory"));
+        posts.setFestivalCategory(multi.getParameter("festivalCategory").toString());
+
+
         posts.setBoardAddr(multi.getParameter("address"));
         posts.setBoardLocAddr(Long.parseLong(multi.getParameter("BoardLocAddr")));
-
 
 
         MultipartFile pic = multi.getFile("contentImage");
@@ -276,10 +279,12 @@ public class AdminController {
 
         posts.setBoardLocAddr(Long.parseLong(multi.getParameter("BoardLocAddr")));
 
-        MultipartFile file = multi.getFile("contentImage");
-        String filename = file.getOriginalFilename();
 
-        String uploadDir = "D:\\upload" + File.separator;
+        MultipartFile pic = multi.getFile("contentImage");
+        UUID uuid=UUID.randomUUID();
+        String filename =uuid+"_"+pic.getOriginalFilename();
+
+        String uploadDir = "C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets" + File.separator;
         File uploadFolder = new File(uploadDir);
         if (!uploadFolder.exists()) {
             uploadFolder.mkdir();
@@ -287,10 +292,12 @@ public class AdminController {
 
         String fullPath = uploadDir + filename;
         try {
-            file.transferTo(new File(fullPath));
+            pic.transferTo(new File(fullPath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        posts.setContentImage(filename);
         //date
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(multi.getParameter("festivalUploadDate"));
