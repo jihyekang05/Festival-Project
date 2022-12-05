@@ -33,7 +33,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="my_page_btn"
+                    <button th:if="${session.member!=null}" type="button" class="btn btn-primary" id="my_page_btn"
                         onclick="window.location.href='/member/mypage'">마이페이지</button>
                     <button type="button" class="btn btn-dark" id="logout_btn" onclick="logoutClick()">로그아웃</button>
                 </div>
@@ -68,7 +68,7 @@
                         </div>
                         <p><a href="#" id="signup-click" class="tooltip-test" title="Tooltip" onclick="signupClick()">회원가입</a></p>
                         <!-- <p><a href="#" class="tooltip-test" title="Tooltip"  data-bs-toggle="modal" data-bs-target="#signup-Modal">회원가입</a></p> -->
-                        <p><a href="#" class="tooltip-test" title="Tooltip">아이디/비밀번호 찾기</a></p>
+                        <p><a href="#" class="tooltip-test" title="Tooltip" onclick="findIdClick()">아이디/비밀번호 찾기</a></p>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -85,7 +85,7 @@
 
     <!-- 로그인 -->
     <script src="/js/login.js"></script>
-
+    <script src="/js/findIdPw.js"></script>
     </div>
 
 

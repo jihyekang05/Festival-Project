@@ -69,8 +69,6 @@ public class FestivalService{
         return Pages;
     }
 
-
-
     //오래된 순
     public Page<Posts> sortOld(Pageable pageable) {
         Page<Posts> Pages = pageRepository.findAllByOrderByFestivalUploadDate(pageable);
@@ -89,7 +87,6 @@ public class FestivalService{
         return Pages;
     }
 
-
     public List<Posts> findOne(Long postNum) {
         return festivalRepository.findBypostNum(postNum);
     }
@@ -99,11 +96,10 @@ public class FestivalService{
 
     //홈페이지 조회수 많은축제 탑3
     public List<Posts> sort3ViewFestivals() {
-        System.out.println("여기@@@@@@@@@@@");
         List<Posts> posts = festivalRepository.findOneOrderByFestival_contentViews();
-        System.out.println(posts);
         return posts;
     }
+
     //홈페이지 새로운축제 탑3
     public List<Posts> sort3NewFestivals() {
         List<Posts> date = festivalRepository.findOndOrderByUpload_Date();

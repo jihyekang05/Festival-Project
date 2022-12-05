@@ -42,7 +42,9 @@ submitBtn.addEventListener('click' , (e) => {
             alert(err);
         }
     }
-
+//    $("#reviewScore").val("===선택===");
+    console.log($("#reviewScore").val());
+    $("#reviewText").val('');
 
 
 });

@@ -5,8 +5,6 @@
 </head>
 
 <body id="page-top" class="post-body">
-<!-- Responsive navbar-->
-<!-- Navigation-->
 <!-- Navigation-->
 <nav th:include="/fragment/mainBodyNav.html :: mainBodyNav" class="navbar navbar-expand-lg navbar-dark fixed-top"
      id="mainNav">
@@ -61,7 +59,7 @@
 
                 <!-- Preview image figure-->
                 <figure class="mb-4">
-                    <img class="img-fluid rounded" th:src="@{/assets/}+${post.contentImage}"  alt="..." width="700px">
+                    <img class="img-fluid rounded" th:src="@{/assets/img/image/}+${post.contentImage}"  alt="..." width="700px">
                 </figure>
                 <!-- Post content-->
                 <section class="mb-5">
@@ -96,16 +94,26 @@
                     <!--                        <button type="submit" class="btn btn-primary btn-l text-uppercase" id="review_submit" >제출</button>-->
                     <a class="btn btn-primary" id="review_submit" type="submit">제출</a>
                     <!--                        th:href="@{|/festival/${post.post_num}|}"-->
-                    <div></div>
+
                     <div class="input-group">
                         <span class="input-group-text">후기와 별점을 입력</span>
                         <!--                            별점-->
                         <tr>
-                            <td>
-                                <input name="review_score" id="reviewScore" type="text" aria-label="First name"
-                                       class="form-control" placeholder="1~5중 별점매기기" value="">
-                            </td>
+                            <select name="review_score" id="reviewScore" value="none">
+                                <option value="none">=== 선택 ===</option>
+                                <option value="1">1점</option>
+                                <option value="2">2점</option>
+                                <option value="3">3점</option>
+                                <option value="4">4점</option>
+                                <option value="4">5점</option>
+                            </select>
                         </tr>
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                <input name="review_score" id="reviewScore" type="text" aria-label="First name"-->
+<!--                                       class="form-control" placeholder="1~5중 별점매기기" value="">-->
+<!--                            </td>-->
+<!--                        </tr>-->
                         <!--                            리뷰 내용-->
                         <tr>
                             <td>
@@ -113,15 +121,10 @@
                              name" class="form-control" placeholder="리뷰를 작성하시오" value="">
                             </td>
                         </tr>
-                        <!--                            리뷰 번호-->
-                        <!--                            <tr>-->
-                        <!--                                <td>-->
-                        <!--                                    <input name="review_index"  id="review_index" type="text" aria-label="Last name" class="form-control" placeholder="리뷰 번호" value="" >-->
-                        <!--                                </td>-->
-                        <!--                            </tr>-->
+
                         <tr>
                             <td>
-                                <input id="memberIndex" name="member_index" type="text" aria-label="Last name"
+                                <input th:if="${session.member!=null}" th:value="${session.member.memberNickname}" id="memberIndex" name="member_index" type="hidden" aria-label="Last name"
                                        class="form-control" placeholder="닉네임" value="">
                             </td>
                         </tr>

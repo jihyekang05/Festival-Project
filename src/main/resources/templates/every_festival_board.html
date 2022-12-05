@@ -75,9 +75,7 @@
     <!-- ==================== -->
     <!--            <section id="theme">-->
     <select class="select" name="sort" id="sort,direction" >
-        <!--                    <div name="Direction" id="Direction">-->
-        <!--                        <div class="text" >선택-->
-        <!--                    <ul class="option-list" id="keyValue" name="keyValue">-->
+
         <option class="option" value="">선택</option>
         <option class="option" value="contentViews,DESC">조회수</option>
         <option class="option" value="festivalUploadDate,DESC">최신순</option>
@@ -103,7 +101,7 @@
     <div class="row" id="post_list">
         <div class="col-md-4" th:each="post : ${posts}">
             <div class="card" style="width: 100%;">
-                <img width="180" height="300" th:src="${post.contentImage}" class="card-img-top" alt="...">
+                <img width="180" height="300" th:src="@{/assets/img/image/}+${post.contentImage}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="festival-title" th:text="${post.festivalTitle}">축제이름</h5>
                     <p>조회수 : <span class="festival-text" th:text="${post.contentViews}"></span></p>

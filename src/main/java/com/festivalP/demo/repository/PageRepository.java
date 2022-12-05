@@ -48,17 +48,8 @@ public interface PageRepository extends PagingAndSortingRepository<Posts, Long>{
 
 
 
-//    Page<Posts> findByFestivalTitleContaining(String keyword, Pageable pageable);
+//    Page<Posts> findByBoardLocAddrContaining(Long local, Pageable pageable);
 
-    Page<Posts> findByBoardLocAddrContaining(Long local, Pageable pageable);
-
-//    @Modifying
-//    @Query(value = "select p from Posts p JOIN FETCH p.favorite f on p.postNum = f.postNum and f.memberIndex = memberIndex")
-//    Page<Posts> findByFestivalContent(Long memberIndex, Pageable pageable);
-//
-//    @Modifying
-//    @Query(value = "select p from Posts p JOIN FETCH p.favorite f on p.postNum = f.postNum and f.memberIndex = memberIndex and p.festivalTitle like %title%")
-//    Page<Posts> findByFestivalTitleContaining(Long memberIndex, String title, Pageable pageable);
 
 }
 
