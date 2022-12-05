@@ -79,7 +79,6 @@ public class PostController {
         Page<Posts> festivals = null;
         if(keyword.length() == 0) {
             if(direction.equals("DESC") && sort.equals("contentViews")) {
-                System.out.println("조회수@@@@@@@@@");
                 festivals =festivalService.sortView(pageable);
             } else if (direction.equals("DESC") && sort.equals("festivalUploadDate")) {
                 festivals = festivalService.sortNew(pageable);
@@ -90,10 +89,7 @@ public class PostController {
             festivals = festivalService.paging(keyword, pageable);
         }
         System.out.println(festivals.getTotalPages()); //2
-//        model.addAttribute("keyword", keyword);
-//        model.addAttribute("posts", festivals);
-//        model.addAttribute("direction",direction);
-//        model.addAttribute("sort",sort);
+
         return festivals;
     }
 

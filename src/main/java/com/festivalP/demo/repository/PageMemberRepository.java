@@ -7,10 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PageMemberRepository extends PagingAndSortingRepository<Member, Long> {
 
     Page<Member> findByMemberIdContaining(String keyword, Pageable pageable);
+
+
 
 
 }

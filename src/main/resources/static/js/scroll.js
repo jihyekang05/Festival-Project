@@ -8,7 +8,6 @@ window.onload = function() {
 
 
 
-
 $(window).scroll(function() {
 	if($(window).scrollTop() + $(window).height() == $(document).height()) {
     let keyword_val = $("#keyword_val").val();

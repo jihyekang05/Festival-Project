@@ -29,12 +29,8 @@ public class HomeController {
         List<Posts> topThree = festivalService.sort3ViewFestivals();
         List<Posts> topDate =  festivalService.sort3NewFestivals();
 
-//        List<Notice> notices = noticeService.NewNotice();
-//        model.addAttribute("notice",notices);
         model.addAttribute("topview",topThree);
         model.addAttribute("topdate",topDate);
-
-
 
         return "home";
     }

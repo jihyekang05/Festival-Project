@@ -275,10 +275,10 @@ public class MemberController {
     }
 
 
-    @RequestMapping("/findid")
-    public String findId() {
-
-        return "findId";
-    }
+//    @RequestMapping("/findid")
+//    public String findId() {
+//
+//        return "findId";
+//    }
 
 }

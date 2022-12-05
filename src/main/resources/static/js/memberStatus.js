@@ -37,10 +37,6 @@ function memberState_modify(memberIndex){
 //                                             member_state_button.disabled;
                                         }
 
-
-
-
-
                         })
                         .fail(function(data){
                         console.log("Ajax fail");

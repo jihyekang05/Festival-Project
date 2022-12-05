@@ -35,10 +35,10 @@ public class MemberService {
     public Member updateMemberState(Long memberIndex) {
 
         Member member = memberRepository.findOne(memberIndex);
-        if (member.getMemberState()==0){
-        member.setMemberState(1);}
-        else {
-         member.setMemberState(0);
+        if (member.getMemberState() == 0) {
+            member.setMemberState(1);
+        } else {
+            member.setMemberState(0);
         }
 
         return member;
@@ -55,7 +55,7 @@ public class MemberService {
     }
 
     @Transactional
-    private Member encryptFunc(Member member){
+    private Member encryptFunc(Member member) {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String pw = member.getMemberPw();
@@ -84,21 +84,20 @@ public class MemberService {
 //    }
 
     @Transactional
-    public String join(Member member){
+    public String join(Member member) {
         System.out.println("MemberService.join");
         memberRepository.save(encryptFunc(member));
         return member.getMemberId();
     }
 
     @Transactional
-    public boolean validateDuplicateMemberId(String memberId){
+    public boolean validateDuplicateMemberId(String memberId) {
         List<Member> findMem = memberRepository.findById(memberId);
-        if(!findMem.isEmpty()) {
+        if (!findMem.isEmpty()) {
             // 중복된 ID 있을 경우
             System.out.println("@@@@@@@ duplicate! @@@@");
             return false;
-        }
-        else{
+        } else {
             // 중복된 ID 없을 경우
             System.out.println("$$$$$$$$ no id in db$$$$$$$$$$");
             return true;
@@ -106,14 +105,13 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean validateDuplicateMemberNickname(String memberNickname){
+    public boolean validateDuplicateMemberNickname(String memberNickname) {
         List<Member> findMem = memberRepository.findByNickname(memberNickname);
-        if(!findMem.isEmpty()) {
+        if (!findMem.isEmpty()) {
             // 중복된 ID 있을 경우
             System.out.println("@@@@@@@ duplicate! @@@@");
             return false;
-        }
-        else{
+        } else {
             // 중복된 닉네임 없을 경우
             System.out.println("$$$$$$$$ no nickname in db$$$$$$$$$$");
             return true;
@@ -121,22 +119,21 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean memberExistCheck(String memberId, String memberPw){
+    public boolean memberExistCheck(String memberId, String memberPw) {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        List<Member> findMem =memberRepository.findById(memberId);
-        if(findMem.isEmpty()){
+        List<Member> findMem = memberRepository.findById(memberId);
+        if (findMem.isEmpty()) {
             return false;
-        }
-        else{
-            return encoder.matches(memberPw,findMem.get(0).getMemberPw());
+        } else {
+            return encoder.matches(memberPw, findMem.get(0).getMemberPw());
         }
     }
 
 
     @Transactional
-    public AuthInfo getMemberAuthInfo(String memberId){
-        List<Member> findMem =memberRepository.findById(memberId);
+    public AuthInfo getMemberAuthInfo(String memberId) {
+        List<Member> findMem = memberRepository.findById(memberId);
         Member mem = findMem.get(0);
 
 //        Member mem = memberRepository.findById(memberId);
@@ -148,28 +145,24 @@ public class MemberService {
     }
 
     @Transactional
-    public Member getMemberAllInfo(String memberId){
-        List<Member> findMem =memberRepository.findById(memberId);
+    public Member getMemberAllInfo(String memberId) {
+        List<Member> findMem = memberRepository.findById(memberId);
         Member mem = findMem.get(0);
         return mem;
     }
 
     @Transactional
-    public Member updateInfo(Member member){
-        Member resMember =  memberRepository.memberInfoUpdate(member);
+    public Member updateInfo(Member member) {
+        Member resMember = memberRepository.memberInfoUpdate(member);
 
         return resMember;
     }
 
     @Transactional
-    public Member deleteMember(Member member){
+    public Member deleteMember(Member member) {
         memberRepository.memberDelete(member);
 
         return member;
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return null;
-//    }
 }
