@@ -72,6 +72,10 @@ function loginClick(){
                         location.reload();
                     });
                 }
+                else if(text=='T'){
+                    // 임시 비밀번호 발급상태
+                    
+                }
                 else {
                     Swal.fire({
                         icon: 'error',
@@ -134,4 +138,11 @@ function signupClick(){
         // 아니면
         window.location.href='/member/signup';
     }
+};
+
+
+function findAccountClick(){
+
+    window.open('/member/findaccount', 'blank');
+
 };

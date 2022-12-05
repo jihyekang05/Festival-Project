@@ -326,8 +326,6 @@ function category_check(){
     category_string = category_string.slice(0,-1);
     console.log(category_string);
 
-    
-
     Array.prototype.forEach.call(category_view, (e) => {
         e.checked=false;
     });
@@ -369,10 +367,6 @@ modify_btn.addEventListener('click', ()=>{
         if (result.isConfirmed) {
             // category_insert();
             sendModify();
-            Swal.fire({
-                title: '저장되었습니다.',
-                confirmButtonText: '확인',
-            });
         }
     });
 
@@ -406,6 +400,10 @@ function sendModify(){
     .done(function(text){
        
         console.log(text);
+        Swal.fire({
+            title: '저장되었습니다.',
+            confirmButtonText: '확인',
+        });
 
     })
     .fail(function(){

@@ -6,8 +6,9 @@
 <div th:fragment="sideMenu">
     <div class="nav nav-list quickmenu">
         <ul>
-            <li th:if="${session.authInfo != null}"><a href="/member/mypage">마이페이지</a></li>
-            
+
+            <li th:if="${session.member != null}"><a >채팅</a></li>
+            <li th:if="${session.member != null}"><a href="/member/mypage">마이페이지</a></li>
             <li>
                 <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-caret-up-fill" viewBox="0 0 16 16">
@@ -19,10 +20,6 @@
             </li>
         </ul>
     </div>
-
-
-
-
     <script src="/js/sideMenu.js"></script>
 </div>
 
