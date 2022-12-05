@@ -60,9 +60,10 @@
       <input type="text" class="form-control" name="festivalTitle" th:value="${posts.festivalTitle}" >
     </div>
     <div class="mb-3">
-      <label for="contentImage" class="form-label">축제 배경이미지</label>
-      <input class="form-control" type="file" id="contentImage" name="contentImage" th:value="${posts.contentImage}">
-      [[${posts.contentImage}]]
+      <label for="contentImage" class="form-label">축제 배경이미지</label><hr>
+      <img class="img-fluid rounded" th:src="@{/assets/}+${posts.contentImage}"  alt="..." width="200px"><hr>
+<!--      <input class="form-control" type="file" id="contentImage" name="contentImage" th:value="${posts.contentImage}">-->
+
     </div>
 
 

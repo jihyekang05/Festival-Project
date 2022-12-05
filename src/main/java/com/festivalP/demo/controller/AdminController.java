@@ -90,6 +90,7 @@ public class AdminController {
         return "festivalWrite";
     }
 
+//    @ResponseBody
     @PostMapping("/festivalWrite")
     public String fes_create(MultipartHttpServletRequest multi) throws ParseException {
 //        if (result.hasErrors()) {
@@ -111,7 +112,11 @@ public class AdminController {
         posts.setBoardLocAddr(Long.parseLong(multi.getParameter("BoardLocAddr")));
 
 
+
         MultipartFile pic = multi.getFile("contentImage");
+        if(pic.getContentType().startsWith("image") == false){
+            return "redirect:/admin/festivalWrite";
+        }
         UUID uuid=UUID.randomUUID();
         String filename =uuid+"_"+pic.getOriginalFilename();
 
@@ -177,6 +182,14 @@ public class AdminController {
         model.addAttribute("keyword", keyword);
         return "memberManagement";
     }
+//    @GetMapping("/memberStateModify/{postNum}")
+//    public String modify_memNum(@PathVariable("memberIndex") Long memberIndex) {
+//
+//        int result = festivalService.deleteBypostNum(postNum);
+//        Member member= memberService.updateMemberState(memberIndex);
+//
+//        return "redirect:/admin/festivalManagement";
+//    }
 
     @ResponseBody
     @PostMapping("/memberStateModify")
@@ -265,6 +278,13 @@ public class AdminController {
     @PostMapping("/admin/modify/{postNum}")
     public String fes_Modify(@PathVariable("postNum") Long postNum, MultipartHttpServletRequest multi) throws ParseException {
 
+
+
+//        File file = new File([파일경로]); // ex. [D:/test/image/testImage.jpg]
+//        file.delete();
+
+
+
         Posts posts = new Posts();
         posts.setPostNum(postNum);
 
@@ -278,6 +298,8 @@ public class AdminController {
         posts.setBoardAddr(multi.getParameter("address"));
 
         posts.setBoardLocAddr(Long.parseLong(multi.getParameter("BoardLocAddr")));
+
+
 
 
         MultipartFile pic = multi.getFile("contentImage");
@@ -296,6 +318,7 @@ public class AdminController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
         posts.setContentImage(filename);
         //date
