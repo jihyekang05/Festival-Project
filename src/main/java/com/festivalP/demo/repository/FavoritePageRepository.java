@@ -27,7 +27,7 @@ public interface FavoritePageRepository extends PagingAndSortingRepository<Posts
 //    @Query("select p from Posts p JOIN FETCH Favorite f on p.postNum = f.postNum where f.memberIndex = :memberIndex and p.festivalTitle like %:keyword%")
 //    Page<Posts> findByFestivalTitle(@Param("memberIndex") Long memberIndex, @Param("keyword") String keyword, Pageable pageable);
 
-    @Query("select p from Posts p JOIN FETCH Favorite f on p.postNum = f.postNum where f.memberIndex = :memberIndex and p.festivalTitle like %:keyword%")
+    @Query("select p from Posts p JOIN FETCH Favorite f on p.postNum = f.postNum where f.memberIndex = :memberIndex and p.festivalTitle like %:keyword% ")
     Page<Posts> findByFestivalTitle(@Param("memberIndex") Long memberIndex, @Param("keyword") String keyword, Pageable pageable);
 }
 
