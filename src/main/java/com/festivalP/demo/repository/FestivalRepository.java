@@ -46,7 +46,6 @@ public class FestivalRepository {
     }
 
 
-
     public void save(Posts posts) {em.persist(posts);}
 
     public List<Posts> findBypostNum(Long postNum) {

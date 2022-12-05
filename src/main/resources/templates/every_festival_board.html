@@ -62,8 +62,6 @@
 </header>
 <div style="padding:10px"></div>
 <!-- 검색창 -->
-<!--<nav class="navbar bg-light">-->
-<!--    <div class="container-fluid" id="searchbox">-->
 <form class="d-flex" action="/allfestival" method="GET" style="padding:5px">
 
     <!--  Session 값 받아오기 위한 hidden tag-->
@@ -73,18 +71,15 @@
     <input class=" me-2" id="keyword" type="text" placeholder="제목검색하시오" aria-label="Search"
            name="keyword" style="width:50%">
     <!-- ==================== -->
-    <!--            <section id="theme">-->
     <select class="select" name="sort" id="sort,direction" >
 
         <option class="option" value="">선택</option>
         <option class="option" value="contentViews,DESC">조회수</option>
         <option class="option" value="festivalUploadDate,DESC">최신순</option>
         <option class="option" value="festivalUploadDate">오래된순</option>
-        <!--                    </ul>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
+
     </select>
-    <!--            </section>-->
+
     <button type="submit" class="btn btn-dark">검색</button>
 </form>
 <div style="padding:10px"></div>
@@ -92,8 +87,6 @@
 
 <input type="hidden" id="sort_val" th:value="${sort}">
 <input type="hidden" id="direction_val" th:value="${direction}">
-
-
 
 
 <!-- 무한스크롤 축제리스트-->

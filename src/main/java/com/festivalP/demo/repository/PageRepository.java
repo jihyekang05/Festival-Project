@@ -26,9 +26,6 @@ public interface PageRepository extends PagingAndSortingRepository<Posts, Long>{
     Page<Posts> findAll( Pageable pageable);
 
 
-
-
-
     Page<Posts> findByFestivalTitleContaining(String keyword, Pageable pageable);
 
 
@@ -47,8 +44,6 @@ public interface PageRepository extends PagingAndSortingRepository<Posts, Long>{
     int updateView(Long postNum);
 
 
-
-//    Page<Posts> findByBoardLocAddrContaining(Long local, Pageable pageable);
 
 
 }

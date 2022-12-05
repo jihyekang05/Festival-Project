@@ -57,7 +57,7 @@ public class PostController {
         }
         model.addAttribute("posts",festivals);
         model.addAttribute("keyword", keyword);
-        model.addAttribute("pageable", pageable);
+//        model.addAttribute("pageable", pageable);
         model.addAttribute("sort",sort);
         model.addAttribute("direction",direction);
         return "every_festival_board";
