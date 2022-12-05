@@ -1,3 +1,9 @@
+//새로고침 했을 때 페이지 맨 위로
+window.onload = function() {
+    setTimeout (function() {
+    scrollTo(0,0);
+    },100);
+}
 
 var data = 0;
 

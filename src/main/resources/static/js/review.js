@@ -64,5 +64,35 @@ submitBtn.addEventListener('click' , (e) => {
         
 
         }
+<<<<<<< HEAD
     });
+=======
+        const reviewData = {reviewScore,reviewText,postNum,review_num,memberIndex,star};
+        console.log(reviewData);
+        console.log(reviewData.star)
+        try {
+            res = fetch('/festival/review',
+            {
+                method:'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(reviewData)
+            });
+            alert('리뷰가 정상적으로 등록되었습니다');
+            var str = '<tr>';
+//                  str += '<td>' +  reviewData.reviewScore + '</td><td>' + reviewData.reviewText +'</td><td>' + reviewData.memberIndex+'</td></tr>';
+                    str += '<td>' +reviewData.star+ '</td><td>' + reviewData.reviewText +'</td><td>' + reviewData.memberIndex+'</td></tr>';
+                  $("#reviewList").append(str);
+
+        }catch(err) {
+            alert(err);
+        }
+    }
+//    $("#reviewScore").val("===선택===");
+    console.log($("#reviewScore").val());
+    $("#reviewText").val('');
+
+
+>>>>>>> d292b217cccd77f706e17fb88142557db9d95e9d
 });

@@ -395,7 +395,6 @@ function sendModify(){
             email:email,
             category:category
         }
-
     })
     .done(function(text){
        

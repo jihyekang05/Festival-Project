@@ -414,11 +414,19 @@ public class MemberController {
     }
 
 
+<<<<<<< HEAD
     @ResponseBody
     @RequestMapping("/findid")
     public String findId() {
 
         return "findId";
     }
+=======
+//    @RequestMapping("/findid")
+//    public String findId() {
+//
+//        return "findId";
+//    }
+>>>>>>> d292b217cccd77f706e17fb88142557db9d95e9d
 
 }
