@@ -114,7 +114,7 @@ public class MemberRepository {
 
         Member delMember = em.find(Member.class, member.getMemberIndex());
 
-        delMember.setMemberState(1);
+        delMember.setMemberState(3);
         return delMember;
     }
 

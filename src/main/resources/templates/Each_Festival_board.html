@@ -95,7 +95,7 @@
                     <a class="btn btn-primary" id="review_submit" type="submit">제출</a>
                     <!--                        th:href="@{|/festival/${post.post_num}|}"-->
 
-                    <div class="input-group">
+                    <div class="input-group" >
                         <span class="input-group-text">후기와 별점을 입력</span>
                         <!--                            별점-->
                         <tr>
@@ -124,13 +124,12 @@
 
                         <tr>
                             <td>
-<<<<<<< HEAD
-                                <input id="memberIndex" name="member_index" type="text" aria-label="Last name"
-                                       class="form-control" placeholder="닉네임" th:value="${session.member.memberNickname}" readonly>
-=======
+
+<!--                                <input id="memberIndex" name="member_index" type="hidden" aria-label="Last name"-->
+<!--                                       class="form-control" placeholder="닉네임" th:value="${session.member.memberNickname}" readonly>-->
+
                                 <input th:if="${session.member!=null}" th:value="${session.member.memberNickname}" id="memberIndex" name="member_index" type="hidden" aria-label="Last name"
                                        class="form-control" placeholder="닉네임" value="">
->>>>>>> d292b217cccd77f706e17fb88142557db9d95e9d
                             </td>
                         </tr>
                         <tr>
@@ -158,7 +157,7 @@
                                th:each="num : ${#numbers.sequence(0,review.reviewScore-1)}"></i></td>
                         <td th:text="${review.reviewText}"></td>
                         <!-- <td th:text="${review.memberIndex}"></td> -->
-                        <td th:text="${session.member.memberNickname}"></td>
+                        <td th:text="${review.memberIndex}"></td>
                     </tr>
                     </tbody>
                 </table>

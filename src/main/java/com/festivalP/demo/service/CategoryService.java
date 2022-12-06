@@ -1,8 +1,9 @@
 package com.festivalP.demo.service;
 
-<<<<<<< HEAD
+import com.festivalP.demo.domain.Category;
 import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.repository.CategoryPageRepository;
+import com.festivalP.demo.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ public class CategoryService {
 
     private final CategoryPageRepository categoryPageRepository;
 
+    private final CategoryRepository categoryRepository;
     @Transactional
     public Page<Posts> paging(Long memberId,String keyword, Pageable pageable) {
 
@@ -44,21 +46,9 @@ public class CategoryService {
         Page<Posts> Pages= categoryPageRepository.findByFavoriteCategory(memberIndex, pageable);
         System.out.println("@#@#@#@#@#@ CategoryService listPaging");
         return Pages;
-=======
-import com.festivalP.demo.domain.Category;
-import com.festivalP.demo.repository.CategoryRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-@RequiredArgsConstructor
-public class CategoryService {
-    private final CategoryRepository categoryRepository;
+    }
 
     public List<Category> findCategory(){
         return categoryRepository.findAll();
->>>>>>> d292b217cccd77f706e17fb88142557db9d95e9d
     }
 }

@@ -30,38 +30,6 @@ function memberState_modify(memberIndex){
                         })
                         .done(function(data){
                             var member=data;
-<<<<<<< HEAD
-//                             console.log(member.memberState)
-//                             if(member.memberState=='1'){
-//                                             alert("insert SUCCESS");
-//                                             member_state_button.value="정지해제";
-//
-//
-//                                         }
-//
-//                                         else if(member.memberState=='0'){
-//                                             member_state_button.value="회원정지";
-//                                         }
-//                                        else{
-////                                             member_state_button.disabled;
-//                                        }
-
-                        $('#data').load(location.href+' #data');
-=======
-                             console.log(member.memberState)
-                             if(member.memberState=='1'){
-                                             alert("insert SUCCESS");
-                                             member_state_button.value="정지해제";
-
-                                         }
-
-                                         else if(member.memberState=='0'){
-                                             member_state_button.value="회원정지";
-                                         }
-                                        else{
-//                                             member_state_button.disabled;
-                                        }
->>>>>>> e6073ddc322db3a79b0eb920ad24ac2e99d001c0
 
                         })
                         .fail(function(data){

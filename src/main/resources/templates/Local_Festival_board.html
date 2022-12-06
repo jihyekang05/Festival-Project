@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="/fragment/mainHead.html :: mainHead">
+    <title>홈페이지</title>
+</head>
+<link rel="stylesheet" href="/css/hover.css">
+<body id="page-top">
+<!-- Navigation-->
+<nav th:include="/fragment/mainBodyNav.html :: mainBodyNav" class="navbar navbar-expand-lg navbar-dark fixed-top"
+     id="mainNav">
+</nav>
+<!-- Masthead-->
+<header class="masthead">
 
+</header>
 <div class="alert alert-warning" role="alert" style="text-align:center">
     원하는 지역을 누르면 그 지역의 축제를 보실 수 있습니다!!!
 </div>
@@ -89,7 +101,6 @@
     </g>
 </svg>
 
-
 <!--선택한 지역의 리스트 뜨는 부분-->
 <!-- 축제 리스트  -->
 <table class="table table-stripped">
@@ -104,7 +115,7 @@
     </tbody>
 </table>
 <!-- 사이드바 -->
-<!-- <div th:include="/fragment/sideMenu.html :: sideMenu"> -->
+<div th:include="/fragment/sideMenu.html :: sideMenu">
 
 </div>
 <!-- 로그인 중일 때 모달창 -->

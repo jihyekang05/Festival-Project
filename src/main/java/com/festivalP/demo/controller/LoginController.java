@@ -48,10 +48,10 @@ public class LoginController {
             try {
                 AuthInfo authInfo = memberService.getMemberAuthInfo(login_id);
                 Member member = memberService.getMemberAllInfo(login_id);
-                if(member.getMemberState()==1)
+                if(member.getMemberState()==1 ||member.getMemberState()==3)
                     return "F";
-                else if(member.getMemberState()==3)
-                    return "T";
+//                else if(member.getMemberState()==3)
+//                    return "T";
                 member.setMemberPw(null);
                 HttpSession session = request.getSession();
                 System.out.println("## login authinfo State :: "+authInfo.getState());
