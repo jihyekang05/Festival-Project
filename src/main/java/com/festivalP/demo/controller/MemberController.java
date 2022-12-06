@@ -138,16 +138,9 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/member/mypage/modifyconfirm")
-    public String modify(@RequestParam("nickname")String nickname, @RequestParam("addr")String addr, @RequestParam("birth")Date birth, @RequestParam("category")String category, @RequestParam("email")String email, HttpSession session){
+    public String modifyConfirm(@RequestParam("nickname")String nickname, @RequestParam("addr")String addr, @RequestParam("birth")Date birth, @RequestParam("category")String category, @RequestParam("email")String email, HttpSession session){
 
         Member member = (Member) session.getAttribute("member");
-
-        System.out.println(member.getMemberNickname());
-        System.out.println(member.getMemberAddr());
-        System.out.println(member.getMemberBirth());
-        System.out.println(member.getMemberCategory());
-        System.out.println(member.getMemberEmail());
-
 
         member.setMemberNickname(nickname);
         member.setMemberAddr(addr);
@@ -156,11 +149,6 @@ public class MemberController {
         member.setMemberCategory(category);
 
         session.setAttribute("member", memberService.updateInfo(member));
-        System.out.println(member.getMemberNickname());
-        System.out.println(member.getMemberAddr());
-        System.out.println(member.getMemberBirth());
-        System.out.println(member.getMemberCategory());
-        System.out.println(member.getMemberEmail());
 
         System.out.println("$$$ wowwowow modifyyyy");
         return "modify success";
@@ -186,8 +174,51 @@ public class MemberController {
         }
     }
 
+    @ResponseBody
+    @PostMapping("/member/mypage/pwmodify")
+    public String pwModify(@RequestParam("login_id")String login_id, @RequestParam("pw_modify_login_password")String pw_modify_login_password){
+
+        System.out.println("## pwModify func Controller");
+        if (memberService.memberExistCheck(login_id, pw_modify_login_password)) {
+
+            try {
+                return "S";
+            } catch (Exception e) {
+                System.out.println("login failed: "+e.toString());
+                return "F";
+
+            }
+        }
+        else {
+            return "F";
+        }
+    }
+
+    @GetMapping("/member/pwmodifypage")
+    public String pwModifyPage(HttpSession session){
+
+        Member member = (Member)session.getAttribute("member");
+
+        System.out.println(member.getMemberId());
+        System.out.println(member.getMemberPw());
+        return "member/memberPasswordModifyPage";
+    }
+
+    @ResponseBody
+    @PostMapping("/member/mypage/pwmodifyconfirm")
+    public String pwModifyConfirm(@RequestParam("password") String password, HttpSession session){
+
+        Member member = (Member) session.getAttribute("member");
+        member.setMemberPw(password);
+        session.setAttribute("member", memberService.updatePassword(member));
+
+        System.out.println("$$$ wowwowow modifyyyy");
+        return "modify success";
+    }
+
+
     @GetMapping("/member/modifypage")
-    public String modifypage(HttpSession session){
+    public String modifyPage(HttpSession session){
 
         Member member = (Member)session.getAttribute("member");
 
@@ -195,6 +226,8 @@ public class MemberController {
         System.out.println(member.getMemberPw());
         return "member/memberModifyPage";
     }
+
+
 
     // 아이디 중복체크
     @ResponseBody
@@ -222,6 +255,20 @@ public class MemberController {
         }
     }
 
+    @ResponseBody
+    @PostMapping("/member/emaildupcheck")
+    public String emaildupcheck(String memberEmail){
+
+        if(memberService.validateDuplicateMemberEmail(memberEmail)){
+            System.out.println("### email dup check true");
+            return "S";
+        }
+        else{
+            return "F";
+        }
+    }
+
+
     @Autowired
     JavaMailSender mailSender;
 
@@ -236,9 +283,9 @@ public class MemberController {
         // 메일 발송
         String setFrom = "wowinteresting234@gmail.com";
         String toMail = email;
-        String title = "회원가입 인증 메일입니다.";
+        String title = "인증 메일입니다.";
         String content =
-                "안녕하세요. XX방문을 감사드립니다."+
+                "안녕하세요."+
                         "<br><br>"+
                         "인증번호는 "+checkNum+" 입니다."+
                         "<br>"+
@@ -267,7 +314,99 @@ public class MemberController {
         if(emailAuthValue.equals(authData.get(email))){
             authData.replace(email, null);
             System.gc();
+        return "S";
+        }
+        else{
+            return "F";
+        }
+    }
+    
+    /////////////////////////////////////////////////////////////////
+    // 아이디/비밀번호 찾기
+    @GetMapping("/member/findaccount")
+    public String findAccount(Model model){
+
+        return "member/findAccount";
+    }
+
+    @GetMapping("/member/findaccountid")
+    public String findAccountId(Model model){
+
+        return "member/findAccountId";
+    }
+
+    @GetMapping("/member/findaccountpw")
+    public String findAccountPassword(Model model){
+
+        return "member/findAccountPassword";
+    }
+
+    @ResponseBody
+    @PostMapping("/member/findaccountpw")
+    public String findAccountPasswordSubmit(@RequestParam("memberId") String memberId, @RequestParam("memberEmail")String memberEmail){
+
+        // 받은 이메일로 아이디 찾기
+        String id = memberService.getMemberIdByEmail(memberEmail);
+
+
+        if(id.equals(memberId)){
+            // 찾은 아이디가 입력받은 아이디와 같으면
+            // 이메일로 임시 비밀번호 전송
+
+            int leftLimit = 48; // numeral '0'
+            int rightLimit = 122; // letter 'z'
+            int targetStringLength = 10;
+            Random random = new Random();
+            String generatedString = random.ints(leftLimit, rightLimit + 1)
+                    .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                    .limit(targetStringLength)
+                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                    .toString();
+
+
+//            Random random = new Random();
+//            int checkNum = random.nextInt(888888) + 111111;
+
+            // 메일 발송
+            String setFrom = "wowinteresting234@gmail.com";
+            String toMail = memberEmail;
+            String title = "임시 비밀번호입니다.";
+            String content =
+                    "안녕하세요."+
+                            "<br><br>"+
+                            "임시 비밀번호는 "+generatedString+" 입니다."+
+                            "<br>"+
+                            "임시 비밀번호로 로그인 후 비밀번호 변경을 진행해주세요.";
+            try{
+                MimeMessage message = mailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+                helper.setFrom(setFrom);
+                helper.setTo(toMail);
+                helper.setSubject(title);
+                helper.setText(content,true);
+                mailSender.send(message);
+                memberService.setMemberState(memberId, generatedString);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
             return "S";
+        }
+        else{
+            // 다르면
+
+            return "F";
+        }
+    }
+    @ResponseBody
+    @PostMapping("/member/emailAuthCheck/findid")
+    public String emailAuthCheckFindIdFunction(String email, String emailAuthValue){
+        if(emailAuthValue.equals(authData.get(email))){
+            authData.replace(email, null);
+            System.gc();
+            return memberService.getMemberIdByEmail(email);
         }
         else{
             return "F";
@@ -275,10 +414,19 @@ public class MemberController {
     }
 
 
+<<<<<<< HEAD
+    @ResponseBody
+    @RequestMapping("/findid")
+    public String findId() {
+
+        return "findId";
+    }
+=======
 //    @RequestMapping("/findid")
 //    public String findId() {
 //
 //        return "findId";
 //    }
+>>>>>>> d292b217cccd77f706e17fb88142557db9d95e9d
 
 }

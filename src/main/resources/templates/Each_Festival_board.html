@@ -124,8 +124,13 @@
 
                         <tr>
                             <td>
+<<<<<<< HEAD
+                                <input id="memberIndex" name="member_index" type="text" aria-label="Last name"
+                                       class="form-control" placeholder="닉네임" th:value="${session.member.memberNickname}" readonly>
+=======
                                 <input th:if="${session.member!=null}" th:value="${session.member.memberNickname}" id="memberIndex" name="member_index" type="hidden" aria-label="Last name"
                                        class="form-control" placeholder="닉네임" value="">
+>>>>>>> d292b217cccd77f706e17fb88142557db9d95e9d
                             </td>
                         </tr>
                         <tr>
@@ -152,7 +157,8 @@
                         <td><i class="fa-solid fa-star"
                                th:each="num : ${#numbers.sequence(0,review.reviewScore-1)}"></i></td>
                         <td th:text="${review.reviewText}"></td>
-                        <td th:text="${review.memberIndex}"></td>
+                        <!-- <td th:text="${review.memberIndex}"></td> -->
+                        <td th:text="${session.member.memberNickname}"></td>
                     </tr>
                     </tbody>
                 </table>

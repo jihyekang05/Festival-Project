@@ -2,6 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:include="/fragment/mainHead.html :: mainHead">
+<<<<<<< HEAD
+
+=======
+>>>>>>> d292b217cccd77f706e17fb88142557db9d95e9d
 
 </head>
 
@@ -67,38 +71,32 @@
 
 
                 관심카테고리
-                <div class="row">
-                    <input type="text" class="form-control shadow-none" th:value="${session.member.memberCategory}"
-                           id="member_category" readonly>
-
                     <div class="row">
-                        <div class="col-md-4">
-                            <input class="form-check-input category_view" type="checkbox" value="1" disabled>Category1<br>
-                            <input class="form-check-input category_view" type="checkbox" value="2" disabled>Category2<br>
-                            <input class="form-check-input category_view" type="checkbox" value="3" disabled>Category3<br>
-                            <input class="form-check-input category_view" type="checkbox" value="4" disabled>Category4<br>
+                        <input type="hidden" class="form-control shadow-none" th:value="${session.member.memberCategory}"
+                        id="memberCategory" readonly>
+                        <div class="col-md-6">
+                            <input class="form-check-input category_view" type="checkbox" value="1" disabled>음악<br>
+                            <input class="form-check-input category_view" type="checkbox" value="2" disabled>음식<br>
+                            <input class="form-check-input category_view" type="checkbox" value="3" disabled>영화<br>
                         </div>
-                        <div class="col-md-4">
-                            <input class="form-check-input category_view" type="checkbox" value="5" disabled>Category5<br>
-                            <input class="form-check-input category_view" type="checkbox" value="6" disabled>Category6<br>
-                            <input class="form-check-input category_view" type="checkbox" value="7" disabled>Category7<br>
-                            <input class="form-check-input category_view" type="checkbox" value="8" disabled>Category8<br>
-                        </div>
-                        <div class="col-md-4">
-                            <input class="form-check-input category_view" type="checkbox" value="9" disabled>Category9<br>
-                            <input class="form-check-input category_view" type="checkbox" value="10" disabled>Category10<br>
-                            <input class="form-check-input category_view" type="checkbox" value="11" disabled>Category11<br>
-                            <input class="form-check-input category_view" type="checkbox" value="12" disabled>Category12<br>
+                        <div class="col-md-6">
+                        
+                            <input class="form-check-input category_view" type="checkbox" value="4" disabled>종교<br>
+                            <input class="form-check-input category_view" type="checkbox" value="5" disabled>꽃<br>
+                            <input class="form-check-input category_view" type="checkbox" value="6" disabled>역사<br>
                         </div>
                     </div>
-                    <input type="text" class="form-control shadow-none" th:value="${session.member.memberCategory}"
-                           id="memberCategory" readonly>
-                </div>
                 <br><br>
-
             </div>
         </div>
         <section>
+            <div class="col-md-6 offset-md-3">
+                <div class="row">
+                    <!-- <input type="button" class="btn btn-primary btn-xl" id="modify_btn" value="회원정보 수정"> -->
+                    <input type="button" class="btn btn-primary btn-xl" value="비밀번호 변경" href="#"
+                           data-bs-toggle="modal" data-bs-target="#modify-pw-Modal">
+                </div>
+            </div>
             <div class="col-md-6 offset-md-3">
                 <div class="row">
                     <!-- <input type="button" class="btn btn-primary btn-xl" id="modify_btn" value="회원정보 수정"> -->
@@ -114,14 +112,20 @@
 <div th:include="/fragment/modal.html :: loginModal-in" class="modal fade" id="login-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 </div>
 
-<!-- 비밀번호 모달 -->
+<!-- 회원정보수정 비밀번호 재확인 모달 -->
 <div th:include="/fragment/modal.html :: passwordRecheckModal" class="modal fade" id="modify-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</div>
+<!-- 비밀번호 변경 비밀번호 재확인 모달 -->
+<div th:include="/fragment/modal.html :: passwordRecheckModal-2" class="modal fade" id="modify-pw-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 </div>
 
 
 <footer th:include="/fragment/mainFooter.html :: mainFooter" class="footer py-4">
 </footer>
+<<<<<<< HEAD
+=======
 
+>>>>>>> d292b217cccd77f706e17fb88142557db9d95e9d
 
 
 
@@ -139,6 +143,13 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/jusoApi.js"></script>
 
+<<<<<<< HEAD
+
+<!-- Jquery cdn -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+ 
+=======
 <!-- Jquery cdn -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
@@ -146,6 +157,7 @@
 
 
 
+>>>>>>> d292b217cccd77f706e17fb88142557db9d95e9d
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <!-- * *                               SB Forms JS                               * *-->
 <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
@@ -194,6 +206,47 @@
 
             });
     });
+
+    document.getElementById("go_to_pw_modify").addEventListener('click', () => {
+        
+        var login_id = $("#memberId").val();
+        var pw_modify_login_password = $("#pw_modify_login_password").val();
+        alert(pw_modify_login_password);
+        $.ajax({
+            type: "POST",
+            async: true,
+            url: "/member/mypage/pwmodify",
+            data: {
+                login_id: login_id,
+                pw_modify_login_password: pw_modify_login_password
+            }
+        })
+            .done(function (text) {
+                console.log(text);
+                if (text == "S") {
+                    Swal.fire({
+                        title: '로그인 성공',
+                        confirmButtonText: '확인',
+                    }).then(() => {
+                        location.href = '/member/pwmodifypage';
+                    });
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '로그인 실패',
+                        text: '아이디 혹은 비밀번호를 확인하세요.',
+                        confirmButtonText: '확인',
+                    });
+                }
+
+            })
+            .fail(function () {
+                alert("Ajax 실패");
+
+            });
+    });
+
 </script>
 
 </html>

@@ -29,7 +29,6 @@ import java.util.List;
 public class FavoriteController {
 
     private final FavoriteService favoriteService;
-    private final FestivalService festivalService;
 
     @ResponseBody
     @PostMapping("/favoritemodify")
@@ -73,13 +72,19 @@ public class FavoriteController {
             return "redirect:/";
         if(keyword == null) {
             festivals = favoriteService.paging2(member.getMemberIndex(), pageable);
+            List<Posts> festivalsList = festivals.getContent();
+
+            for(Posts p : festivalsList){
+                System.out.println("$$ postNum :: "+p.getPostNum());
+                System.out.println("$$ festivalTitle :: "+p.getFestivalTitle());
+            }
 
         } else {
             festivals = favoriteService.paging(member.getMemberIndex(), keyword, pageable);
         }
         model.addAttribute("posts",festivals);
         model.addAttribute("keyword", keyword);
-//        System.out.println();
+
         return "favorite_festival_board";
     }
 
@@ -101,43 +106,4 @@ public class FavoriteController {
         System.out.println(festivals.getTotalPages()); //2
         return festivals;
     }
-
-
-//    @GetMapping("/favoritefestival")
-//    public String list(Model model, HttpSession session) {
-//
-//        Member member = (Member) session.getAttribute("member");
-//
-//        if(member!=null){
-//            List<Posts> favoriteFes = favoriteService.findFestivals(member.getMemberIndex());
-//            System.out.println("favoriteFes.size(): "+favoriteFes.size());
-//            model.addAttribute("posts",favoriteFes);
-//        }
-//
-//        return "favorite_festival_board";
-//    }
-
-
-
-
-//    @GetMapping("/allfestival")
-//    public String allList(Model model) {
-//        List<Posts> festivals = festivalService.findFestivals();
-//        model.addAttribute("posts",festivals);
-//        log.info("DEBUG");
-//        return "every_festival_board";
-//    }
-//
-//    //각 축제별 정보와 리뷰리스트 불러오는 부분
-//    @GetMapping("/festival/{post_num}")
-//    public String fesContent(Model model, @PathVariable("post_num") Long post_num) {
-//        List<Posts> post = festivalService.findOne(post_num);
-//        model.addAttribute("post", post);
-//        List<Review> reviews = festivalService.findReviews(post_num);
-//        model.addAttribute("reviews",reviews);
-//        return "Each_Festival_board";
-//    }
-
-
-
 }
