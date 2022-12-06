@@ -114,9 +114,9 @@ public class AdminController {
 
 
         MultipartFile pic = multi.getFile("contentImage");
-        if(pic.getContentType().startsWith("image") == false){
-            return "redirect:/admin/festivalWrite";
-        }
+//        if(pic.getContentType().startsWith("image") == false){
+//            return "redirect:/admin/festivalWrite";
+//        }
         UUID uuid=UUID.randomUUID();
         String filename =uuid+"_"+pic.getOriginalFilename();
 

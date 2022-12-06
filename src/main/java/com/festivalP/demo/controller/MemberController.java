@@ -414,7 +414,6 @@ public class MemberController {
     }
 
 
-
     @ResponseBody
     @RequestMapping("/findid")
     public String findId() {
@@ -422,11 +421,13 @@ public class MemberController {
         return "findId";
     }
 
+
 //    @RequestMapping("/findid")
 //    public String findId() {
 //
 //        return "findId";
 //    }
+
 
 
 }
