@@ -4,7 +4,6 @@ import com.festivalP.demo.domain.Favorite;
 import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.repository.FavoritePageRepository;
 import com.festivalP.demo.repository.FavoriteRepository;
-import com.festivalP.demo.repository.FestivalRepository;
 import com.festivalP.demo.repository.PageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -56,7 +55,6 @@ public class FavoriteService {
 
     @Transactional
     public Page<Posts> paging(Long memberId,String keyword, Pageable pageable) {
-//        Page<Posts> Pages= favoritePageRepository.findByFestivalTitleContaining(memberId ,keyword, pageable);
         Page<Posts> Pages= favoritePageRepository.findByFestivalTitle(memberId ,keyword, pageable);
         System.out.println("@#@#@#@#@#@ FavoriteService paging");
         return Pages;
@@ -64,9 +62,7 @@ public class FavoriteService {
 
     @Transactional
     public  Page<Posts> paging2(Long memberId, Pageable pageable) {
-//        Page<Posts> Pages= favoritePageRepository.findByMemberIndex(memberId, pageable);
         System.out.println("????? member ID ???: "+memberId);
-
         Page<Posts> Pages= favoritePageRepository.findByMemberIndex(memberId, pageable);
         System.out.println("@#@#@#@#@#@ FavoriteService paging22");
         return Pages;

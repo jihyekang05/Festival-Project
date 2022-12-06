@@ -91,6 +91,10 @@ public class FestivalService{
         return festivalRepository.findBypostNum(postNum);
     }
 
+    public List<Review> findReviewOne(Long postNum) {
+        return reviewRepository.findReviewBypostNum(postNum);
+    }
+
     //지역별축제기능
     public List<Posts> findOne2(Long local){ return festivalRepository.findByboardLocAddr(local);}
 

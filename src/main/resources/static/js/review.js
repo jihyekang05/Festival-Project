@@ -1,5 +1,6 @@
 const submitBtn = document.querySelector('#review_submit');
 
+
 //리뷰 등록버튼 눌렀을 때
 submitBtn.addEventListener('click' , (e) => {
     e.preventDefault(); //기본 폼 동작 막기

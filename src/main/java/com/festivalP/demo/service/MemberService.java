@@ -64,29 +64,14 @@ public class MemberService {
         return member;
     }
 
-// 암호화 함수 사용 전
-//    @Transactional
-//    public String join(Member member){
-//        System.out.println("MemberService.join");
-//
-//        memberRepository.save(member);
-//        return member.getmemberId();
-//    }
-
-    // 암호화 함수 사용 전
-//    @Transactional
-//    public String join(Member member){
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        member.setmemberPw(encoder.encode(member.getmemberPw()));
-//        System.out.println("MemberService.join");
-//        memberRepository.save(member);
-//        return member.getmemberId();
-//    }
 
     @Transactional
     public String join(Member member) {
         System.out.println("MemberService.join");
         memberRepository.save(encryptFunc(member));
+        if(member.getMemberCategory()!="")
+            memberRepository.saveCategory(member);
+
         return member.getMemberId();
     }
 
@@ -119,7 +104,23 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean memberExistCheck(String memberId, String memberPw) {
+    public boolean validateDuplicateMemberEmail(String memberEmail){
+        List<Member> findMem = memberRepository.findByEmail(memberEmail);
+
+        if(!findMem.isEmpty()) {
+            // 중복된 email 있을 경우
+            System.out.println("@@@@@@@ email duplicate! @@@@");
+            return false;
+        }
+        else{
+            // 중복된 email 없을 경우
+            System.out.println("$$$$$$$$ no email in db$$$$$$$$$$");
+            return true;
+        }
+    }
+
+    @Transactional
+    public boolean memberExistCheck(String memberId, String memberPw){
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         List<Member> findMem = memberRepository.findById(memberId);
@@ -129,6 +130,24 @@ public class MemberService {
             return encoder.matches(memberPw, findMem.get(0).getMemberPw());
         }
     }
+
+    @Transactional
+    public String getMemberIdByEmail(String memberEmail){
+        Member member = memberRepository.findByEmailOne(memberEmail);
+        return member.getMemberId();
+    }
+
+    @Transactional
+    public void setMemberState(String memberId, String tempPw){
+        Member member = memberRepository.findById(memberId).get(0);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String securePw = encoder.encode(tempPw);
+
+        memberRepository.memberStateUpdate(member.getMemberIndex(), securePw);
+    }
+
+
 
 
     @Transactional
@@ -159,9 +178,20 @@ public class MemberService {
     }
 
     @Transactional
-    public Member deleteMember(Member member) {
-        memberRepository.memberDelete(member);
 
+    public Member updatePassword(Member member){
+
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String newPw = encoder.encode(member.getMemberPw());
+        Member resMember =  memberRepository.memberPasswordUpdate(member, newPw);
+        return resMember;
+    }
+
+    @Transactional
+    public Member deleteMember(Member member){
+
+        memberRepository.memberDelete(member);
         return member;
     }
 

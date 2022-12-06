@@ -85,8 +85,8 @@ public class AdminController {
     @RequestMapping("/festivalWrite")
     public String festivalWrite(Model model) {
         // 축제 작성 페이지
-        List<Category> category=categoryService.findCategory();
-        model.addAttribute("category", category);
+//        List<Category> category=categoryService.findCategory();
+//        model.addAttribute("category", category);
         return "festivalWrite";
     }
 

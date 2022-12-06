@@ -98,7 +98,9 @@ public class PostController {
     public String list(Model model, @PathVariable("postNum") Long postNum, HttpServletRequest request) {
         List<Posts> post = festivalService.findOne(postNum);
         model.addAttribute("post", post);
-        List<Review> reviews = festivalService.findReviews(postNum);
+        List<Review> reviews = festivalService.findReviewOne(postNum);
+        System.out.println("리뷰사이즈임!!!!!!!!!!!!!!!!");
+        System.out.println(reviews.size());
         model.addAttribute("reviews",reviews);
 
         PostForm postForm = new PostForm();
