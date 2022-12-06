@@ -16,5 +16,5 @@ public interface PageMemberRepository extends PagingAndSortingRepository<Member,
 
 
 
-
+    Page<Member> findByMemberState( int memberState ,Pageable pageable);
 }

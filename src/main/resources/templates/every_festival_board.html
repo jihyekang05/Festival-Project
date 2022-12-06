@@ -98,7 +98,7 @@
                 <div class="card-body">
                     <h5 class="festival-title" th:text="${post.festivalTitle}">축제이름</h5>
                     <p>조회수 : <span class="festival-text" th:text="${post.contentViews}"></span></p>
-                    <p>게시일자 : <span class="festival-text" th:text="${post.festivalUploadDate}"></span></p>
+                    <p>행사일 : <span class="festival-text" th:text="${post.festivalUploadDate}"></span></p>
 
                     <a th:if="${session.member!=null}" th:href="@{|/festival/${post.postNum}|}" class="btn btn-primary">자세히보기</a>
                 </div>

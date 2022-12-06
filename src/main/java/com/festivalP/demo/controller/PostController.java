@@ -102,7 +102,7 @@ public class PostController {
         System.out.println("리뷰사이즈임!!!!!!!!!!!!!!!!");
         System.out.println(reviews.size());
         model.addAttribute("reviews",reviews);
-
+//        festivalService.updateView(postNum);
         PostForm postForm = new PostForm();
 
         System.out.println("@@@@@@@@@@@@@@ " +post.get(0).getPostNum());
@@ -132,7 +132,6 @@ public class PostController {
 
         return "Each_Festival_board";
     }
-
 
     //후기 제출했을 때 데이터 저장되는 부분
     @PostMapping("/festival/review")

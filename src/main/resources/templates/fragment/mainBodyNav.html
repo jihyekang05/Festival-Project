@@ -9,7 +9,7 @@
     <div class="container">
         <!-- ============================================================================= -->
         <!-- 페이지 로고 이미지 바꿀부분입니다!!!!!!!!!!! -->
-        <a class="navbar-brand" href="/"><img src="/assets/img/navbar-logo.svg" alt="..." /></a>
+        <a class="navbar-brand" href="/"><img src="/assets/img/navbar-logo.png" style="height:60px" alt="..." /></a>
         <!-- ============================================================================================= -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,6 @@
                         data-bs-toggle="modal" data-bs-target="#login-Modal">로그인</a></li>
                 <li th:if="${session.authInfo != null}" class="nav-item"><a class="nav-link" href="#"
                         data-bs-toggle="modal" data-bs-target="#login-Modal">내 정보</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/chat">채팅</a></li>
                 <li class="nav-item"><a class="nav-link" href="/allfestival">전체목록</a></li>
                 <li th:if="${session.member!=null}" class="nav-item"><a class="nav-link" href="/favoritefestival">즐겨찾기</a></li>
                 <li th:if="${session.member!=null}" class="nav-item"><a class="nav-link" href="/categoryfestival">관심축제목록</a></li>

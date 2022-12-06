@@ -147,7 +147,7 @@ public class FestivalService{
         post.setFestivalUploadDate(posts.getFestivalUploadDate());
         post.setBoardAddr(posts.getBoardAddr());
         post.setBoardLocAddr(posts.getBoardLocAddr());
-
+        post.setFestivalCategory(posts.getFestivalCategory());
     }
 
 

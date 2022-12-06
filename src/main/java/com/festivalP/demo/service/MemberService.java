@@ -50,6 +50,10 @@ public class MemberService {
         return pageMemberRepository.findByMemberIdContaining(keyword, pageable);
     }
 
+    public Page<Member> findByMemberState(int memberState, Pageable pageable){
+    return pageMemberRepository.findByMemberState(memberState, pageable);
+    }
+
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }
@@ -197,6 +201,8 @@ public class MemberService {
         memberRepository.memberDelete(member);
         return member;
     }
+
+
 
 //    @Override
 //    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

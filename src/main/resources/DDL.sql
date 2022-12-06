@@ -66,11 +66,11 @@ CREATE TABLE FESTIVAL_REVIEW (
 
 drop table NOTICE;
 CREATE TABLE NOTICE (
-	postNum	number(10)		primary key,
-	adminIndex	number(1)		NOT NULL,
-	contentTitle	varchar2(200)		NOT NULL,
-	contentText	varchar2(4000)		NOT NULL,
-    CONSTRAINT admin_notice_index FOREIGN KEY(adminIndex) REFERENCES admin(adminIndex)
+	post_num	number(10)		primary key,
+	admin_index	number(1)		NOT NULL,
+	content_title	varchar2(200)		NOT NULL,
+	content_text	varchar2(4000)		NOT NULL,
+    CONSTRAINT admin_notice_index FOREIGN KEY(admin_index) REFERENCES admin(admin_index)
 );
 
 drop table MESSAGE;
@@ -90,9 +90,9 @@ CREATE TABLE CHAT_ROOM (
 
 drop table ADMIN;
 CREATE TABLE ADMIN (
-	adminIndex	number(10)		primary key,
-	adminId	varchar2(100)		NOT NULL,
-	adminPw	varchar2(100)		NOT NULL
+	admin_index	number(10)		primary key,
+	admin_id	varchar2(100)		NOT NULL,
+	admin_pw	varchar2(100)		NOT NULL
 );
 
 DROP TABLE CATEGORY;

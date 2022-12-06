@@ -120,7 +120,7 @@ public class AdminController {
         UUID uuid=UUID.randomUUID();
         String filename =uuid+"_"+pic.getOriginalFilename();
 
-        String uploadDir = "C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets" + File.separator;
+        String uploadDir = "C:\\Users\\kitri\\Desktop\\project2\\src\\main\\resources\\static\\assets\\img\\image" + File.separator;
         File uploadFolder = new File(uploadDir);
         if (!uploadFolder.exists()) {
             uploadFolder.mkdir();
@@ -142,7 +142,7 @@ public class AdminController {
 
         posts.setFestivalUploadDate(date);
 
-        posts.setContentViews(0L);
+//        posts.setContentViews(0L);
         posts.setReviewScoreAvg(0L);
 
 
@@ -182,14 +182,20 @@ public class AdminController {
         model.addAttribute("keyword", keyword);
         return "memberManagement";
     }
-//    @GetMapping("/memberStateModify/{postNum}")
-//    public String modify_memNum(@PathVariable("memberIndex") Long memberIndex) {
-//
-//        int result = festivalService.deleteBypostNum(postNum);
-//        Member member= memberService.updateMemberState(memberIndex);
-//
-//        return "redirect:/admin/festivalManagement";
-//    }
+
+
+    @GetMapping("/memberManagement/{memberState}")
+    public String findMemberState(@PathVariable("memberState")int memberState, @PageableDefault(size = 10, page = 0, direction = Sort.Direction.DESC)Pageable pageable, Model model){
+        System.out.println("memberState!!!!!!!");
+        System.out.println(memberState);
+
+        Page<Member> members= memberService.findByMemberState(memberState, pageable);
+
+        model.addAttribute("maxPage", 5);
+        model.addAttribute("members", members);
+
+        return "memberManagement";
+    }
 
     @ResponseBody
     @PostMapping("/memberStateModify")
@@ -205,11 +211,15 @@ public class AdminController {
     }
 
     @PostMapping("/noticeWrite")
-    public String noticeCreate(Notice form, BindingResult result) {
+    public String noticeCreate(Notice form, BindingResult result, HttpSession session) {
         Notice notice = new Notice();
 
+
+        Admin admin = (Admin) session.getAttribute("admin");
+
         notice.setPostNum(form.getPostNum());
-        notice.setAdminIndex(1L);
+//        notice.setAdminIndex(1L);
+        notice.setAdminIndex(admin.getAdminIndex());
         notice.setContentTitle(form.getContentTitle());
         notice.setContentText(form.getContentText());
 
@@ -283,13 +293,6 @@ public class AdminController {
     @PostMapping("/admin/modify/{postNum}")
     public String fes_Modify(@PathVariable("postNum") Long postNum, MultipartHttpServletRequest multi) throws ParseException {
 
-
-
-
-
-
-
-
         Posts posts = new Posts();
         posts.setPostNum(postNum);
 
@@ -303,9 +306,6 @@ public class AdminController {
         posts.setBoardAddr(multi.getParameter("address"));
 
         posts.setBoardLocAddr(Long.parseLong(multi.getParameter("BoardLocAddr")));
-
-
-
         MultipartFile pic = multi.getFile("contentImage");
 
 
@@ -320,7 +320,7 @@ public class AdminController {
             String filename = uuid + "_" + pic.getOriginalFilename();
             // 랜덤 이름 생성
 
-            String uploadDir = "C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets" + File.separator;
+            String uploadDir = "C:\\Users\\kitri\\Desktop\\project2\\src\\main\\resources\\static\\assets\\img\\image" + File.separator;
 
 
 
@@ -341,7 +341,7 @@ public class AdminController {
             System.out.println("## posts.getContentImage() :; "+posts.getContentImage());
 
             //delete
-            File file = new File("C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets/" + srcFileName); // ex. [D:/test/image/testImage.jpg]
+            File file = new File("C:\\Users\\kitri\\Desktop\\project2\\src\\main\\resources\\static\\assets\\img\\image/" + srcFileName); // ex. [D:/test/image/testImage.jpg]
             System.out.println("## srcFileName ::" + srcFileName);
 
             file.delete();
@@ -357,7 +357,7 @@ public class AdminController {
         posts.setFestivalUploadDate(date);
 
 
-        posts.setContentViews(0L);
+//        posts.setContentViews(0L);
         posts.setReviewScoreAvg(0L);
 
 

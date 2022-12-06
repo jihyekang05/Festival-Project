@@ -26,12 +26,11 @@ $(window).scroll(function() {
             $.each(json.content , function(i) {
                             str += "<div class='col-md-4'>\
                                         <div class='card' style='width: 100%;' >\
-                                           <img src='"+ json.content[i].contentImage + "' class='card-img-top' alt='...'>\
+                                           <img width='180' height='300' src='/assets/img/image/"+ json.content[i].contentImage+"' class='card-img-top' alt='...'>\
                                            <div class='card-body'>\
                                              <h5 class='festivalTitle'>"+json.content[i].festivalTitle+"</h5>\
                                              <p>조회수</p>\
                                              <p class='festival-text'>"+ json.content[i].contentViews +"</p>\
-                                             <p class='festival-text'>"+ json.content[i].festivalCategory +"</p>\
                                              <a href='/festival/"+ json.content[i].postNum +"' class='btn btn-primary'>자세히보기</a>\
                                            </div>\
                                          </div>\

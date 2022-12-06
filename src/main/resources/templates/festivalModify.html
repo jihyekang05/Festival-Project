@@ -52,7 +52,7 @@
     </div>
   </div>
 </nav>
-</body>
+
 
 
 <div class="container">
@@ -64,7 +64,7 @@
     </div>
     <div class="mb-3">
       <label for="contentImage" class="form-label">축제 배경이미지</label><hr>
-      <img class="img-fluid rounded"  th:src="@{/assets/}+${posts.contentImage}"  alt="..." width="200px"><hr>
+      <img class="img-fluid rounded"  th:src="@{/assets/img/image/}+${posts.contentImage}"  alt="..." width="200px"><hr>
       <input  type="file" id="contentImage" name="contentImage" >
       <input  type="input"  id="contentImage0"  name="contentImage0" th:value="${posts.contentImage}">
 
@@ -125,10 +125,23 @@
             </td>
           </tr>
       </table>
+      <div class="row">
+        <div class="col-md-4" >
+          <input class="form-check-input category" type="checkbox" id="category_value" name="festivalCategory" value="1" >음악<br>
+          <input class="form-check-input category" type="checkbox" id="category_value" name="festivalCategory" value="2" >음식<br>
+          <input class="form-check-input category" type="checkbox" id="category_value" name="festivalCategory" value="3" >영화<br>
+          <input class="form-check-input category" type="checkbox" id="category_value" name="festivalCategory" value="4" >종교<br>
+          <input class="form-check-input category" type="checkbox" id="category_value" name="festivalCategory" value="5" >꽃<br>
+          <input class="form-check-input category" type="checkbox" id="category_value" name="festivalCategory" value="6" >역사<br>
+          <input type="hidden" class="form-control shadow-none" th:value="${posts.festivalCategory}"
+                        id="festivalCategory" readonly>
+        </div>
+
     </div>
 
     <div class="text-right">
       <input type="hidden" name="mode" value="write">
+      <!--<input type="button" class="btn btn-outline-secondary" id="btnWrite" value="글등록">-->
       <button type="submit" class="btn btn-outline-secondary" >글수정</button>
       <button type="button" class="btn btn-outline-danger" onclick="history.back(-1);">취소</button>
     </div>
@@ -139,5 +152,54 @@
   <script src="/js/imageUpdate.js" ></script>
 
 </div>
+
+</body>
+
+<script>
+    const category_value = document.getElementById("category_value");
+    const category = document.getElementsByClassName("category");
+    const festivalCategory = document.getElementById("festivalCategory");
+    //category_check();
+
+    function category_insert() {
+
+        Array.prototype.forEach.call(category, (e) => {
+
+            if (e.checked) {
+                category_value.value += e.value + ",";
+            }
+        });
+    };
+
+document.getElementById("btnWrite").addEventListener('click', ()=>{
+
+
+    category_insert();
+    $("#festivalWrite").submit();
+
+
+});
+
+
+function category_check(){
+
+  var category_string =  festivalCategory.value.split(',');
+  category_string = category_string.slice(0,-1);
+
+  
+
+  Array.prototype.forEach.call(category, (e) => {
+      e.checked=false;
+  });
+
+  category_string.forEach((e)=>{
+      
+      idx = Number(e);
+      category[idx-1].checked=true;
+  });
+};
+
+
+</script>
 
 </html>
