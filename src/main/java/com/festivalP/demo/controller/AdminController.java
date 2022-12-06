@@ -120,7 +120,7 @@ public class AdminController {
         UUID uuid=UUID.randomUUID();
         String filename =uuid+"_"+pic.getOriginalFilename();
 
-        String uploadDir = "C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets" + File.separator;
+        String uploadDir = "D:\\FestivalProject\\Festival-Project\\src\\main\\resources\\static\\assets\\img" + File.separator;
         File uploadFolder = new File(uploadDir);
         if (!uploadFolder.exists()) {
             uploadFolder.mkdir();
@@ -142,7 +142,7 @@ public class AdminController {
 
         posts.setFestivalUploadDate(date);
 
-        posts.setContentViews(0L);
+//        posts.setContentViews(0L);
         posts.setReviewScoreAvg(0L);
 
 
@@ -320,7 +320,7 @@ public class AdminController {
             String filename = uuid + "_" + pic.getOriginalFilename();
             // 랜덤 이름 생성
 
-            String uploadDir = "C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets" + File.separator;
+            String uploadDir = "D:\\FestivalProject\\Festival-Project\\src\\main\\resources\\static\\assets\\img" + File.separator;
 
 
 
@@ -341,7 +341,7 @@ public class AdminController {
             System.out.println("## posts.getContentImage() :; "+posts.getContentImage());
 
             //delete
-            File file = new File("C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets/" + srcFileName); // ex. [D:/test/image/testImage.jpg]
+            File file = new File("D:\\FestivalProject\\Festival-Project\\src\\main\\resources\\static\\assets\\img/" + srcFileName); // ex. [D:/test/image/testImage.jpg]
             System.out.println("## srcFileName ::" + srcFileName);
 
             file.delete();
@@ -357,7 +357,7 @@ public class AdminController {
         posts.setFestivalUploadDate(date);
 
 
-        posts.setContentViews(0L);
+//        posts.setContentViews(0L);
         posts.setReviewScoreAvg(0L);
 
 

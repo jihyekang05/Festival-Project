@@ -32,7 +32,7 @@ public class Posts extends BaseTimeEntity{
     private String contentText;
 
     @Column(name="content_views",columnDefinition = "integer default 0", nullable = false)
-    private Long contentViews;
+    private int contentViews;
 
     @Column(name = "festival_title")
     private String festivalTitle;

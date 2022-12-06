@@ -40,7 +40,6 @@ public class CategoryController {
             System.out.println("## categoryController ##");
             System.out.println("## categoryController ##");
 
-
             categoryPosts = categoryService.listPaging(member.getMemberIndex(), pageable);
             List<Posts> categoryPostsList= categoryPosts.getContent();
             System.out.println("## categoryPostsList.size() ::"+categoryPostsList.size());
@@ -85,7 +84,6 @@ public class CategoryController {
                 System.out.println("$$ festivalTitle :: "+p.getFestivalTitle());
                 System.out.println("$$ festivalCategory :: "+p.getFestivalCategory());
             }
-
         } else {
             categoryPosts = categoryService.paging(member.getMemberIndex(), keyword, pageable);
         }

@@ -21,7 +21,7 @@ public class PostForm {
 
     private String contentText;
 
-    private Long contentViews;
+    private int contentViews;
 
     private String festivalTitle;
 

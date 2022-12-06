@@ -67,4 +67,21 @@ public class FavoriteService {
         System.out.println("@#@#@#@#@#@ FavoriteService paging22");
         return Pages;
     }
+
+    public Page<Posts> sortOld(Long memberIndex, Pageable pageable) {
+        Page<Posts> Pages = favoritePageRepository.findAllByOrderByFestivalUploadDate(memberIndex, pageable);
+        return Pages;
+    }
+    //최신 순
+    public Page<Posts> sortNew(Long memberIndex, Pageable pageable) {
+        Page<Posts> Pages = favoritePageRepository.findAllByOrderByFestivalUploadDateDesc(memberIndex, pageable);
+        return Pages;
+    }
+
+    //조회수 순
+    public Page<Posts> sortView(Long memberIndex, Pageable pageable) {
+        Page<Posts> Pages = favoritePageRepository.findAllByOrderByContentViewsDesc(memberIndex, pageable);
+
+        return Pages;
+    }
 }

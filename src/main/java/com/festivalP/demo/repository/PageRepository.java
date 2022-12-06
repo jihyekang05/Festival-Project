@@ -43,7 +43,7 @@ public interface PageRepository extends PagingAndSortingRepository<Posts, Long>{
     Page<Posts> findAllByOrderByContentViewsDesc(Pageable pageable);
 
     @Modifying
-    @Query("update Posts p set p.contentViews = p.contentViews + 1 where p.postNum =postNum")
+    @Query("update Posts p set p.contentViews = p.contentViews + 1 where p.postNum = :postNum")
     int updateView(Long postNum);
 
 

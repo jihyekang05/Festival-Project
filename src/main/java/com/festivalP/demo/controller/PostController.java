@@ -97,10 +97,12 @@ public class PostController {
     @GetMapping("/festival/{postNum}")
     public String list(Model model, @PathVariable("postNum") Long postNum, HttpServletRequest request) {
         List<Posts> post = festivalService.findOne(postNum);
-        model.addAttribute("post", post);
+//        model.addAttribute("post", post);
         List<Review> reviews = festivalService.findReviews(postNum);
         model.addAttribute("reviews",reviews);
-
+//        festivalService.updateView(postNum);
+        System.out.println("조회수!!!!!!!!!!");
+        System.out.println(festivalService.updateView(postNum));
         PostForm postForm = new PostForm();
 
         System.out.println("@@@@@@@@@@@@@@ " +post.get(0).getPostNum());
@@ -108,7 +110,7 @@ public class PostController {
         postForm.setPostNum(post.get(0).getPostNum());
         postForm.setAdminIndex(post.get(0).getAdminIndex());
         postForm.setContentText(post.get(0).getContentText());
-        postForm.setContentViews(post.get(0).getContentViews());
+//        postForm.setContentViews(post.get(0).getContentViews());
         postForm.setFestivalTitle(post.get(0).getFestivalTitle());
         postForm.setReviewScoreAvg(post.get(0).getReviewScoreAvg());
         postForm.setBoardAddr(post.get(0).getBoardAddr());

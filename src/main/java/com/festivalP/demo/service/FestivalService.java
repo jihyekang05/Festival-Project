@@ -48,6 +48,8 @@ public class FestivalService{
     //조회수 증가
     @Transactional
     public int updateView(Long postNum) {
+//        System.out.println("festivalService updateView!!");
+//        System.out.println(pageRepository.updateView(postNum));
         return pageRepository.updateView(postNum);
     }
 
