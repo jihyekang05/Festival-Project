@@ -120,7 +120,7 @@ public class AdminController {
         UUID uuid=UUID.randomUUID();
         String filename =uuid+"_"+pic.getOriginalFilename();
 
-        String uploadDir = "C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets\\img\\image" + File.separator;
+        String uploadDir = "C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets" + File.separator;
         File uploadFolder = new File(uploadDir);
         if (!uploadFolder.exists()) {
             uploadFolder.mkdir();
@@ -223,7 +223,9 @@ public class AdminController {
     public String del_notice_num(@PathVariable("postNum") Long postNum) {
         System.out.println(postNum);
         int result = noticeService.deleteByNotice_num(postNum);
-        System.out.println("result : " + result);
+
+
+
 
         return "redirect:/admin/noticeManagement";
     }
@@ -257,6 +259,9 @@ public class AdminController {
         System.out.println(postNum);
         int result = festivalService.deleteBypostNum(postNum);
         System.out.println("result : " + result);
+        //        File file = new File("C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets/" + srcFileName);
+//        file.delete();
+
 
         return "redirect:/admin/festivalManagement";
     }
@@ -280,8 +285,8 @@ public class AdminController {
 
 
 
-//        File file = new File([파일경로]); // ex. [D:/test/image/testImage.jpg]
-//        file.delete();
+
+
 
 
 
@@ -301,31 +306,56 @@ public class AdminController {
 
 
 
-
         MultipartFile pic = multi.getFile("contentImage");
-        UUID uuid=UUID.randomUUID();
-        String filename =uuid+"_"+pic.getOriginalFilename();
 
-        String uploadDir = "C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets" + File.separator;
-        File uploadFolder = new File(uploadDir);
-        if (!uploadFolder.exists()) {
-            uploadFolder.mkdir();
+
+
+
+        String srcFileName = multi.getParameter("contentImage0");
+
+
+
+        if(pic.getOriginalFilename().length()!=0){
+            UUID uuid = UUID.randomUUID();
+            String filename = uuid + "_" + pic.getOriginalFilename();
+            // 랜덤 이름 생성
+
+            String uploadDir = "C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets" + File.separator;
+
+
+
+            File uploadFolder = new File(uploadDir);
+            if (!uploadFolder.exists()) {
+                uploadFolder.mkdir();
+            }
+
+            String fullPath = uploadDir + filename;
+            try {
+                pic.transferTo(new File(fullPath));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            posts.setContentImage(filename);
+            System.out.println("## posts.getContentImage() :; "+posts.getContentImage());
+
+            //delete
+            File file = new File("C:\\Users\\kitri\\Desktop\\new\\Festival-Project\\src\\main\\resources\\static\\assets/" + srcFileName); // ex. [D:/test/image/testImage.jpg]
+            System.out.println("## srcFileName ::" + srcFileName);
+
+            file.delete();
         }
 
-        String fullPath = uploadDir + filename;
-        try {
-            pic.transferTo(new File(fullPath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        else{
+            posts.setContentImage(srcFileName);
         }
 
-
-        posts.setContentImage(filename);
-        //date
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(multi.getParameter("festivalUploadDate"));
 
         posts.setFestivalUploadDate(date);
+
 
         posts.setContentViews(0L);
         posts.setReviewScoreAvg(0L);

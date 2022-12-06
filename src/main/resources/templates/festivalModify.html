@@ -61,8 +61,9 @@
     </div>
     <div class="mb-3">
       <label for="contentImage" class="form-label">축제 배경이미지</label><hr>
-      <img class="img-fluid rounded" th:src="@{/assets/}+${posts.contentImage}"  alt="..." width="200px"><hr>
-<!--      <input class="form-control" type="file" id="contentImage" name="contentImage" th:value="${posts.contentImage}">-->
+      <img class="img-fluid rounded"  th:src="@{/assets/}+${posts.contentImage}"  alt="..." width="200px"><hr>
+      <input  type="file" id="contentImage" name="contentImage" >
+      <input  type="input"  id="contentImage0"  name="contentImage0" th:value="${posts.contentImage}">
 
     </div>
 
@@ -132,7 +133,7 @@
 
   </form>
   <script src="/js/modify.js" ></script>
-
+  <script src="/js/imageUpdate.js" ></script>
 
 </div>
 
