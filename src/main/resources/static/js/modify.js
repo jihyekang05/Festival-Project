@@ -1,6 +1,7 @@
 
-	function post_delete($postNum){
-        //console.log("post num : "+$postNum)
+	function post_delete($postNum, $contentImage){
+        console.log("post num : "+$postNum)
+        console.log("post num : "+$contentImage)
         location.href = "admin/delete/"+$postNum; // admin/delete/7
     }
 
@@ -14,7 +15,7 @@
 
     function notice_delete($postNum){
         console.log("post num : "+$postNum)
-        location.href = "noticeManagement/delete_notice/"+$postNum; // admin/delete/7
+        location.href = "noticeManagement/delete_notice/"+$postNum+; // admin/delete/7
     }
 
 
