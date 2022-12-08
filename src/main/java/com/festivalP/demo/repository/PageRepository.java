@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -40,8 +41,8 @@ public interface PageRepository extends PagingAndSortingRepository<Posts, Long>{
     Page<Posts> findAllByOrderByContentViewsDesc(Pageable pageable);
 
     @Modifying
-    @Query("update Posts p set p.contentViews = p.contentViews + 1 where p.postNum =:postNum")
-    int updateView(Long postNum);
+    @Query("update Posts p set p.contentViews = p.contentViews + 1 where p.postNum = :postNum")
+    int updateView(@Param("postNum")Long postNum);
 
 
 

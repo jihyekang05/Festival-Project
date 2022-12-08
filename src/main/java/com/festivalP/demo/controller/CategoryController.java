@@ -30,56 +30,55 @@ public class CategoryController {
 
 
     @GetMapping("/categoryfestival")
-    public String list(Model model, @PageableDefault(size =6,page=0, sort="contentViews", direction = Sort.Direction.DESC) Pageable pageable,String keyword, HttpSession session) {
-
-        Member member = (Member)session.getAttribute("member");
-
-        Page<Posts> festivals = null;
-
+    public String list(Model model, @PageableDefault(size =6,page=0, sort="contentViews", direction = Sort.Direction.DESC) Pageable pageable, String keyword, HttpSession session) {
+        System.out.println("## sortDirection"+ String.valueOf(pageable.getSort()));
+        System.out.println(pageable.getSort());
         String[] sortDirection  = String.valueOf(pageable.getSort()).split(":");
+
+
         String sort = sortDirection[0].trim();
         String direction = sortDirection[1].trim();
+
+        Member member = (Member)session.getAttribute("member");
+        Page<Posts> categoryPosts = null;
 
         if(member==null)
             return "redirect:/";
         if(keyword == null) {
 
-            festivals = categoryService.listPaging(member.getMemberIndex(), pageable);
-//            categoryPosts = categoryService.listPaging(member.getMemberIndex(), pageable);
+            categoryPosts = categoryService.listPaging(member.getMemberIndex(), pageable);
 
         } else {
-            festivals = categoryService.paging(member.getMemberIndex(), keyword, pageable);
+            categoryPosts = categoryService.paging(member.getMemberIndex(), keyword, pageable);
         }
-        model.addAttribute("posts",festivals);
+        model.addAttribute("posts",categoryPosts);
         model.addAttribute("keyword", keyword);
         model.addAttribute("pageable", pageable);
         model.addAttribute("sort",sort);
         model.addAttribute("direction",direction);
-
         System.out.println("## model.getAttribute('posts')"+model.getAttribute("posts"));
         return "category_festival_board";
     }
 
-    @ResponseBody
-
     @PostMapping("/categoryfestival/scroll")
+    @ResponseBody
     public Page<Posts> list(Model model, String keyword, @PageableDefault(size =6,page=0, direction = Sort.Direction.DESC) Pageable pageable, @RequestParam String direction, String sort, HttpSession session) {
         System.out.println("=========================");
         System.out.println("scroll page keyword :" + keyword);
-        System.out.println("## categoryfestival/scroll in ");
+
         Member member = (Member)session.getAttribute("member");
         Page<Posts> categoryPosts=null;
 
 
-        if(keyword.length() == 0) {
-
+        if(keyword == null) {
             if(direction.equals("DESC") && sort.equals("contentViews")) {
-                categoryPosts =categoryService.sortView(member.getMemberIndex(),pageable);
+                categoryPosts =categoryService.sortView(member.getMemberIndex(), pageable);
             } else if (direction.equals("DESC") && sort.equals("festivalUploadDate")) {
-                categoryPosts = categoryService.sortNew(member.getMemberIndex(),pageable);
+                categoryPosts = categoryService.sortNew(member.getMemberIndex(), pageable);
             } else {
-                categoryPosts = categoryService.sortOld(member.getMemberIndex(),pageable);
+                categoryPosts = categoryService.sortOld(member.getMemberIndex(), pageable);
             }
+//            categoryPosts = categoryService.listPaging(member.getMemberIndex(), pageable);
 
         } else {
             categoryPosts = categoryService.paging(member.getMemberIndex(), keyword, pageable);

@@ -1,6 +1,5 @@
 package com.festivalP.demo.service;
 
-
 import com.festivalP.demo.domain.Category;
 import com.festivalP.demo.domain.Posts;
 import com.festivalP.demo.repository.CategoryPageRepository;
@@ -25,7 +24,7 @@ public class CategoryService {
     @Transactional
     public Page<Posts> paging(Long memberId,String keyword, Pageable pageable) {
 
-        Page<Posts> Pages= categoryPageRepository.findByFavoriteCategory(memberId ,keyword, pageable);
+        Page<Posts> Pages= categoryPageRepository.findByFestivalTitle(memberId ,keyword, pageable);
         System.out.println("@#@#@#@#@#@ CategoryService paging");
 
         return Pages;
@@ -43,17 +42,16 @@ public class CategoryService {
 
     @Transactional
     public Page<Posts> listPaging(Long memberIndex, Pageable pageable) {
-        System.out.println("????? memberIndex ???: " + memberIndex);
-        Page<Posts> Pages = categoryPageRepository.findByFavoriteCategory(memberIndex, pageable);
+        System.out.println("????? memberIndex ???: "+memberIndex);
+        Page<Posts> Pages= categoryPageRepository.findByFavoriteCategory(memberIndex, pageable);
         System.out.println("@#@#@#@#@#@ CategoryService listPaging");
         return Pages;
-
     }
 
     public List<Category> findCategory(){
         return categoryRepository.findAll();
-
     }
+
 
     public Page<Posts> sortOld(Long memberIndex, Pageable pageable) {
         Page<Posts> Pages = categoryPageRepository.findAllByOrderByFestivalUploadDate(memberIndex, pageable);

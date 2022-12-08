@@ -102,9 +102,10 @@ public class PostController {
         System.out.println("리뷰사이즈임!!!!!!!!!!!!!!!!");
         System.out.println(reviews.size());
         model.addAttribute("reviews",reviews);
-//        festivalService.updateView(postNum);
-        PostForm postForm = new PostForm();
+        System.out.println("postNUM!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(postNum);
 
+        PostForm postForm = new PostForm();
         System.out.println("@@@@@@@@@@@@@@ " +post.get(0).getPostNum());
 
         postForm.setPostNum(post.get(0).getPostNum());
@@ -129,7 +130,7 @@ public class PostController {
             postForm.setFavoriteFlag(false);
         }
         model.addAttribute("post", postForm);
-
+        festivalService.updateView(postNum);
         return "Each_Festival_board";
     }
 

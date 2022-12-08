@@ -40,7 +40,8 @@ public interface FavoritePageRepository extends PagingAndSortingRepository<Posts
     Page<Posts> findAllByOrderByFestivalUploadDateDesc(@Param("memberIndex") Long memberIndex, Pageable pageable);
 
     //조회수 순
-    @Query("select p from Posts p JOIN FETCH Favorite f on p.postNum = f.postNum and f.memberIndex = :memberIndex order by p.contentViews desc")
+    @Query("select p from Posts p JOIN FETCH Favorite f on p.postNum = f.postNum and f.memberIndex = :memberIndex order by p.contentViews")
+
     Page<Posts> findAllByOrderByContentViewsDesc(@Param("memberIndex") Long memberIndex, Pageable pageable);
 
 
